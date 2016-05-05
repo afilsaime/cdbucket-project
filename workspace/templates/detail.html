@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+<h1>{{ Music.titre }}</h1>
+artiste : {{ Music.artiste.nom }}</br>
+duree : {{ Music.duree }}</br>
+<a href='{% url "listmusic" %}'>&raquo; Retour a la liste des musiques</a>
