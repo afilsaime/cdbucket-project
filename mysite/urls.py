@@ -23,5 +23,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^workspace/',include(urls)),
 ]
-#blablabla
+
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
