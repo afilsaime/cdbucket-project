@@ -22,7 +22,7 @@ N'oubliez pas de vous placer dans le repertoire ou se trouve le fichier **manage
     manage.py runserver
 
 Notez que vous devez avoir au préalable **lancé vos serveurs de base de données pour que le tout fonctionne correctement**.
-Vous pouvez ensuite accéder a vos pages à l'addresse [127.0.0.1:8000/](127.0.0.1:8000/) suivi des urls correspondantes dans le fichier **urls.py**
+Vous pouvez ensuite accéder a vos pages à l'addresse [127.0.0.1:8000/](http://127.0.0.1:8000/) suivi des urls correspondantes dans le fichier **urls.py**
 
 ####Conseil pratique:
 Lorsque vous réalisez des modifications de fichier, **le serveur recompile automatiquement les fichiers modifiés**. Pas besoin de le relancer, sauf dans le cas des
