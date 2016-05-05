@@ -40,3 +40,10 @@ Pour se faire, utiliser la commande
 ```
 manage.py migrate
 ```
+
+###Creer un super utilisateur:
+Pour pouvoir utiliser le module d'administration de Django, il vous faudra créer un super-utilisateur. Pour se faire, utilisez la commande
+```
+manage.py createsuperuser
+```
+Renseignez ensuite les informations demandées par le prompt du terminal.
