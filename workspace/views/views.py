@@ -22,24 +22,28 @@ class HelloWorld(TemplateView):
 #     context_object_name = "Music"
 #     model = Music
 
-class ArtistRegistrationView(FormView):
-    template_name = "artist_registration.html"
+class RegistrationView(FormView):
+    template_name = "registration.html"
     form_class = RegistrationForm
-    success_url = "/workspace/artist-sign-up/thanks"
+    success_url = "/workspace/sign-up/thanks"
 
     def form_valid(self,form):
         #Sauvegarde de l'utilisateur
         username = form.cleaned_data['username']
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
-        new_artiste = User.objects.create_user(username,email,password)
-        new_artiste.groups.add(Group.objects.get(name="Artistes"))
-        new_artiste.is_active = False
-        new_artiste.save()
+        new_user = User.objects.create_user(username,email,password)
+        #Verifie si l'utilisateur est un artiste ou non
+        monparam = self.kwargs['type']
+        if monparam == 'artist':
+            new_user.groups.add(Group.objects.get(name="Artistes"))
+
+        new_user.is_active = False
+        new_user.save()
 
         #CLE D'ENREGISTREMENT
         uniq_key = uuid.uuid1().hex
-        Registration(user=new_artiste,key=uniq_key).save()
+        Registration(user=new_user,key=uniq_key).save()
 
         #ENVOI DE MAIL
         sujet = "Activation du compte"
@@ -50,7 +54,7 @@ class ArtistRegistrationView(FormView):
 
 
 
-        return super(ArtistRegistrationView,self).form_valid(form)
+        return super(RegistrationView,self).form_valid(form)
 
 class ActivationView(TemplateView):
     template_name = "activation.html"
