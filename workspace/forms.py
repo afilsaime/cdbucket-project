@@ -2,6 +2,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from workspace.models import *
+import os
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=30)
@@ -51,3 +52,15 @@ class CreateMusicForm(forms.Form):
     album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username="toto").exclude(type_album='PL'))
     tag = forms.ModelChoiceField(queryset=Tag.objects.all())
     path = forms.FileField()
+
+    def clean(self):
+        possible_extension = ['.mp3','.ogg','.wav']
+        cleaned_data = super(CreateMusicForm,self).clean()
+        cleaned_name = cleaned_data.get('path').name
+        extension = os.path.splitext(cleaned_name)[1]
+
+        if extension not in possible_extension:
+            msg = "Veuillez renseigner un fichier audio"
+            self.add_error("path",msg)
+
+        return cleaned_data
