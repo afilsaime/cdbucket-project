@@ -1,11 +1,11 @@
+# coding: utf8
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import FormView
 from django.contrib.auth.models import User, Group
 from django.contrib import messages
-from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
 from workspace.models import *
 from workspace.forms import *
 import uuid
@@ -72,10 +72,11 @@ class ActivationView(TemplateView):
 
         return super(ActivationView,self).dispatch(request,*args,**kwargs)
 
-class CreateMusicView(FormView):
+class CreateMusicView(SuccessMessageMixin,FormView):
     template_name = "create_music.html"
     form_class = CreateMusicForm
     success_url = "/workspace/music/add"
+    success_message = 'Musique ajoutée'
 
     def get_form_kwargs(self):
         kwargs = super(CreateMusicView,self).get_form_kwargs()
@@ -102,10 +103,4 @@ class CreateMusicView(FormView):
         music.save()
         music.path = self.request.FILES['path']
         music.save()
-
         return super(CreateMusicView,self).form_valid(form)
-
-    def get_context_data(self,**kwargs):
-        context = super(FormView, self).get_context_data(**kwargs)
-        context['success'] = True
-        return context
