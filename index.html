@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>Cdbucket-project by afilsaime</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>Cdbucket-project</h1>
+        <h2>Projet de fin d&#39;année FIP1</h2>
+        <a href="https://github.com/afilsaime/cdbucket-project" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="cdbucket-project" class="anchor" href="#cdbucket-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>cdbucket-project</h1>
+
+<h2>
+<a id="petit-memo-des-commandes-" class="anchor" href="#petit-memo-des-commandes-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Petit Memo des commandes :</h2>
+
+<p>Pour chacune des commandes si dessous, 3 prefixes sont possible selon la configuration de votre machine.
+Exemple avec la commande manage.py :</p>
+
+<pre><code>manage.py
+</code></pre>
+
+<p>ou</p>
+
+<pre><code>python manage.py
+</code></pre>
+
+<p>ou encore</p>
+
+<pre><code>./manage.py
+</code></pre>
+
+<p>A vous de voir quelle commande utiliser.
+N'oubliez pas de vous placer dans le repertoire ou se trouve le fichier <strong>manage.py</strong></p>
+
+<h3>
+<a id="lancer-le-serveur-web-django" class="anchor" href="#lancer-le-serveur-web-django" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Lancer le serveur web Django:</h3>
+
+<pre><code>manage.py runserver
+</code></pre>
+
+<p>Notez que vous devez avoir au préalable <strong>lancé vos serveurs de base de données pour que le tout fonctionne correctement</strong>.
+Vous pouvez ensuite accéder a vos pages à l'addresse <a href="http://127.0.0.1:8000/">127.0.0.1:8000/</a> suivi des urls correspondantes dans le fichier <strong>urls.py</strong></p>
+
+<h4>
+<a id="conseil-pratique" class="anchor" href="#conseil-pratique" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Conseil pratique:</h4>
+
+<p>Lorsque vous réalisez des modifications de fichier, <strong>le serveur recompile automatiquement les fichiers modifiés</strong>. Pas besoin de le relancer, sauf dans le cas des
+modifications apportés au modèles comme expliqué ci dessous.</p>
+
+<h3>
+<a id="enregistrer-des-modifications-apportés-au-modèles" class="anchor" href="#enregistrer-des-modifications-apport%C3%A9s-au-mod%C3%A8les" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Enregistrer des modifications apportés au modèles:</h3>
+
+<pre><code>manage.py makemigrations
+</code></pre>
+
+<p>Cette commande parcours le fichier <strong>models.py</strong> et crée un fichier contenant les modifications a apporter lors de la prochaine migration.
+Avant de lancer cette commande, <strong>assurez vous d'avoir arrété le serveur Web Django (Ctrl+C dans la console du serveur web.)</strong></p>
+
+<h3>
+<a id="réaliser-une-migration" class="anchor" href="#r%C3%A9aliser-une-migration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Réaliser une migration:</h3>
+
+<p>Apres avoir enregistré des modifications du modele, il faut réaliser physiquement ces modifications sur la base de donnée.
+Pour se faire, utiliser la commande</p>
+
+<pre><code>manage.py migrate
+</code></pre>
+
+<h3>
+<a id="creer-un-super-utilisateur" class="anchor" href="#creer-un-super-utilisateur" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creer un super utilisateur:</h3>
+
+<p>Pour pouvoir utiliser le module d'administration de Django, il vous faudra créer un super-utilisateur. Pour se faire, utilisez la commande</p>
+
+<pre><code>manage.py createsuperuser
+</code></pre>
+
+<p>Renseignez ensuite les informations demandées par le prompt du terminal.</p>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/afilsaime/cdbucket-project/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/afilsaime/cdbucket-project/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/afilsaime/cdbucket-project"></a> is maintained by <a href="https://github.com/afilsaime">afilsaime</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
