@@ -2,7 +2,13 @@
 {% block title %}<h1>Ajouter une musique</h1>{% endblock %}
 {% block content %}
     {% if success %}
-        <h3 style="color:green;">musique ajoutée</h3>
+    <div class="alert alert-success" role="alert">
+        musique ajoutée
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
     {% endif %}
     <form method="post" action="" enctype="multipart/form-data">
         {% csrf_token %}

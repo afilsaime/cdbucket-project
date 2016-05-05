@@ -2,7 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import FormView
 from django.contrib.auth.models import User, Group
+from django.contrib import messages
+from django.http import HttpResponseRedirect, HttpResponse
 from django.core.mail import send_mail
+from django.core.urlresolvers import reverse
 from workspace.models import *
 from workspace.forms import *
 import uuid
@@ -69,7 +72,6 @@ class CreateMusicView(FormView):
     template_name = "create_music.html"
     form_class = CreateMusicForm
     success_url = "/workspace/music/add"
-    success = False
 
     def get_form_kwargs(self):
         kwargs = super(CreateMusicView,self).get_form_kwargs()
@@ -96,12 +98,10 @@ class CreateMusicView(FormView):
         music.save()
         music.path = self.request.FILES['path']
         music.save()
-        self.success = True
 
         return super(CreateMusicView,self).form_valid(form)
 
     def get_context_data(self,**kwargs):
-        context = super(CreateMusicView,self).get_context_data(**kwargs)
-        context['success'] = self.success
-
+        context = super(FormView, self).get_context_data(**kwargs)
+        context['success'] = True
         return context
