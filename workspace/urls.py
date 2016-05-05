@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
 from views import *
-
+#test de commentaire pour le commit
 urlpatterns = [
    url(r'^base', HelloWorld.as_view()),
    # url(r'^musiques', ListMusic.as_view(),name="listmusic"),
