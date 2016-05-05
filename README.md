@@ -37,4 +37,6 @@ Avant de lancer cette commande, **assurez vous d'avoir arrété le serveur Web D
 ###Réaliser une migration:
 Apres avoir enregistré des modifications du modele, il faut réaliser physiquement ces modifications sur la base de donnée.
 Pour se faire, utiliser la commande
-    manage.py migrate
+```
+manage.py migrate
+```
