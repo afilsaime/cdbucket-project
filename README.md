@@ -3,13 +3,11 @@
 ##Petit Memo des commandes :
 Pour chacune des commandes si dessous, 3 prefixes sont possible selon la configuration de votre machine.
 Exemple avec la commande manage.py :
-    manage.py
-
+`manage.py`
 ou
-    python manage.py
-
+`python manage.py`
 ou encore
-    ./manage.py
+`./manage.py`
 
 A vous de voir quelle commande utiliser.
 N'oubliez pas de vous placer dans le repertoire ou se trouve le fichier **manage.py**
