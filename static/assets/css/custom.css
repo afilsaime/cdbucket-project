@@ -1,0 +1,74 @@
+@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800&amp;subset=latin,latin-ext);
+@import url(https://fonts.googleapis.com/css?family=Lekton);
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700);
+@import url(https://fonts.googleapis.com/css?family=Libre+Baskerville:400,700);
+@import url(https://fonts.googleapis.com/css?family=Abel);
+@import url(https://fonts.googleapis.com/css?family=Karla:400,700);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,300,500,400italic,300italic,500italic,600,600italic,700,700italic);
+@import url(http://fonts.googleapis.com/css?family=Raleway+Dots);
+@import url(http://fonts.googleapis.com/css?family=Advent+Pro:400,200,700);
+@import "flaticon.css";
+
+.header{
+    float: right;
+}
+
+.header a{
+    color:white;
+    text-decoration:none;
+    font-family: 'Open Sans';
+    text-transform: uppercase;
+    letter-spacing:0.5rem;
+    font-weight: bold;
+    border-right:1px solid rgba(255, 255, 255, 0.39);
+    padding: 10px;
+    border-radius: 2px;
+    transition : background-color .5s, color .5s;
+}
+
+.header a:hover {
+    color:#333;
+    background-color: white;
+}
+
+.header a:last-of-type{
+    border-right: none;
+}
+
+.opacity::after{
+    content:"";
+    background: url(../img/events/background3.jpg);
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    opacity: 0.1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    z-index: -1;
+}
+
+.fieldWrapper{
+    margin: 20px 20px 20px 20px;
+    text-align: left;
+}
+
+.custom-form h3{
+    color:white;
+    font-family: 'Open Sans';
+    text-transform: uppercase;
+    letter-spacing:0.5rem;
+}
+
+.errorlist{
+    display: inline-block;
+}

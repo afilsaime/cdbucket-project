@@ -56,11 +56,13 @@ class CreateMusicForm(forms.Form):
     def clean(self):
         possible_extension = ['.mp3','.ogg','.wav']
         cleaned_data = super(CreateMusicForm,self).clean()
-        cleaned_name = cleaned_data.get('path').name
-        extension = os.path.splitext(cleaned_name)[1]
+        cleaned_path = cleaned_data.get('path')
+        if cleaned_path:
+            cleaned_name = cleaned_path.name
+            extension = os.path.splitext(cleaned_name)[1]
 
-        if extension not in possible_extension:
-            msg = "Veuillez renseigner un fichier audio"
-            self.add_error("path",msg)
+            if extension not in possible_extension:
+                msg = "Veuillez renseigner un fichier audio"
+                self.add_error("path",msg)
 
-        return cleaned_data
+                return cleaned_data

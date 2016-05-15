@@ -104,3 +104,8 @@ class CreateMusicView(SuccessMessageMixin,FormView):
         music.path = self.request.FILES['path']
         music.save()
         return super(CreateMusicView,self).form_valid(form)
+
+class AccessMusicView(DetailView):
+    context_object_name = "music"
+    model = Music
+    template_name = "single_music.html"
