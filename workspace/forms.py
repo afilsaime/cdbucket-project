@@ -3,6 +3,7 @@ from django import forms
 from django.contrib.auth.models import User
 from workspace.models import *
 import os
+from django.contrib.auth import authenticate, login
 
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=30)
@@ -66,3 +67,8 @@ class CreateMusicForm(forms.Form):
                 self.add_error("path",msg)
 
                 return cleaned_data
+
+
+class ConnexionForm(forms.Form):
+    username = forms.CharField(label="User")
+    password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)

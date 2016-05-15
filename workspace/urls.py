@@ -11,5 +11,7 @@ urlpatterns = [
    url(r'^home$',TemplateView.as_view(template_name="base.html"),name="home"),
    url(r'^comptes/activation/(?P<key>\w+)',ActivationView.as_view(), name="activation"),
    url(r'^music/add$', CreateMusicView.as_view(), name="ajout_musique"),
-   url(r'^music/listen/(?P<pk>\d+)$',AccessMusicView.as_view(),name="ecouter_musique")
+   url(r'^music/listen/(?P<pk>\d+)$',AccessMusicView.as_view(),name="ecouter_musique"),
+   url(r'^connexion/$', ConnexionView, name="connexion"),
+   url(r'^deconnexion/$', deconnexion, name='deconnexion'),
 ]
