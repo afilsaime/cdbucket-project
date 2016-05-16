@@ -114,7 +114,6 @@ class AccessMusicView(DetailView):
     model = Music
     template_name = "single_music.html"
 
-
 def ConnexionView(request):
     error = False
 
@@ -136,3 +135,48 @@ def ConnexionView(request):
 def deconnexion(request):
     logout(request)
     return redirect(reverse('connexion'))
+
+
+
+class monCompte(TemplateView):
+    template_name = "mon_compte.html"
+
+
+class NewEmail(FormView):
+    template_name = "albumsSingle4_email.html"
+    form_class = NewEmail
+    success_url = "/workspace/sign-up/thanks"
+
+    def form_valid(self,form):
+        #Sauvegarde de l'utilisateur
+        email = form.cleaned_data['email']
+
+        #CLE D'ENREGISTREMENT
+        uniq_key = uuid.uuid1().hex
+        Registration(user=new_user,key=uniq_key).save()
+
+        #ENVOI DE MAIL
+        sujet = "Nouvelle adresse Email"
+        titre = "<h1>Mis à jour Email</h1></br></br>"
+        message = "Votre nouvelle adresse email a été enregistré !:</br>"
+        send_mail(sujet,titre+message,"site@project.com",[email])
+
+        return super(RegistrationView,self).form_valid(form)
+
+
+class RegistrationView(FormView):
+    template_name = "registration.html"
+    form_class = NewPassword
+    success_url = "/workspace/sign-up/thanks"
+
+    def form_valid(self,form):
+        #Sauvegarde de l'utilisateur
+        password = form.cleaned_data['password']
+
+        #ENVOI DE MAIL
+        sujet = "Nouveau mot de passe"
+        titre = "<h1>Mis à jour mot de passe</h1></br></br>"
+        message = "Votre nouveau mot de passe a été enregistré !:</br>"
+        send_mail(sujet,titre+message,"site@project.com",[email])
+
+        return super(RegistrationView,self).form_valid(form)

@@ -102,14 +102,20 @@
 	<!-- =============== START TOP HEADER ================ -->
 	<div class="topHeader" >
 		<div class="logo-container-top">
-	        <a href="index-2.html">Cdbucket</a>
+	        <a href="{% url 'home' %}">Cdbucket</a>
 	    </div>
 		<div class="header">
-			<!-- si connecté>
-			<a href="#">Artistes</a>
-			<a href="#">Albums</a>-->
-			<a href="#"><i class="material-icons md-18" style="vertical-align:middle;">queue</i> Inscription</a>
-			<a href="#"><i class="material-icons md-18" style="vertical-align:middle;" >person</i> Connexion</a>
+
+      {% if user.is_authenticated %}
+      <a href="{% url 'mon_compte' %}"><i class="material-icons md-18" style="vertical-align:middle;" >person</i> Mon Compte</a>
+      <a href="{% url 'deconnexion' %}"><i></i> Deconnexion</a>
+      {% else %}
+      <a href="{% url 'sign-up' 'user' %}"><i class="material-icons md-18" style="vertical-align:middle;">queue</i> Inscription</a>
+      <a href="{% url 'connexion' %}"><i class="material-icons md-18" style="vertical-align:middle;" >person</i> Connexion</a>
+      {% endif %}
+
+
+
 		</div><!-- end header -->
 		<!-- Menu Fixed Container -->
 
@@ -149,6 +155,7 @@
 	<!-- =============== END BREADCRUMB ================ -->
     {% endblock %}
     {% block content %}
+    {% if user.is_authenticated %}
 	<!-- =============== START ALBUM COVER SECTION ================ -->
 	<section style="background-color:white;" class="padding albumsHome">
 		<div class="container">
@@ -156,7 +163,7 @@
 				<div class="col-sm-12">
 					<div class="sectionTitle paddingBottom">
 						<span class="heading-t3"></span>
-						<h2><a href="albums.html">Discography</a></h2>
+						<h2>Recommandation de musiques</h2>
 						<span class="heading-b3"></span>
 					</div><!-- end sectionTtile -->
 				</div><!-- end col-sm-12 -->
@@ -223,7 +230,7 @@
 					<div class="col-sm-12">
 						<div class="sectionTitle paddingBottom">
 							<span class="heading-t3"></span>
-							<h2><a href="albums.html">Events</a></h2>
+							<h2><a href="albums.html">Dérnières publications</a></h2>
 							<span class="heading-b3"></span>
 						</div><!-- end sectionTtile -->
 						<table>
@@ -559,108 +566,8 @@
 		</div>
 	</section>
 	<!-- =============== END GALLERY SECTION ================ -->
+{% else %}  {% endif %}
 
-	<!-- =============== START HOME-SHOP SECTION ================ -->
-	<section class="shopHomePage shopHomePadding">
-		<div class="shopSection">
-			<div class="container-fluid">
-			<div class="shopContent">
-				<div class="sectionTitle paddingBottom">
-					<span class="heading-t3"></span>
-					<h2><a href="shop.html">Shop Online</a></h2>
-					<span class="heading-b3"></span>
-				</div><!-- end sectionTtile -->
-				<div class="row">
-					<nav class="shop-products">
-                        <ul class="clearfix">
-                            <li class="col-sm-3">
-                                <figure>
-                                    <figcaption>
-                                        <img src="{% static "assets/img/content/shop1.jpg" %}" alt="">
-                                    </figcaption>
-                                    <div class="content">
-                                        <div class="shopHover">
-                                            <div class="price">
-                                                &pound; 15,99
-                                            </div>
-                                            <div  class="proTitle">
-                                                <a href="shopSingle.html">Original T. Brothers</a>
-                                            </div>
-                                            <div class="product">Hoodie Aqura</div>
-                                            <a href="shopSingle.html" class="icon-button shopIcon"><i class="fa fa-shopping-cart"></i><span></span></a>
-                                             <a href="shopSingle.html" class="icon-button shopIcon"><i class="fa fa-info"></i><span></span></a>
-                                        </div>
-                                    </div>
-                                </figure>
-                            </li>
-                            <li class="col-sm-3">
-                                <figure>
-                                    <figcaption>
-                                        <img src="{% static "assets/img/content/shop2.jpg" %}" alt="">
-                                    </figcaption>
-                                    <div class="content">
-                                        <div class="shopHover">
-                                            <div class="price">
-                                                &pound; 15,99
-                                            </div>
-                                            <div  class="proTitle">
-                                                <a href="shopSingle.html">Original T. Brothers</a>
-                                            </div>
-                                            <div class="product">Hoodie Aqura</div>
-                                            <a href="shopSingle.html" class="icon-button shopIcon"><i class="fa fa-shopping-cart"></i><span></span></a>
-                                             <a href="shopSingle.html" class="icon-button shopIcon"><i class="fa fa-info"></i><span></span></a>
-                                        </div>
-                                    </div>
-                                </figure>
-                            </li>
-                            <li class="col-sm-3">
-                                <figure>
-                                    <figcaption>
-                                        <img src="{% static "assets/img/content/shop3.jpg" %}" alt="">
-                                    </figcaption>
-                                    <div class="content">
-                                        <div class="shopHover">
-                                            <div class="price">
-                                                &pound; 15,99
-                                            </div>
-                                            <div  class="proTitle">
-                                                <a href="shopSingle.html">Original T. Brothers</a>
-                                            </div>
-                                            <div class="product">Hoodie Aqura</div>
-                                            <a href="shopSingle.html" class="icon-button shopIcon"><i class="fa fa-shopping-cart"></i><span></span></a>
-                                             <a href="shopSingle.html" class="icon-button shopIcon"><i class="fa fa-info"></i><span></span></a>
-                                        </div>
-                                    </div>
-                                </figure>
-                            </li>
-                            <li class="col-sm-3">
-                                <figure>
-                                    <figcaption>
-                                        <img src="{% static "assets/img/content/shop4.jpg" %}" alt="">
-                                    </figcaption>
-                                    <div class="content">
-                                        <div class="shopHover">
-                                            <div class="price">
-                                                &pound; 15,99
-                                            </div>
-                                            <div  class="proTitle">
-                                                <a href="shopSingle.html">Original T. Brothers</a>
-                                            </div>
-                                            <div class="product">Hoodie Aqura</div>
-                                            <a href="shopSingle.html" class="icon-button shopIcon"><i class="fa fa-shopping-cart"></i><span></span></a>
-                                             <a href="shopSingle.html" class="icon-button shopIcon"><i class="fa fa-info"></i><span></span></a>
-                                        </div>
-                                    </div>
-                                </figure>
-                            </li>
-                        </ul>
-                    </nav><!-- end shop-products -->
-				</div><!-- end row -->
-			</div><!-- end shopContent -->
-		</div>
-		</div>
-	</section>
-	<!-- =============== END HOME-SHOP SECTION ================ -->
     {% endblock %}
 
     {% block footer %}
@@ -723,6 +630,7 @@
 	<!-- ================================================== -->
     {% endblock %}
     {% block extrajavascript %}
+
     {% endblock %}
 </body>
 </html>

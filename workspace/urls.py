@@ -13,5 +13,6 @@ urlpatterns = [
    url(r'^music/add$', CreateMusicView.as_view(), name="ajout_musique"),
    url(r'^music/listen/(?P<pk>\d+)$',AccessMusicView.as_view(),name="ecouter_musique"),
    url(r'^connexion/$', ConnexionView, name="connexion"),
-   url(r'^deconnexion/$', deconnexion, name='deconnexion'),
+   url(r'^deconnexion/$', deconnexion, name="deconnexion"),
+   url(r'^mon_compte/$', monCompte.as_view(), name="mon_compte"),
 ]

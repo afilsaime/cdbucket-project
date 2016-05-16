@@ -72,3 +72,44 @@ class CreateMusicForm(forms.Form):
 class ConnexionForm(forms.Form):
     username = forms.CharField(label="User")
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
+
+
+
+class NewEmail(forms.Form):
+    new_email = forms.EmailField()
+
+    def clean(self):
+        cleaned_data = super(RegistrationForm,self).clean()
+        email = cleaned_data.get('email')
+
+        if email:
+            mailquery = User.objects.filter(email=email)
+            if len(mailquery) != 0:
+                msg = "Un utilisateur avec cet email a déja été enregistré"
+                self.add_error("email",msg)
+
+        return cleaned_data
+
+
+
+
+class NewPassword(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput)
+    password2 = forms.CharField(widget=forms.PasswordInput)
+
+    def clean(self):
+        cleaned_data = super(RegistrationForm,self).clean()
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+
+        if password and password2:
+            if password != password2:
+                msg = "Les deux mots de passe sont differents"
+                self.add_error("password",msg)
+
+            if len(password) < 8:
+                msg = "La taille du mot de passe doit être d'au moins 8 caracteres"
+                self.add_error("password",msg)
+
+
+        return cleaned_data
