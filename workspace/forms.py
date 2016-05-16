@@ -40,6 +40,12 @@ class RegistrationForm(forms.Form):
 
         return cleaned_data
 
+
+class MySelect(forms.Select):
+    def render_option(self, selected_choices, option_value, option_label):
+        # look at the original for something to start with
+        return '<option data-class="icon-folder-plus" value="{0}">{1}</option>'.format(option_value,option_label);
+
 class CreateMusicForm(forms.Form):
 
     def __init__(self,*args,**kwargs):
@@ -49,8 +55,8 @@ class CreateMusicForm(forms.Form):
     titre = forms.CharField()
     duree = forms.DurationField()
     #album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username=self.user.username).exclude(type_album='PL'))
-    album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username="toto").exclude(type_album='PL'))
-    tag = forms.ModelChoiceField(queryset=Tag.objects.all())
+    album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username="toto").exclude(type_album='PL'),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
+    tag = forms.ModelChoiceField(queryset=Tag.objects.all(),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
     path = forms.FileField()
 
     def clean(self):
