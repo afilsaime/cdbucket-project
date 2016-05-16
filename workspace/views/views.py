@@ -141,9 +141,11 @@ def deconnexion(request):
 class monCompte(TemplateView):
     template_name = "mon_compte.html"
 
+class SupprCompte(TemplateView):
+    template_name = "suppr_compte.html"
 
 class NewEmail(FormView):
-    template_name = "albumsSingle4_email.html"
+    template_name = "new_email.html"
     form_class = NewEmail
     success_url = "/workspace/sign-up/thanks"
 
@@ -163,9 +165,8 @@ class NewEmail(FormView):
 
         return super(RegistrationView,self).form_valid(form)
 
-
-class RegistrationView(FormView):
-    template_name = "registration.html"
+class NewMDP(FormView):
+    template_name = "new_mdp.html"
     form_class = NewPassword
     success_url = "/workspace/sign-up/thanks"
 
