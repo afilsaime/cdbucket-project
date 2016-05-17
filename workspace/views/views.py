@@ -165,6 +165,8 @@ class NewEmail(FormView):
 
         return super(RegistrationView,self).form_valid(form)
 
+# self.request.user
+
 class NewMDP(FormView):
     template_name = "new_mdp.html"
     form_class = NewPassword
