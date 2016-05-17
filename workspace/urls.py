@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 from views import *
 
 urlpatterns = [
@@ -15,7 +16,7 @@ urlpatterns = [
    url(r'^connexion/$', ConnexionView, name="connexion"),
    url(r'^deconnexion/$', deconnexion, name="deconnexion"),
    url(r'^mon_compte/$', monCompte.as_view(), name="mon_compte"),
-   url(r'^new_mdp/$', NewMDP.as_view(), name="new_mdp"),
-   url(r'^new_email/$', NewEmail.as_view(), name="new_email"),
-   url(r'^suppr_compte/$', SupprCompte.as_view(), name="suppr_compte"),
+   url(r'^new_mdp/$', login_required(NewMDP.as_view()), name="new_mdp"),
+   url(r'^new_email/$', login_required(NewEmail.as_view()), name="new_email"),
+   url(r'^suppr_compte/$', login_required(SupprCompte.as_view()), name="suppr_compte"),
 ]

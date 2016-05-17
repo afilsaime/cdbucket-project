@@ -41,6 +41,12 @@ class RegistrationForm(forms.Form):
 
         return cleaned_data
 
+
+class MySelect(forms.Select):
+    def render_option(self, selected_choices, option_value, option_label):
+        # look at the original for something to start with
+        return '<option data-class="icon-folder-plus" value="{0}">{1}</option>'.format(option_value,option_label);
+
 class CreateMusicForm(forms.Form):
 
     def __init__(self,*args,**kwargs):
@@ -50,8 +56,8 @@ class CreateMusicForm(forms.Form):
     titre = forms.CharField()
     duree = forms.DurationField()
     #album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username=self.user.username).exclude(type_album='PL'))
-    album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username="toto").exclude(type_album='PL'))
-    tag = forms.ModelChoiceField(queryset=Tag.objects.all())
+    album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username="toto").exclude(type_album='PL'),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
+    tag = forms.ModelChoiceField(queryset=Tag.objects.all(),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
     path = forms.FileField()
 
     def clean(self):
@@ -79,7 +85,7 @@ class NewEmail(forms.Form):
     new_email = forms.EmailField()
 
     def clean(self):
-        cleaned_data = super(RegistrationForm,self).clean()
+        cleaned_data = super(NewEmail,self).clean()
         email = cleaned_data.get('email')
 
         if email:
@@ -98,7 +104,7 @@ class NewPassword(forms.Form):
     password2 = forms.CharField(widget=forms.PasswordInput)
 
     def clean(self):
-        cleaned_data = super(RegistrationForm,self).clean()
+        cleaned_data = super(NewPassword,self).clean()
         password = cleaned_data.get('password')
         password2 = cleaned_data.get('password2')
 

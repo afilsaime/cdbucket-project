@@ -163,23 +163,28 @@ class NewEmail(FormView):
         message = "Votre nouvelle adresse email a été enregistré !:</br>"
         send_mail(sujet,titre+message,"site@project.com",[email])
 
-        return super(RegistrationView,self).form_valid(form)
+        return super(NewEmail,self).form_valid(form)
 
-# self.request.user
 
+#deconnexion intempestive au changement de MDP !
 class NewMDP(FormView):
     template_name = "new_mdp.html"
     form_class = NewPassword
-    success_url = "/workspace/sign-up/thanks"
+    success_url = "/workspace/home"
 
     def form_valid(self,form):
         #Sauvegarde de l'utilisateur
+        user = self.request.user
         password = form.cleaned_data['password']
+        user.set_password(password)
+        user.save()
+
+
 
         #ENVOI DE MAIL
-        sujet = "Nouveau mot de passe"
-        titre = "<h1>Mis à jour mot de passe</h1></br></br>"
-        message = "Votre nouveau mot de passe a été enregistré !:</br>"
-        send_mail(sujet,titre+message,"site@project.com",[email])
+        #sujet = "Nouveau mot de passe"
+    #    titre = "<h1>Mis à jour mot de passe</h1></br></br>"
+    #    message = "Votre nouveau mot de passe a été enregistré !:</br>"
+    #    send_mail(sujet,titre+message,"site@project.com",[email])
 
-        return super(RegistrationView,self).form_valid(form)
+        return super(NewMDP,self).form_valid(form)
