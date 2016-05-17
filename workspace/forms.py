@@ -88,8 +88,8 @@ class NewEmail(forms.Form):
         cleaned_data = super(NewEmail,self).clean()
 
 
-        new_email = forms.ModelChoiceField(queryset=utilisateur.objects.filter(artiste__username="toto").exclude(type_album='PL'),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
-        Entry.objects.filter(pub_date__year=2007).update(headline='Everything is the same')
+        #new_email = forms.ModelChoiceField(queryset=utilisateur.objects.filter(artiste__username="toto").exclude(type_album='PL'),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
+        #Entry.objects.filter(pub_date__year=2007).update(headline='Everything is the same')
 
 
         email = cleaned_data.get('email')

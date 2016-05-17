@@ -152,7 +152,7 @@ class NewEmail(FormView):
     def form_valid(self,form):
         #Sauvegarde de l'utilisateur
         user = self.request.user
-        email = form.cleaned_data['password']
+        email = form.cleaned_data['new_email']
         #user.
         user.save()
         #ENVOI DE MAIL
