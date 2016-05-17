@@ -62,7 +62,7 @@ div.cs-skin-slide::before {
 .cs-skin-slide.cs-active > span::after {
 	font-family: 'icomoon';
 	content: '\e9bd';
-	color: #eb7e7f;
+	color: #ff9912;
 	position: absolute;
 	top:40%;
 	-webkit-backface-visibility: hidden;
@@ -139,7 +139,7 @@ div.cs-skin-slide::before {
 .cs-skin-slide .cs-options li span:hover,
 .cs-skin-slide .cs-options li.cs-focus span,
 .cs-skin-slide .cs-options li.cs-selected span {
-	color: #eb7e7f;
+	color: #ff9912;
 	background: transparent;
 }
 

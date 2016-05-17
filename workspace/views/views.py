@@ -5,6 +5,7 @@ from django.views.generic.edit import FormView
 from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.mail import send_mail
 from workspace.models import *
 from workspace.forms import *
@@ -76,7 +77,8 @@ class ActivationView(TemplateView):
 
         return super(ActivationView,self).dispatch(request,*args,**kwargs)
 
-class CreateMusicView(SuccessMessageMixin,FormView):
+class CreateMusicView(PermissionRequiredMixin,SuccessMessageMixin,FormView):
+    permission_required = 'workspace.add_music'
     template_name = "create_music.html"
     form_class = CreateMusicForm
     success_url = "/workspace/music/add"

@@ -58,7 +58,7 @@ class CreateMusicForm(forms.Form):
     #album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username=self.user.username).exclude(type_album='PL'))
     album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username="toto").exclude(type_album='PL'),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
     tag = forms.ModelChoiceField(queryset=Tag.objects.all(),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
-    path = forms.FileField()
+    path = forms.FileField(widget=forms.FileInput(attrs={'class':'inputfile inputfile-4'}))
 
     def clean(self):
         possible_extension = ['.mp3','.ogg','.wav']

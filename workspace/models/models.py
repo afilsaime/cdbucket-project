@@ -38,7 +38,7 @@ class Music(models.Model):
     path = models.FileField(upload_to=renomage,max_length=100)
 
     def __str__(self):
-        return "{0} de {1} duree: {2}".format(self.titre,self.auteur, self.duree)
+        return "{0} de {1} duree: {2}".format(self.titre,self.auteur.username, self.duree)
 
 class Album(models.Model):
     ALBUM = 'AL'
