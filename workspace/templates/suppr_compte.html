@@ -130,12 +130,12 @@
 				<ul>
 					<!-- Menu Fixed Item -->
 					<li>
-						<a href="index-2.html">
+						<a href="{% url 'home' %}">
 							Recommandation
 						</a>
 					</li>
 					<li>
-						<a href="mon_compte.html">
+						<a href="{% url 'mon_compte' %}">
 							Ma Playlist
 						</a>
 					</li>
@@ -147,19 +147,19 @@
 						<ul class="sub-menu">
 							<!-- Menu Fixed Sub Menu Item -->
 							<li>
-								<a href="new_email.html">
+								<a href="{% url 'new_email' %}">
 									Modifier son Adresse email
 								</a>
 							</li>
 							<!-- Menu Fixed Sub Menu Item -->
 							<li>
-								<a href="new_mdp.html">
+								<a href="{% url 'new_mdp' %}">
 									Modifier son mot de passe
 								</a>
 							</li>
 							<!-- Menu Fixed Sub Menu Item -->
 							<li>
-								<a href="suppr_compte.html">
+								<a href="{% url 'suppr_compte' %}">
 									Supprimer mon compte
 								</a>
 							</li>
@@ -167,7 +167,7 @@
 					</li>
 
 					<!-- Menu Fixed Item -->
-					<li>
+						<li>
 
 						</a>
 						<ul class="sub-menu">
@@ -252,12 +252,12 @@
 	<div class="section-block  bkg-grey-ultralight pagination-2">
 		<div class="row full-width ">
 			<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="mon_compte.html" class="pagination-previous">
+				<a href="{% url 'mon_compte' %}" class="pagination-previous">
 					<span>Gérer mes musiques</span>
 				</a>
 			</div>
-			<div class="col-sm-6 rightHover" style="background-image: url('assets/img/albums/albFooter.jpg');">
-				<a href="base.html" class="pagination-next ">
+			<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
+				<a href="{% url 'home' %}" class="pagination-next ">
 					<span>Accueil</span>
 				</a>
 			</div>
