@@ -8,7 +8,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from workspace.models import *
 from workspace.forms import *
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 import uuid
+
 
 
 # Create your views here.
@@ -109,3 +113,71 @@ class AccessMusicView(DetailView):
     context_object_name = "music"
     model = Music
     template_name = "single_music.html"
+
+def ConnexionView(request):
+    error = False
+
+    if request.method == "POST":
+        form = ConnexionForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            password = form.cleaned_data["password"]
+            user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
+            if user:  # Si l'objet renvoyé n'est pas None
+                login(request, user)  # nous connectons l'utilisateur
+            else: # sinon une erreur sera affichée
+                error = True
+    else:
+        form = ConnexionForm()
+
+    return render(request, 'connexion.html', locals())
+
+def deconnexion(request):
+    logout(request)
+    return redirect(reverse('connexion'))
+
+
+
+class monCompte(TemplateView):
+    template_name = "mon_compte.html"
+
+class SupprCompte(TemplateView):
+    template_name = "suppr_compte.html"
+
+class NewEmail(FormView):
+    template_name = "new_email.html"
+    form_class = NewEmail
+    success_url = "/workspace/sign-up/thanks"
+
+    def form_valid(self,form):
+        #Sauvegarde de l'utilisateur
+        email = form.cleaned_data['email']
+
+        #CLE D'ENREGISTREMENT
+        uniq_key = uuid.uuid1().hex
+        Registration(user=new_user,key=uniq_key).save()
+
+        #ENVOI DE MAIL
+        sujet = "Nouvelle adresse Email"
+        titre = "<h1>Mis à jour Email</h1></br></br>"
+        message = "Votre nouvelle adresse email a été enregistré !:</br>"
+        send_mail(sujet,titre+message,"site@project.com",[email])
+
+        return super(RegistrationView,self).form_valid(form)
+
+class NewMDP(FormView):
+    template_name = "new_mdp.html"
+    form_class = NewPassword
+    success_url = "/workspace/sign-up/thanks"
+
+    def form_valid(self,form):
+        #Sauvegarde de l'utilisateur
+        password = form.cleaned_data['password']
+
+        #ENVOI DE MAIL
+        sujet = "Nouveau mot de passe"
+        titre = "<h1>Mis à jour mot de passe</h1></br></br>"
+        message = "Votre nouveau mot de passe a été enregistré !:</br>"
+        send_mail(sujet,titre+message,"site@project.com",[email])
+
+        return super(RegistrationView,self).form_valid(form)
