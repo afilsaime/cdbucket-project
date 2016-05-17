@@ -1,3 +1,4 @@
+# coding: utf8
 from __future__ import unicode_literals
 
 from django.db import models
@@ -29,16 +30,29 @@ def renomage(instance,name):
     return os.path.join(username,album,date_str,name)
 
 class Music(models.Model):
-
     titre = models.CharField(max_length=100)
     duree = models.DurationField()
     album = models.ForeignKey('Album')
     tag = models.ForeignKey('Tag')
     auteur = models.ForeignKey(User)
+    active = models.BooleanField(default=True)
     path = models.FileField(upload_to=renomage,max_length=100)
 
     def __str__(self):
         return "{0} de {1} duree: {2}".format(self.titre,self.auteur.username, self.duree)
+
+class Signalement(models.Model):
+    artiste = models.ForeignKey(User)
+    music = models.ForeignKey(Music)
+    traite = models.BooleanField(default = False)
+    creation = models.DateTimeField(auto_now_add = True)
+
+    def __str__(self):
+        if self.traite:
+            traitement = "oui"
+        else:
+            traitement = "non"
+        return "titre '{0}' signalé par {1}, traité: {2}".format(self.music, self.artiste, traitement)
 
 class Album(models.Model):
     ALBUM = 'AL'
