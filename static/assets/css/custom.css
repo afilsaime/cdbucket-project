@@ -117,7 +117,10 @@ input[type="submit"]:hover{
     transition: box-shadow 0.3s ease-out;
 }
 
-.inputfile-4:hover + label figure{
+.inputfile-4:hover + label figure,
+.inputfile-4:focus + label figure,
+.inputfile-4:active + label figure,
+.inputfile-4:visited + label figure{
     background-color: #282b30;
     box-shadow: 0 0 0 3px #ff9912;
 }
