@@ -162,16 +162,36 @@ class NewEmail(FormView):
     def form_valid(self,form):
         #Sauvegarde de l'utilisateur
         user = self.request.user
-        email = form.cleaned_data['new_email']
-        #user.
+        new_email = form.cleaned_data['new_email']
         user.save()
+
+        uniq_key = uuid.uuid1().hex
+        Registration(user=user,key=uniq_key,email=new_email).save()
+
         #ENVOI DE MAIL
-    #    sujet = "Nouvelle adresse Email"
-    #    titre = "<h1>Mis à jour Email</h1></br></br>"
-    #    message = "Votre nouvelle adresse email a été enregistré !:</br>"
-    #    send_mail(sujet,titre+message,"site@project.com",[email])
+        sujet = "Mise à jours adresse email"
+        titre = "<h1>Validation de votre adresse mail</h1></br></br>"
+        message = "Veuillez acceder a ce lien pour activer votre nouvelle adresse email:</br>"
+        lien = "127.0.0.1:8000/workspace/email_activation/{0}".format(uniq_key)
+        send_mail(sujet,titre+message+lien,"site@project.com",[new_email])
 
         return super(NewEmail,self).form_valid(form)
+
+
+
+class Email_Activation(FormView):
+    template_name = "mon_compte.html"
+
+    def dispatch(self,request,*args,**kwargs):
+        key = kwargs['key']
+        if key:
+            regobject = get_object_or_404(Registration,key=key)
+            regobject.user.email=regobject.email
+            regobject.user.save()
+            regobject.delete()
+
+        return redirect(reverse("mon_compte"))
+
 
 
 #deconnexion intempestive au changement de MDP !
@@ -200,7 +220,7 @@ class NewMDP(FormView):
 
 class SupprCompte(FormView):
     template_name = "suppr_compte.html"
-    #form_class = 
+    #form_class =
     success_url = "/workspace/home"
 
 
@@ -218,6 +238,7 @@ class SupprCompte(FormView):
     #    send_mail(sujet,titre+message,"site@project.com",[email])
 
         return super(SupprCompte,self).form_valid(form)
+
 
 
 

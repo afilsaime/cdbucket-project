@@ -1,6 +1,5 @@
 # coding: utf8
 from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import User
 from datetime import timedelta
@@ -10,6 +9,7 @@ import os
 class Registration(models.Model):
     user = models.ForeignKey(User)
     key = models.CharField(max_length=100)
+    email = models.EmailField(max_length=100, null=True)
 
     def __str__(self):
         return "{0}:{1}".format(self.user.username,self.key)
