@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.http import HttpResponseForbidden
 from django.core.mail import send_mail
 from workspace.models import *
 from workspace.forms import *
@@ -78,11 +79,14 @@ class ActivationView(TemplateView):
         return super(ActivationView,self).dispatch(request,*args,**kwargs)
 
 class CreateMusicView(PermissionRequiredMixin,SuccessMessageMixin,FormView):
-    permission_required = 'workspace.add_music'
     template_name = "create_music.html"
     form_class = CreateMusicForm
     success_url = "/workspace/music/add"
+    permission_required = 'workspace.add_music'
     success_message = 'Musique ajoutée'
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden()
 
     def get_form_kwargs(self):
         kwargs = super(CreateMusicView,self).get_form_kwargs()
