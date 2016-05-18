@@ -50,13 +50,17 @@ class MySelect(forms.Select):
 class CreateMusicForm(forms.Form):
 
     def __init__(self,*args,**kwargs):
-        self.user = kwargs.pop('user',None)
+        self.user = kwargs.pop('user')
         super(CreateMusicForm,self).__init__(*args,**kwargs)
+        self.fields['album'] = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username=self.user.username).exclude(type_album='PL'),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
+        print(self.user)
+
+
 
     titre = forms.CharField()
     duree = forms.DurationField()
     #album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username=self.user.username).exclude(type_album='PL'))
-    album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username="toto").exclude(type_album='PL'),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
+    #album = forms.ModelChoiceField(queryset=Album.objects.filter(artiste__username=user.username).exclude(type_album='PL'),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
     tag = forms.ModelChoiceField(queryset=Tag.objects.all(),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
     path = forms.FileField(widget=forms.FileInput(attrs={'class':'inputfile inputfile-4'}))
 
