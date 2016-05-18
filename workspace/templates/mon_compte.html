@@ -94,8 +94,8 @@
 			</div><!-- .jp-type-playlist -->
 	</div><!-- .jp-container_N -->
 	<!-- =============== END PLAYER ================ -->
-	{% endblock %}
-	{% block headerNav %}
+		{% endblock %}
+		{% block headerNav %}
 	<!-- =============== START TOP HEADER ================ -->
 	<div class="topHeader" >
 		<div class="header">
@@ -135,7 +135,7 @@
 						</a>
 					</li>
 					<li>
-						<a href="{% url 'mon_compte' %}">
+						<a href="{% url 'my_playlist' %}">
 							Ma Playlist
 						</a>
 					</li>
@@ -164,6 +164,11 @@
 								</a>
 							</li>
 						</ul>
+						<li>
+							<a href="{% url 'contact' %}">
+								Contact
+							</a>
+						</li>
 					</li>
 					<!-- Menu Fixed Item -->
 						<li>
@@ -209,18 +214,8 @@
 	</div><!-- end topHeader -->
 	<!-- =============== END TOP HEADER ================ -->
 	{% endblock %}
-
-
-
-
-
-
-
-
- 	{% if user.Group == Artistes %}
+ 	{% if user.Group != Artistes %}
 	{% block title %}
-
-
 	<!-- =============== START BREADCRUMB ================ -->
 	<section class="no-mb">
 		<div class="row">
@@ -234,7 +229,6 @@
 		</div>
 	</section>
 	<!-- =============== END BREADCRUMB ================ -->
-
   {% endblock %}
 	{% block content %}
 	<!-- =============== START ALBUM SINGLE ================ -->
@@ -250,12 +244,14 @@
 				<div class="col-sm-3 col-sm-offset-1">
 					<div class="sidebarAlbum">
 						<div class="widget">
+
 							<h3>Mes Informations d'utilisateur </h3>
 							<ul>
 								<li>Date de création:<span> {{ user.date_joined }} </span></li>
 								<li>Nombre de playlist :<span></span></li>
 								<li>Nombre d'album :<span></span></li>
 								<li>Durée total audio :<span> </span></li>
+							</ul>
 							</ul>
 						</div><!-- end widget -->
 					</div><!-- end sidebarAlbum -->
@@ -333,11 +329,22 @@
 					<div class="col-sm-3 col-sm-offset-1">
 						<div class="sidebarAlbum">
 							<div class="widget">
-								<h3>Mes Informations d'utilisateur </h3>
+								<h3>MES INFORMATIONS D'ARTISTE </h3>
+
+
+								<h3>MES NDICATEURS </h3>
 								<ul>
-									<li>Date de création:<span> {{ user.date_joined }} </span></li>
-									<li>Nombre de playlist :<span></span></li>
-									<li>Nombre d'album :<span></span></li>
+									<li>Date de création du compte :<span> {{ user.date_joined }} </span></li>
+
+									<li>Votre TOP 3 des musiques les plus écoutées : <span></span></li>
+
+									<li>Votre TOP 3 des musiques les plus téléchargées : <span></span></li>
+
+
+									<li>Nombre de playlist présentes sur le site :<span></span></li>
+									<li>Nombre d'écoute par musique :<span></span></li>
+									<li>Nombre d'écoute TOTAL :<span></span></li>
+									<li>Nombre de téléchargement :<span></span></li>
 									<li>Durée total audio :<span> </span></li>
 								</ul>
 							</div><!-- end widget -->

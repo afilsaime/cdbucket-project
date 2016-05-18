@@ -237,11 +237,20 @@ class SupprCompte(FormView):
     #    message = "Votre nouveau mot de passe a été enregistré !:</br>"
     #    send_mail(sujet,titre+message,"site@project.com",[email])
 
-        return super(SupprCompte,self).form_valid(form)
+        return redirect(reverse("home"))
+        #return super(h).form_valid(form)
 
 
 
 
 
+class MyPlaylist(TemplateView):
+    template_name = "my_playlist.html"
 
-# -> inactif renvoi faux
+
+class Search(TemplateView):
+    template_name = "search.html"
+
+
+class Contact(TemplateView):
+    template_name = "contact.html"

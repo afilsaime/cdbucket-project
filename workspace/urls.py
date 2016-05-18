@@ -20,4 +20,7 @@ urlpatterns = [
    url(r'^new_email/$', login_required(NewEmail.as_view()), name="new_email"),
    url(r'^suppr_compte/$', login_required(SupprCompte.as_view()), name="suppr_compte"),
    url(r'^email_activation/(?P<key>\w+)',Email_Activation.as_view(), name="email_activation"),
+   url(r'^my_playlist/$', login_required(MyPlaylist.as_view()), name="my_playlist"),
+   url(r'^search/$', Search.as_view(), name="search"),
+   url(r'^contact/$', Contact.as_view(), name="contact"),
 ]

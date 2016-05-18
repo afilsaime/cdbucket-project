@@ -37,7 +37,7 @@
 							<div class="jp-controls">
 								<button class="jp-previous" tabindex="0"><i class="fa fa-step-backward"></i></button>
 								<button class="jp-play" tabindex="0"><i class="fa fa-play"></i></button>
-								<!-- <button class="jp-stop" tabindex="0"><i class="flaticon-geometry60"></i></button> -->
+								<button class="jp-stop" tabindex="0"><i class="flaticon-geometry60"></i></button>
 								<button class="jp-next" tabindex="0"><i class="fa fa-step-forward"></i>
 								</button>
 									<button id="playlist-toggle" class="jplayerButton">
@@ -164,6 +164,11 @@
 								</a>
 							</li>
 						</ul>
+						<li>
+							<a href="{% url 'contact' %}">
+								Contact
+							</a>
+						</li>
 					</li>
 					<!-- Menu Fixed Item -->
 						<li>
@@ -216,7 +221,7 @@
 			<div class="col-sm-12">
 				<div class="before-FullscreenSlider"></div>
 				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
-					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single4.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
+					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single2.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
 					</div>
 				</div>
 			</div>
@@ -231,6 +236,10 @@
 			<div class="sectionTitle paddingBottom">
 				<span class="heading-t3"></span>
 				<h2><a>Votre Playlist</a></h2><br>
+
+<!-- idée : affichage en fonction du nombre de playlist presente pour ce user dans la BDD
+Si 3 playlist afficher les 3 choix pour qu'il entre dedans sinon afficher directement la playlist en liste -->
+
 				<h4>Bienvenu à vous {{ album.titre }} !</h4>
 				<span class="heading-b3"></span>
 			</div><!-- end sectionTtile -->
@@ -367,6 +376,8 @@
 								<li>NB musique:<span>23 </span></li>
 								<li>Genre musical:<span>aqura sound </span></li>
 								<li>Durée album:<span>03h35 </span></li>
+								<li><a>Modifier cette playlist</a></li>
+								<li><a>Supprimer cette playlist</a></li>
 							</ul>
 						</div><!-- end widget -->
 						<div class="widget">
