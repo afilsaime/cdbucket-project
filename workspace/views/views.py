@@ -130,13 +130,19 @@ def ConnexionView(request):
             password = form.cleaned_data["password"]
             user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
             if user:  # Si l'objet renvoyé n'est pas None
-                login(request, user)  # nous connectons l'utilisateur
+                login(request, user)
+                return redirect(reverse("home"))
+                 # nous connectons l'utilisateur
             else: # sinon une erreur sera affichée
                 error = True
     else:
         form = ConnexionForm()
 
     return render(request, 'connexion.html', locals())
+
+
+
+
 
 def deconnexion(request):
     logout(request)
@@ -147,8 +153,6 @@ def deconnexion(request):
 class monCompte(TemplateView):
     template_name = "mon_compte.html"
 
-class SupprCompte(TemplateView):
-    template_name = "suppr_compte.html"
 
 class NewEmail(FormView):
     template_name = "new_email.html"
@@ -192,3 +196,31 @@ class NewMDP(FormView):
     #    send_mail(sujet,titre+message,"site@project.com",[email])
 
         return super(NewMDP,self).form_valid(form)
+
+
+class SupprCompte(FormView):
+    template_name = "suppr_compte.html"
+    #form_class = 
+    success_url = "/workspace/home"
+
+
+    def form_valid(self,form):
+        #Sauvegarde de l'utilisateur
+        user = self.request.user
+        user.is_active = False
+        user.save()
+
+
+        #ENVOI DE MAIL
+        #sujet = "Nouveau mot de passe"
+    #    titre = "<h1>Mis à jour mot de passe</h1></br></br>"
+    #    message = "Votre nouveau mot de passe a été enregistré !:</br>"
+    #    send_mail(sujet,titre+message,"site@project.com",[email])
+
+        return super(SupprCompte,self).form_valid(form)
+
+
+
+
+
+# -> inactif renvoi faux

@@ -83,21 +83,14 @@ class ConnexionForm(forms.Form):
     username = forms.CharField(label="User")
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
 
-
-
 class NewEmail(forms.Form):
     new_email = forms.EmailField()
 
     def clean(self):
         cleaned_data = super(NewEmail,self).clean()
-
-
         #new_email = forms.ModelChoiceField(queryset=utilisateur.objects.filter(artiste__username="toto").exclude(type_album='PL'),widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
         #Entry.objects.filter(pub_date__year=2007).update(headline='Everything is the same')
-
-
         email = cleaned_data.get('email')
-
         if email:
             mailquery = User.objects.filter(email=email)
             if len(mailquery) != 0:
@@ -129,3 +122,10 @@ class NewPassword(forms.Form):
 
 
         return cleaned_data
+
+
+#class SupprCompteForm(forms.Form):
+    #id =
+
+#    is_active =
+# has_perm(perm, obj=None)

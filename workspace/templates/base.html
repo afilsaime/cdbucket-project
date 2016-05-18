@@ -107,6 +107,10 @@
 	    </div>
 		<div class="header">
 
+
+
+
+      <!-- je veux ajouter une seconde condition dans le IF pour verifier que le user est toujours actif ,voir variable is_active request.user.is_active-->
       {% if user.is_authenticated %}
       <a href="{% url 'mon_compte' %}"><i class="material-icons md-18" style="vertical-align:middle;" >person</i> Mon Compte</a>
       <a href="{% url 'deconnexion' %}"><i class="material-icons md-18" style="vertical-align:middle;">exit_to_app</i> Deconnexion</a>
