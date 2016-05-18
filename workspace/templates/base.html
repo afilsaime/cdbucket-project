@@ -14,7 +14,7 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
         <link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-select.css" %}"/>
-		<link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-skin-slide.css" %}"/>    
+		<link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-skin-slide.css" %}"/>
     </head>
 {% endblock %}
 
@@ -107,6 +107,10 @@
 	    </div>
 		<div class="header">
 
+
+
+
+      <!-- je veux ajouter une seconde condition dans le IF pour verifier que le user est toujours actif ,voir variable is_active request.user.is_active-->
       {% if user.is_authenticated %}
       <a href="{% url 'mon_compte' %}"><i class="material-icons md-18" style="vertical-align:middle;" >person</i> Mon Compte</a>
       <a href="{% url 'deconnexion' %}"><i></i> Deconnexion</a>

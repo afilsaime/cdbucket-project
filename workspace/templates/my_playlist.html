@@ -209,18 +209,7 @@
 	</div><!-- end topHeader -->
 	<!-- =============== END TOP HEADER ================ -->
 	{% endblock %}
-
-
-
-
-
-
-
-
- 	{% if user.Group == Artistes %}
 	{% block title %}
-
-
 	<!-- =============== START BREADCRUMB ================ -->
 	<section class="no-mb">
 		<div class="row">
@@ -234,7 +223,6 @@
 		</div>
 	</section>
 	<!-- =============== END BREADCRUMB ================ -->
-
   {% endblock %}
 	{% block content %}
 	<!-- =============== START ALBUM SINGLE ================ -->
@@ -242,22 +230,179 @@
 		<div class="container">
 			<div class="sectionTitle paddingBottom">
 				<span class="heading-t3"></span>
-				<h2><a>Mon compte</a></h2><br>
-				<h4>Bienvenu à vous {{ user.get_username }} !</h4>
+				<h2><a>Votre Playlist</a></h2><br>
+				<h4>Bienvenu à vous {{ album.titre }} !</h4>
 				<span class="heading-b3"></span>
 			</div><!-- end sectionTtile -->
 			<div class="row">
+				<div class="col-sm-8">
+					<table class="featured-songs">
+						  <tr>
+						    <td></td>
+						    <td class="nameTable">Name</td>
+						    <td class="lengthTable">Length</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/flute.mp3"
+					       data-artist="Tensnake"
+					       data-song="See Right Through ft. Fiora"
+					       data-poster="assets/img/albums/cover1.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Tensnake - See Right Through ft. Fiora</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/2.mp3"
+					       data-artist="Jack Ü"
+					       data-song="Take Ü There feat. Kiesza"
+					       data-poster="assets/img/albums/cover2.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Jack Ü - Take Ü There feat. Kiesza</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/3.mp3"
+					       data-artist="Bos Sinclair"
+					       data-song="Cinderella"
+					       data-poster="assets/img/albums/cover3.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Bob Sinclair - Cinderella</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/3.mp3"
+					       data-artist="Yiuna"
+					       data-song="Lullabies"
+					       data-poster="assets/img/albums/cover4.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Yiuna - Lullabies</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/flute.mp3"
+					       data-artist="Tensnake"
+					       data-song="See Right Through ft. Fiora"
+					       data-poster="assets/img/albums/cover1.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Tensnake - See Right Through ft. Fiora</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/2.mp3"
+					       data-artist="Jack Ü"
+					       data-song="Take Ü There feat. Kiesza"
+					       data-poster="assets/img/albums/cover2.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Jack Ü - Take Ü There feat. Kiesza</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/3.mp3"
+					       data-artist="Bos Sinclair"
+					       data-song="Cinderella"
+					       data-poster="assets/img/albums/cover3.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Bob Sinclair - Cinderella</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/3.mp3"
+					       data-artist="Yiuna"
+					       data-song="Lullabies"
+					       data-poster="assets/img/albums/cover4.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Yiuna - Lullabies</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/flute.mp3"
+					       data-artist="Tensnake"
+					       data-song="See Right Through ft. Fiora"
+					       data-poster="assets/img/albums/cover1.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Tensnake - See Right Through ft. Fiora</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/2.mp3"
+					       data-artist="Jack Ü"
+					       data-song="Take Ü There feat. Kiesza"
+					       data-poster="assets/img/albums/cover2.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Jack Ü - Take Ü There feat. Kiesza</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/3.mp3"
+					       data-artist="Bos Sinclair"
+					       data-song="Cinderella"
+					       data-poster="assets/img/albums/cover3.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Bob Sinclair - Cinderella</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						    <td class="padTable"><a href="#" class="btnPlay song"
+					       data-mp3="assets/audio/3.mp3"
+					       data-artist="Yiuna"
+					       data-song="Lullabies"
+					       data-poster="assets/img/albums/cover4.jpg"><i class="fa fa-play"></i></a></td>
+						    <td class="tableWidth">Yiuna - Lullabies</td>
+						    <td>3:25</td>
+						  </tr>
+						  <tr>
+						  	<td></td>
+						  	<td></td>
+						  	<td></td>
+						  </tr>
+					</table>
+				</div><!-- end-col-sm-8 -->
 				<div class="col-sm-3 col-sm-offset-1">
 					<div class="sidebarAlbum">
 						<div class="widget">
-							<h3>Mes Informations d'utilisateur </h3>
+							<h3>Details PLAYLIST</h3>
 							<ul>
-								<li>Date de création:<span> {{ user.date_joined }} </span></li>
-								<li>Nombre de playlist :<span></span></li>
-								<li>Nombre d'album :<span></span></li>
-								<li>Durée total audio :<span> </span></li>
+								<li>Nom:<span>Playlist test </span></li>
+								<li>Date de création:<span>december 15, 2015 </span></li>
+								<li>NB musique:<span>23 </span></li>
+								<li>Genre musical:<span>aqura sound </span></li>
+								<li>Durée album:<span>03h35 </span></li>
 							</ul>
 						</div><!-- end widget -->
+						<div class="widget">
+							<h3>Mes autres Playlist</h3>
+							<div class="instagram-widget">
+								<ul id="instagram-sidebar-widget" class="clearfix"></ul>
+							</div>
+						</div><!-- end widget -->
+
+						<div class="widget">
+							<h3>Available On</h3>
+							<section>
+							  <ul id='services'>
+							    <li>
+							      <a href="#"><div><i class="fa fa-lastfm"></i></div></a>
+							    </li>
+							    <li>
+							    	<a href="#"><div><i class="fa fa-soundcloud"></i></div></a>
+							    </li>
+							    <li>
+							    	<a href="#"><div><i class="fa fa-apple"></i></div></a>
+							    </li>
+							    <li>
+							    	<a href="#"><div><i class="fa fa-spotify"></i></div></a>
+							    </li>
+							    <li>
+							    	<a href="#"><div><i class="fa fa-amazon"></i></div></a>
+							    </li>
+							  </ul>
+							</section>
+						</div><!-- end widget -->
+
+
+
+
+
 					</div><!-- end sidebarAlbum -->
 				</div><!-- end col-sm-3 col-sm-offset-1 -->
 			</div><!-- end row -->
@@ -278,110 +423,10 @@
 					<span>MES ALBUMS</span>
 				</a>
 			</div>
-			<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="{% url 'home' %}" class="pagination-next ">
-					<span>MES PLAYLIST</span>
-				</a>
-			</div>
-			<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="{% url 'home' %}" class="pagination-previous">
-					<span>ACCUEIL</span>
-				</a>
-			</div>
 		</div>
 	</div>
 	<!-- =============== END PAGINATION ================ -->
-
 	{% endblock %}
-
-
-
-
-
-
-	{% else %}
-
-	<!-- si c'est un USER afficher la partie suivante -->
-
-
-		<!-- =============== START BREADCRUMB ================ -->
-		<section class="no-mb">
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="before-FullscreenSlider"></div>
-					<div class="breadcrumb-fullscreen-parent phone-menu-bg">
-						<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single1.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- =============== END BREADCRUMB ================ -->
-
-
-
-		<!-- =============== START ALBUM SINGLE ================ -->
-		<section class="albumSingle padding background-properties" style="background-image:url(' {% static "assets/img/albums/single44.jpg" %}');">
-			<div class="container">
-				<div class="sectionTitle paddingBottom">
-					<span class="heading-t3"></span>
-					<h2><a>Mon compte</a></h2><br>
-					<h4>Bienvenu à vous {{ user.get_username }} !</h4>
-					<span class="heading-b3"></span>
-				</div><!-- end sectionTtile -->
-				<div class="row">
-					<div class="col-sm-3 col-sm-offset-1">
-						<div class="sidebarAlbum">
-							<div class="widget">
-								<h3>Mes Informations d'utilisateur </h3>
-								<ul>
-									<li>Date de création:<span> {{ user.date_joined }} </span></li>
-									<li>Nombre de playlist :<span></span></li>
-									<li>Nombre d'album :<span></span></li>
-									<li>Durée total audio :<span> </span></li>
-								</ul>
-							</div><!-- end widget -->
-						</div><!-- end sidebarAlbum -->
-					</div><!-- end col-sm-3 col-sm-offset-1 -->
-				</div><!-- end row -->
-			</div><!-- end container -->
-		</section>
-		<!-- =============== END ALBUM SINGLE ================ -->
-
-		<!-- =============== START PAGINATION ================ -->
-		<div class="section-block  bkg-grey-ultralight pagination-2">
-			<div class="row full-width ">
-				<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-previous">
-						<span>RECOMMANDATION</span>
-					</a>
-				</div>
-				<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-next ">
-						<span>MES ALBUMS</span>
-					</a>
-				</div>
-				<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-next ">
-						<span>MES PLAYLIST</span>
-					</a>
-				</div>
-				<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-previous">
-						<span>ACCUEIL</span>
-					</a>
-				</div>
-			</div>
-		</div>
-		<!-- =============== END PAGINATION ================ -->
-
-	{% endif %}
-
-
-
-
-
-
 	{% block footer %}
 	<!-- =============== START FOOTER ================ -->
 	<section style="background-color:#eeeeee;">
@@ -390,7 +435,7 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="copyFooter">
-							<a href="#">&copy; CDBUCKET 2016</a>
+							<a href="#">&copy; Aqura 2015</a>
 						</div>
 					</div>
 					<div class="col-sm-4">

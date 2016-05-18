@@ -236,19 +236,10 @@
 			</div><!-- end sectionTtile -->
 
 			<center>
-				<label>Votre compte sera supprimé automatiquement et vous serez désinscris de la platerforme. </label>
-				<ul><br>
-					<input type="submit" value="Confirmer">
-					<input type="submit" value="Annuler">
-				</ul>
-			</center>
-			<center>
 				<form action="" method="post">
 					{% csrf_token %}
 					<label>Votre compte sera supprimé automatiquement et vous serez désinscris de la platerforme.</label>
-					{{ form.password }}
-					<label>Confirmation du nouveau mot de passe :</label>
-					{{ form.password2 }}
+					{{ form.id }}
 					<input type="submit" value="Valider">
 				</form>
 			</center>
