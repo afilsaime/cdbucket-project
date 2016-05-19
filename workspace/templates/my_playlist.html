@@ -371,8 +371,9 @@ Si 3 playlist afficher les 3 choix pour qu'il entre dedans sinon afficher direct
 						<div class="widget">
 							<h3>Details PLAYLIST</h3>
 							<ul>
-								<li>Nom:<span>Playlist test </span></li>
-								<li>Date de création:<span>december 15, 2015 </span></li>
+								<!--ici recuperer l'id du user pour recuperer l'id de sa playlist -->
+								<li>Nom:<span>{{ album.titre }}</span></li>
+								<li>Date de création:<span> {{ album.date_publication }}</span></li>
 								<li>NB musique:<span>23 </span></li>
 								<li>Genre musical:<span>aqura sound </span></li>
 								<li>Durée album:<span>03h35 </span></li>
