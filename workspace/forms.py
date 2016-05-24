@@ -95,6 +95,8 @@ class ConnexionForm(forms.Form):
     username = forms.CharField(label="User")
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
 
+    
+
 class NewEmail(forms.Form):
     new_email = forms.EmailField()
 
@@ -136,8 +138,9 @@ class NewPassword(forms.Form):
         return cleaned_data
 
 
-#class SupprCompteForm(forms.Form):
-    #id =
+class SupprCompteForm(forms.Form):
 
-#    is_active =
-# has_perm(perm, obj=None)
+    def __init__(self,*args,**kwargs):
+        self.user = kwargs.pop('user')
+        super(SupprCompteForm,self).__init__(*args,**kwargs)
+        self.fields['user'] = forms.IntegerField(widget=forms.HiddenInput(), initial=self.user.id)

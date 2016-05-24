@@ -1,22 +1,28 @@
+{% load staticfiles %}
+{% block head %}
 <!DOCTYPE html>
 <html lang="en">
-
-<!-- Mirrored from theme-eagle.com/ThemeBrothers.co/blogGrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Apr 2016 14:42:16 GMT -->
 <head>
 	<meta charset="UTF-8">
 	<meta name="HandheldFriendly" content="true" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<title>Blog-Grid</title>
+	<title>mon compte</title>
 	<link rel="icon" href="assets/img/content/icon.png">
 	<!-- ========== CSS INCLUDES ========== -->
-	<link rel="stylesheet" href="assets/css/master.css">
+	<link rel="stylesheet" href="{% static "assets/css/master.css" %}">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
 </head>
+{% endblock %}
 <body>
-	<div class="page-loader">
-	     <div class="vertical-align align-center">
-	          <img src="assets/loader/loader.gif" alt="" class="loader-img">
-	     </div>
-    </div>
+    {% block loader %}
+        <div class="page-loader">
+             <div class="vertical-align align-center">
+                  <img src="{% static "assets/loader/loader.gif" %}" alt="" class="loader-img">
+             </div>
+        </div>
+    {% endblock %}
+		{% block player %}
 	<!-- =============== START PLAYER ================ -->
     <div id="jp_container_N" class="jplayer-home homeNormal">
             <div class="jp-type-playlist">
@@ -67,7 +73,7 @@
                 <div id="playlist-wrapper" class="playlist-wrapper">
                     <div class="jp-playlist container">
                         <div class="header-text">
-                            <h1><img src="assets/img/header/logoB.png" alt=""></h1>
+                            <h1><img src="{% static "assets/img/header/logoB.png" %}" alt=""></h1>
                             <p>PLAYERLIST</p>
                         </div>
                         <div class="about-list clearfix">
@@ -88,42 +94,17 @@
             </div><!-- .jp-type-playlist -->
     </div><!-- .jp-container_N -->
     <!-- =============== END PLAYER ================ -->
-
+    {% endblock %}
+    {% block headerNav %}
 	<!-- =============== START TOP HEADER ================ -->
 	<div class="topHeader" >
 		<div class="header">
 			<div class="rightTopHeader">
 				<div class="cartContainer">
 					<div class="myCart">
-						<ul>
-							<li class="cartTitle"><img src="assets/img/shop/cart.png" alt=""><span>0</span></li>
-						</ul>
 					</div><!-- end myCart -->
 					<div class="cartParent">
 						<div class="cartItems">
-							<ul>
-								<li>
-									<div class="priceCart">
-										<img src="assets/img/shop/cart1.jpg" alt="">
-										<a href="#">Hoodie T.Brothers <!-- <span><i class="fa fa-times"></i></span> --></a>
-										<p>Price:&nbsp;<span>&pound;15,99</span></p>
-										<p class="quantity">Quantity: <span>1</span></p>
-									</div>
-								</li>
-								<li>
-									<div class="priceCart">
-										<img src="assets/img/shop/cart2.jpg" alt="">
-										<a href="#">Hoodie T.Brothers <!-- <span><i class="fa fa-times"></i></span> --></a>
-										<p>Price:&nbsp;<span>&pound;15,99</span></p>
-										<p class="quantity">Quantity: <span>1</span></p>
-									</div>
-								</li>
-								<li>
-									<div class="total">
-										<a href="#">Sub Total<span>31,98&pound;</span></a>
-									</div>
-								</li>
-							</ul>
 							<button type="submit" class="single_add_to_cart_button button alt buttonView">
 							                    View Cart
 			                </button>
@@ -153,146 +134,48 @@
 				</div>
 				<!-- Menu Fixed Primary List -->
 				<ul>
-					<!-- Menu Fixed Item -->
-					<li>
-						<a href="index-2.html">
-							home
-						</a>
-						<ul class="sub-menu">
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="index-2.html">
-									home star
-								</a>
-							</li>
-							<li>
-								<a href="index-royal-slider.html">
-									home royal slider
-								</a>
-							</li>
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="index-video.html">
-									home video
-								</a>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<a href="albumsGrid.html">
-							discography
-						</a>
-						<ul class="sub-menu">
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="albumsFullBackground.html">
-									albums full background
-								</a>
-							</li>
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="albumsGrid.html">
-									albums grid
-								</a>
-							</li>
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="albumsSingle1.html">
-									album description
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- Menu Fixed Item -->
-					<li>
-						<a href="events.html">
-							events
-						</a>
-					</li>
-					<!-- Menu Fixed Item -->
-					<li>
-						<a href="#">
-							blog
-						</a>
-						<ul class="sub-menu">
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="blogGrid.html">
-									blog grid
-								</a>
-							</li>
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="blogSidebarRight.html">
-									blog sidebar
-								</a>
-							</li>
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="blogSingle.html">
-									blog single
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- Menu Fixed Item -->
-					<li>
-						<a href="#">
-							gallery
-						</a>
-						<ul class="sub-menu">
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="galleryGrid.html">
-									gallery grid
-								</a>
-							</li>
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="galleryScroll.html">
-									gallery scroll
-								</a>
-							</li>
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="gallerySingle.html">
-									gallery single
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- Menu Fixed Item -->
-					<li>
-						<a href="#">
-							Other Pages
-						</a>
-						<ul class="sub-menu">
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="biography.html">
-									Biography
-								</a>
-							</li>
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="video.html">
-									Video
-								</a>
-							</li>
-						</ul>
-					</li>
-					<!-- Menu Fixed Item -->
-					<li>
-						<a href="contact.html">
-							contact
-						</a>
-					</li>
-					<!-- Menu Fixed Item -->
-					<li>
-						<a href="shop.html">
-							shop
-						</a>
-					</li>
+          <li>
+            <a href="{% url 'mon_compte' %}">
+              Mes albums
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'my_playlist' %}">
+              Ma Playlist
+            </a>
+          </li>
+          <!-- Menu Fixed Item -->
+          <li>
+            <a href="#">
+              Gérer mon compte
+            </a>
+            <ul class="sub-menu">
+              <!-- Menu Fixed Sub Menu Item -->
+              <li>
+                <a href="{% url 'new_email' %}">
+                  Modifier son Adresse email
+                </a>
+              </li>
+              <!-- Menu Fixed Sub Menu Item -->
+              <li>
+                <a href="{% url 'new_mdp' %}">
+                  Modifier son mot de passe
+                </a>
+              </li>
+              <!-- Menu Fixed Sub Menu Item -->
+              <li>
+                <a href="{% url 'suppr_compte' %}">
+                  Supprimer mon compte
+                </a>
+              </li>
+            </ul>
+            <li>
+              <a href="{% url 'contact' %}">
+                Contact
+              </a>
+            </li>
+          </li>
+          <!-- Menu Fixed Item -->
 				</ul>
 				<!-- Menu Fixed Close Button -->
 				<div class="x-filter">
@@ -303,28 +186,29 @@
 		</div><!-- end menu-fixed-container -->
 		<!-- =============== STAR LOGO ================ -->
 		<div class="logo-container-top">
-	        <a href="index-2.html"><img src="assets/img/logo/whiteLogo.png" alt="Aqura"></a>
+	        <a href="{% url 'home' %}">Cdbucket</a>
 	    </div><!-- end logo-container-top -->
 		<!-- =============== END LOGO ================ -->
 	</div><!-- end topHeader -->
 	<!-- =============== END TOP HEADER ================ -->
-
+  {% endblock %}
+  {% block title %}
 	<!-- =============== START BREADCRUMB ================ -->
 	<section class="no-mb">
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="before-FullscreenSlider"></div>
 				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
-					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url('assets/img/blog/header.jpg');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
+					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/blog/header.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
 						<div class="breadTxt">
                             <h1>
-                                Blog List
+                                Search
                             </h1>
                             <p>
-                                Your time is limited, don’t waste it living someone else’s life. Don’t be trapped<br>by dogma, which is living the result of other people’s thinking.<br> Don’t let the noise of other opinions drown<br> your own inner voice.
+                              <h2>Vous recherchez une musique en particulier ?</h2>
                             </p>
                             <a href="#content" data-easing="easeInOutQuint" data-scroll="" data-speed="900" data-url="false">
-                                View More <i class="fa fa-angle-down"></i>
+                                RECHERCHER <i class="fa fa-angle-down"></i>
                             </a>
                         </div>
 					</div>
@@ -333,21 +217,25 @@
 		</div>
 	</section>
 	<!-- =============== END BREADCRUMB ================ -->
-
+  {% endblock %}
+  {% block content %}
 	<!-- =============== START BLOG FILTER ================ -->
 	<section class="aquraFilter padding" id="content">
 		<div class="container">
 			<!-- start blog-filter-category -->
 			<div class="categories">
+        <form method="post" action="traitement.php">
+     <input type="text" ></code>
+  </form>
 					<ul class="clearfix" data-option-key="filter">
-						<li><a href="#"><i class="fa fa-filter"></i></a></li>
+						<li><a href="#">Effacer filtre <i class="fa fa-filter"></i></a></li>
 						<li> <a href="#" class="selected" data-option-value="*">All</a></li>
-						<li> <a href="#" data-option-value=".news">News</a></li>
-						<li> <a href="#" data-option-value=".audio">Audio</a></li>
-						<li> <a href="#" data-option-value=".cloud">Soundcloud</a></li>
-						<li> <a href="#" data-option-value=".video">Video</a></li>
-						<li> <a href="#" data-option-value=".gallery">Gallery</a></li>
-						<li> <a href="#" data-option-value=".standard">Standard</a></li>
+						<li> <a href="#" data-option-value=".news">ARTISTE</a></li>
+						<li> <a href="#" data-option-value=".audio">ALBUM</a></li>
+						<li> <a href="#" data-option-value=".cloud">SINGLE</a></li>
+						<li> <a href="#" data-option-value=".video">test</a></li>
+						<li> <a href="#" data-option-value=".gallery">test</a></li>
+						<li> <a href="#" data-option-value=".standard">test</a></li>
 					</ul>
 			</div><!--end categories-->
 			<!-- end blog-filter-category -->
@@ -499,7 +387,8 @@
 		</div><!-- end container -->
 	</section>
 	<!-- =============== END BLOG FILTER ================ -->
-
+  {% endblock %}
+  {% block footer %}
 	<!-- =============== START FOOTER ================ -->
 	<section style="background-color:#eeeeee;">
 		<div class="footer footerPadding">
@@ -512,17 +401,7 @@
 					</div>
 
 					<div class="col-sm-4">
-						<nav class="social-icons">
-							<ul class="clearfix">
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-twitter"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-facebook"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-apple"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-lastfm"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-soundcloud"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-youtube-play"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-vimeo"></i><span></span></a></li>
-                			</ul>
-						</nav>
+
 					</div>
 					<div class="col-sm-4">
 						<div class="goTop" id="back-to-top">
@@ -534,33 +413,32 @@
 			</div>
 		</div>
 	</section>
-	<!-- =============== END FOOTER ================ -->
-
+  <!-- =============== END FOOTER ================ -->
+	{% endblock %}
+	{% block javasscript %}
 	<!-- ================================================== -->
 	<!-- =============== START JQUERY SCRIPTS ================ -->
 	<!-- ================================================== -->
-
-	<script src="assets/js/jquery.js"></script>
-	<script src="assets/js/bootstrap.min.js"></script>
-	<script src="assets/js/plugins.js"></script>
-	<script type="text/javascript" src="assets/jplayer/jplayer/jquery.jplayer.js"></script>
-	<script type="text/javascript" src="assets/jplayer/add-on/jplayer.playlist.js"></script>
-	<script type="text/javascript" src="assets/js/playlist.js"></script>
-	<script src="assets/js/mainVideo.js"></script>
-
+	<script src="{% static "assets/js/jquery.js" %}"></script>
+	<script src="{% static "assets/js/bootstrap.min.js" %}"></script>
+	<script src="{% static "assets/js/plugins.js" %}"></script>
+	<script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
+	<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
+	<script type="text/javascript" src="{% static "assets/js/playlist.js" %}"></script>
+	<script src="{% static "assets/js/mainVideo.js" %}"></script>
 	<!--[if lte IE 9 ]>
-		<script src="assets/js/placeholder.js"></script>
+			<script src="{% static "assets/js/placeholder.js"></script>
 		<script>
 			jQuery(function() {
 				jQuery('input, textarea').placeholder();
 			});
 		</script>
 	<![endif]-->
-
 	<!-- ================================================== -->
 	<!-- =============== END JQUERY SCRIPTS ================ -->
 	<!-- ================================================== -->
+	{% endblock %}
+	{% block extrajavascript %}
+	{% endblock %}
 </body>
-
-<!-- Mirrored from theme-eagle.com/ThemeBrothers.co/blogGrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 19 Apr 2016 14:42:58 GMT -->
 </html>

@@ -371,8 +371,9 @@ Si 3 playlist afficher les 3 choix pour qu'il entre dedans sinon afficher direct
 						<div class="widget">
 							<h3>Details PLAYLIST</h3>
 							<ul>
-								<li>Nom:<span>Playlist test </span></li>
-								<li>Date de création:<span>december 15, 2015 </span></li>
+								<!--ici recuperer l'id du user pour recuperer l'id de sa playlist -->
+								<li>Nom:<span>{{ album.titre }}</span></li>
+								<li>Date de création:<span> {{ album.date_publication }}</span></li>
 								<li>NB musique:<span>23 </span></li>
 								<li>Genre musical:<span>aqura sound </span></li>
 								<li>Durée album:<span>03h35 </span></li>
@@ -446,21 +447,10 @@ Si 3 playlist afficher les 3 choix pour qu'il entre dedans sinon afficher direct
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="copyFooter">
-							<a href="#">&copy; Aqura 2015</a>
+							<a href="#">&copy; CDBUCKET 2016</a>
 						</div>
 					</div>
 					<div class="col-sm-4">
-						<nav class="social-icons">
-							<ul class="clearfix">
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-twitter"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-facebook"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-apple"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-lastfm"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-soundcloud"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-youtube-play"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-vimeo"></i><span></span></a></li>
-                			</ul>
-						</nav>
 					</div>
 					<div class="col-sm-4">
 						<div class="goTop" id="back-to-top">

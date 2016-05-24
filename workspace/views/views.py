@@ -11,6 +11,7 @@ from django.core.mail import send_mail
 from workspace.models import *
 from workspace.forms import *
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 import datetime
@@ -162,7 +163,7 @@ def ConnexionView(request):
     error = False
 
     if request.method == "POST":
-        form = ConnexionForm(request.POST)
+        form = AuthenticationForm(request.POST)
         if form.is_valid():
             username = form.cleaned_data["username"]
             password = form.cleaned_data["password"]
@@ -258,13 +259,19 @@ class NewMDP(FormView):
 
 class SupprCompte(FormView):
     template_name = "suppr_compte.html"
-    #form_class =
+    form_class = SupprCompteForm
     success_url = "/workspace/home"
+
+    def get_form_kwargs(self):
+        kwargs = super(SupprCompte,self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
 
 
     def form_valid(self,form):
         #Sauvegarde de l'utilisateur
         user = self.request.user
+        logout(self.request)
         user.is_active = False
         user.save()
 
@@ -275,8 +282,8 @@ class SupprCompte(FormView):
     #    message = "Votre nouveau mot de passe a été enregistré !:</br>"
     #    send_mail(sujet,titre+message,"site@project.com",[email])
 
-        return redirect(reverse("home"))
-        #return super(h).form_valid(form)
+        #return redirect(reverse("home"))
+        return super(SupprCompte,self).form_valid(form)
 
 
 

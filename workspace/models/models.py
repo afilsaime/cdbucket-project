@@ -14,7 +14,6 @@ class Registration(models.Model):
     def __str__(self):
         return "{0}:{1}".format(self.user.username,self.key)
 
-
 class Tag(models.Model):
     intitule = models.CharField(max_length=100)
 
@@ -95,3 +94,11 @@ class Album(models.Model):
 
     def __str__(self):
         return "{0} de {1}".format(self.titre,self.artiste)
+
+class LikeMusic(models.Model):
+    user = models.ForeignKey(User)
+    music = models.ForeignKey(Music)
+
+class LikeAlbum(models.Model):
+    user = models.ForeignKey(User)
+    album = models.ForeignKey(Album)
