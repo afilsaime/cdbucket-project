@@ -13,6 +13,7 @@ from workspace.forms import *
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+import datetime
 import uuid
 
 
@@ -114,6 +115,43 @@ class CreateMusicView(PermissionRequiredMixin,SuccessMessageMixin,FormView):
         music.path = self.request.FILES['path']
         music.save()
         return super(CreateMusicView,self).form_valid(form)
+
+class AddAlbumView(PermissionRequiredMixin,SuccessMessageMixin,FormView):
+    template_name = "add_album.html"
+    form_class = AddAlbumForm
+    success_url = "/workspace/album/add"
+    permission_required = 'workspace.add_album'
+    success_message = 'Album ajouté'
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden()
+
+    def form_valid(self,form):
+        titre = form.cleaned_data['titre']
+        date = form.cleaned_data['date']
+        type = form.cleaned_data['type']
+        artiste = self.request.user
+
+        new_album = Album(titre=titre,date_publication=date,type_album=type,artiste=artiste).save()
+        return super(AddAlbumView,self).form_valid(form)
+
+class AddPlaylistView(SuccessMessageMixin,FormView):
+    template_name = "add_playlist.html"
+    form_class = AddPlaylistForm
+    success_url = "/workspace/playlist/add"
+    success_message = 'Playliste ajoutée'
+
+    def form_valid(self,form):
+        titre = form.cleaned_data['titre']
+        date = datetime.datetime.now()
+        print("+++++++++++++++++++++++++++++++++++++++++++++")
+        print(date)
+        print("+++++++++++++++++++++++++++++++++++++++++++++")
+        type = Album.PLAYLIST
+        artiste = self.request.user
+
+        new_album = Album(titre=titre,date_publication=date,type_album=type,artiste=artiste).save()
+        return super(AddPlaylistView,self).form_valid(form)
 
 class AccessMusicView(DetailView):
     context_object_name = "music"

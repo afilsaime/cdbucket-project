@@ -132,3 +132,7 @@ input[type="submit"]:hover{
 .inputfile-4:hover + label svg{
     fill:#ff9912;
 }
+
+.search,.search>input,.search>button{
+    float:right;
+}

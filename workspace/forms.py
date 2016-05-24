@@ -78,6 +78,18 @@ class CreateMusicForm(forms.Form):
 
                 return cleaned_data
 
+class AddAlbumForm(forms.Form):
+    ADD_ALBUM_CHOICES = (
+        (Album.ALBUM,'Album'),
+        (Album.SINGLE,'Single'),
+    )
+
+    titre = forms.CharField()
+    date = forms.DateTimeField(label="date de publication")
+    type = forms.ChoiceField(choices=ADD_ALBUM_CHOICES,widget=MySelect(attrs={'class':'cs-select cs-skin-slide'}))
+
+class AddPlaylistForm(forms.Form):
+    titre = forms.CharField()
 
 class ConnexionForm(forms.Form):
     username = forms.CharField(label="User")
