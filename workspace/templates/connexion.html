@@ -13,7 +13,7 @@ Vous êtes connecté, {{ user.username }} !
 {% csrf_token %}
 {{ form.as_p }}
 <a href="{% url 'home' %}"><input type="submit" value="Se connecter" /></a>
-
+<input type="hidden" name="next" value="{{ redirect_field }}" />
 </form>
 {% endif %}
 {% endblock %}

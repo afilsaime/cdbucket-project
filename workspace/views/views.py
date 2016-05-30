@@ -159,36 +159,6 @@ class AccessMusicView(DetailView):
     model = Music
     template_name = "single_music.html"
 
-def ConnexionView(request):
-    error = False
-
-    if request.method == "POST":
-        form = AuthenticationForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            password = form.cleaned_data["password"]
-            user = authenticate(username=username, password=password)  # Nous vérifions si les données sont correctes
-            if user:  # Si l'objet renvoyé n'est pas None
-                login(request, user)
-                return redirect(reverse("home"))
-                 # nous connectons l'utilisateur
-            else: # sinon une erreur sera affichée
-                error = True
-    else:
-        form = ConnexionForm()
-
-    return render(request, 'connexion.html', locals())
-
-
-
-
-
-def deconnexion(request):
-    logout(request)
-    return redirect(reverse('connexion'))
-
-
-
 class monCompte(TemplateView):
     template_name = "mon_compte.html"
 
