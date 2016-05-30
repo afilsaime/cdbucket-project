@@ -12,13 +12,10 @@ urlpatterns = [
    url(r'^home/$',TemplateView.as_view(template_name="base.html"),name="home"),
    url(r'^comptes/activation/(?P<key>\w+)',ActivationView.as_view(), name="activation"),
    url(r'^music/add$', CreateMusicView.as_view(), name="ajout_musique"),
-<<<<<<< HEAD
    url(r'^music/listen/(?P<pk>\d+)$',AccessMusicView.as_view(),name="ecouter_musique"),
    url(r'^album/add$', AddAlbumView.as_view(), name="ajout_album"),
    url(r'^playlist/add$', login_required(AddPlaylistView.as_view()), name="ajout_playliste"),
-=======
    url(r'^music/listen/(?P<pk>\d+)$', AccessMusicView.as_view(),name="ecouter_musique"),
->>>>>>> ce21a529f7eb2be058b79539216a884f96a7900d
    url(r'^connexion/$', ConnexionView, name="connexion"),
    url(r'^deconnexion/$', deconnexion, name="deconnexion"),
    url(r'^mon_compte/$', login_required(monCompte.as_view()), name="mon_compte"),
