@@ -78,9 +78,9 @@ class Album(models.Model):
         for music in q:
             total_duration += music.duree
 
-        minutes = (total_duration.days*3600*24)
+        seconds = (total_duration.days*3600*24) + total_duration.seconds
 
-        return "{0} min {1}".format(minutes,total_duration.seconds)
+        return "{0} min {1}".format(seconds/60,seconds%60)
 
     def liste_tag(self):
         q = self.music_set.all()
