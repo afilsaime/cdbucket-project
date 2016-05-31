@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% block head %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>mon compte</title>
+	<link rel="icon" href="assets/img/content/icon.png">
+	<!-- ========== CSS INCLUDES ========== -->
+	<link rel="stylesheet" href="{% static "assets/css/master.css" %}">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
+</head>
+{% endblock %}
+<body>
+    {% block loader %}
+        <div class="page-loader">
+             <div class="vertical-align align-center">
+                  <img src="{% static "assets/loader/loader.gif" %}" alt="" class="loader-img">
+             </div>
+        </div>
+    {% endblock %}
+	{% block title %}
+	<!-- =============== START BREADCRUMB ================ -->
+	<section class="no-mb">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="before-FullscreenSlider"></div>
+				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
+					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single4.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- =============== END BREADCRUMB ================ -->
+  {% endblock %}
+  {% block content %}
+  <section class="albumSingle padding background-properties" style="background-image:url(assets/img/albums/single22.jpg);">
+      <div class="container">
+          <div class="sectionTitle paddingBottom">
+              <span class="heading-t3"></span>
+              <h2><a href="albumsSingle1.html">{{ Album.titre }}</a></h2>
+              <span class="heading-b3"></span>
+          </div><!-- end sectionTtile -->
+          <div class="row">
+              <div class="col-sm-8">
+                  <table class="featured-songs">
+                        <tr>
+                          <td></td>
+                          <td class="nameTable">Titre</td>
+                          <td class="lengthTable">Duree</td>
+                          <td></td>
+                        </tr>
+                        {% for musique in Album.liste_musique %}
+                            <tr>
+                              <td class="padTable"><a href="#" class="btnPlay song"
+                             data-mp3="{{ musique.path.url }}"
+                             data-artist="{{ Album.artiste }}"
+                             data-song="{{ musique.titre }}"
+                             data-poster="{% static "assets/img/albums/cover1.jpg" %}"><i class="fa fa-play"></i></a></td>
+                              <td class="tableWidth">{{ musique.titre }}</td>
+                              <td>{{ musique.duree }}</td>
+                              <td><a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
+                            </tr>
+                        {% endfor %}
+
+                  </table>
+              </div><!-- end-col-sm-8 -->
+              <div class="col-sm-3 col-sm-offset-1">
+                  <div class="sidebarAlbum">
+                      <div class="widget">
+                          <h3>Details de l'album</h3>
+                          <ul>
+                              <li>Titre: <span>{{ Album.titre }}</span></li>
+                              <li>Artiste: <span>{{ Album.artiste }}</span></li>
+                              <li>Publication: <span>{{ Album.date_publication }}</span></li>
+                              <li>Duree: <span>{{ Album.duree_totale }}</span></li>
+                          </ul>
+                      </div><!-- end widget -->
+                    </div><!-- end sidebarAlbum -->
+                </div><!-- end col-sm-3 col-sm-offset-1 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section>
+  {% endblock %}
+	{% block footer %}
+	<!-- =============== START FOOTER ================ -->
+	<section style="background-color:#eeeeee;">
+		<div class="footer footerPadding">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="copyFooter">
+							<a href="#">&copy; CDBUCKET 2016</a>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<nav class="social-icons">
+							<ul class="clearfix">
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-twitter"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-facebook"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-apple"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-lastfm"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-soundcloud"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-youtube-play"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-vimeo"></i><span></span></a></li>
+                			</ul>
+						</nav>
+					</div>
+					<div class="col-sm-4">
+						<div class="goTop" id="back-to-top">
+							<i class="fa fa-angle-up"></i>
+							<a href="#">Go Top</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- =============== END FOOTER ================ -->
+	{% endblock %}
+	{% block javasscript %}
+	<!-- ================================================== -->
+	<!-- =============== START JQUERY SCRIPTS ================ -->
+	<!-- ================================================== -->
+	<script src="{% static "assets/js/jquery.js" %}"></script>
+	<script src="{% static "assets/js/bootstrap.min.js" %}"></script>
+	<script src="{% static "assets/js/plugins.js" %}"></script>
+	<script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
+	<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
+	<script type="text/javascript" src="{% static "assets/js/playlist.js" %}"></script>
+	<script src="{% static "assets/js/mainVideo.js" %}"></script>
+	<!--[if lte IE 9 ]>
+			<script src="{% static "assets/js/placeholder.js"></script>
+		<script>
+			jQuery(function() {
+				jQuery('input, textarea').placeholder();
+			});
+		</script>
+	<![endif]-->
+	<!-- ================================================== -->
+	<!-- =============== END JQUERY SCRIPTS ================ -->
+	<!-- ================================================== -->
+	{% endblock %}
+	{% block extrajavascript %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // ========= jPlayer config 1 ==========
+                // Home player, Track player, Single post top player
+                var myPlaylist = new jPlayerPlaylist({
+                    jPlayer: "#jquery_jplayer_N",
+                    cssSelectorAncestor: "#jp_container_N"
+                }, [
+                    {% for musique in Album.liste_musique %}
+                    {
+                        artist: "toto ", // the artist name
+                        title:"{{ musique.titre }}", // track title
+                        mp3:"{{ musique.path.url }}",// mp3 path
+                        oga:"{{ musique.path.url }}",// oga path
+                        poster: "{% static "assets/img/albums/cover2.jpg" %}",// poster image path
+                        duration: '{{ musique.duree }}',// duration time in playlist
+
+                    },
+                    {% endfor %}
+                ], {
+                    swfPath: "{% static "assets/jplayer/jplayer" %}",
+                    supplied: "oga, mp3",
+                    wmode: "window",
+                    useStateClassSkin: true,
+                    autoBlur: false,
+                    smoothPlayBar: true,
+                    keyEnabled: true,
+                    size: {width: "80px", height: "80px"},
+                    loop: true
+                });
+                // Show The Current Track !!
+                $("#jquery_jplayer_N").on(
+                    $.jPlayer.event.ready + ' ' + $.jPlayer.event.play,
+                    function(event){
+                        var current = myPlaylist.current;
+                        var playlist = myPlaylist.playlist;
+                        $.each(playlist, function (index, obj) {
+                            if (index == current) {
+                                $("#nowPlaying").html("<span class='track-name'>" + obj.title + "</span>" + "<br>" + "<span class='artist-name'>" + obj.artist + "</span>");
+                                $("#nowPlaying").html("<span class='track-name'>" + obj.title + "</span>" + "<br>" + "<span class='artist-name'>" + obj.artist + "</span>");
+                            }
+                        });
+                    }
+                );
+
+                // Sidebar tracks
+               $(".featured-songs").find(".song").on('click', function(e) {
+                  e.preventDefault();
+
+                   if ($(this).hasClass('play')) {
+                       myPlaylist.pause();
+            //           $(".featured-songs").find(".song").addClass("play");
+                       $(".featured-songs").find(".song").not($this).removeClass("play");
+                       $(this).find('i').removeClass('fa-pause').addClass('fa-play');
+                   } else {
+                       var $this = $(this);
+                       myPlaylist.add({
+                           mp3: $this.attr("data-mp3"),
+                           artist: $this.attr("data-artist"),
+                           title: $this.attr("data-song"),
+                           poster:$this.attr("data-poster")
+                       });
+                       myPlaylist.play(-1);
+                       $(".featured-songs").find(".song").not($this).removeClass("play");
+                       $this.toggleClass("play");
+
+                       $(".featured-songs").find('.song i').removeClass('fa-pause').addClass('fa-play');
+                       $(this).find('i').removeClass('fa-play').addClass('fa-pause');
+                       return false;
+                   }
+               });//End Click
+
+                $('.jp-play').click(function() {
+                    if ( $(this).closest('.jplayer-home').hasClass('jp-state-playing') ) {
+                        $('.btnPlay').removeClass('play');
+                        $('.btnPlay').find('i').removeClass('fa-pause').addClass('fa-play');
+
+                        $('.jp-playlist ul li').removeClass('jp-playlist-current')
+                        $('.jp-playlist ul li .jp-playlist-item').removeClass('jp-playlist-current')
+                    }
+                });
+
+                $('.jplayerButton').one('click', function() {
+                    $('.jp-playlist ul li').removeClass('jp-playlist-current');
+                    $('.jp-playlist ul li a.jp-playlist-item').removeClass('jp-playlist-current');
+
+                    $('.jp-playlist-item').click(function() {
+                        if ($(this).hasClass('jp-playlist-current')) {
+                            myPlaylist.pause();
+                        }
+                        $(this).addClass('jp-playlist-current');
+                        $(this).find('ul li a.jp-playlist-item').addClass('jp-playlist-current');
+                    });
+                });
+
+
+            });
+
+        </script>
+	{% endblock %}
+</body>
+</html>

@@ -159,6 +159,11 @@ class AccessMusicView(DetailView):
     model = Music
     template_name = "single_music.html"
 
+class AccessAlbumView(DetailView):
+    context_object_name = "Album"
+    model = Album
+    template_name = "album.html"
+
 class monCompte(TemplateView):
     template_name = "mon_compte.html"
 

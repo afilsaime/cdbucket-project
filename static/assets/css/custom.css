@@ -136,3 +136,16 @@ input[type="submit"]:hover{
 .search,.search>input,.search>button{
     float:right;
 }
+
+.ddl{
+    color:#000;
+    border-radius:50%;
+    box-shadow: 0 0 0 50px  rgba(255, 255, 255, 0);
+    transition: box-shadow 0.3s ease-out;
+}
+
+.ddl:hover{
+    color:white;
+    background-color: black;
+    box-shadow: 0 0 0 3px  rgba(0, 0, 0, 1);
+}
