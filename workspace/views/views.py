@@ -102,7 +102,7 @@ class CreateMusicView(PermissionRequiredMixin,SuccessMessageMixin,FormView):
         tag = form.cleaned_data['tag']
         path = form.cleaned_data['path']
         #artiste = self.request.user
-        auteur = User.objects.get(username="toto")
+        auteur = User.objects.get(username=self.request.user.username)
 
         music = Music()
         music.titre = titre
@@ -256,15 +256,25 @@ class SupprCompte(FormView):
         return super(SupprCompte,self).form_valid(form)
 
 
-
-
-
 class MyPlaylist(TemplateView):
     template_name = "my_playlist.html"
 
 
-class Search(TemplateView):
+class Search(FormView):
     template_name = "search.html"
+    form_class = SearchForm
+
+    def form_valid(self,form,**kwargs):
+        query = form.cleaned_data['query']
+        musiques = Music.objects.filter(titre=query)
+        artistes = User.objects.filter(usernadme=query)
+        albums = Album.objects.filter(titre=query)
+        context = self.get_context_data(**kwargs)
+        context['Albums'] = albums
+        context['Artistes'] = artistes
+        context['Musiques'] = musiques
+
+        return self.render_to_response(context)
 
 
 class Contact(TemplateView):

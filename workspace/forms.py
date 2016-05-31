@@ -95,7 +95,7 @@ class ConnexionForm(forms.Form):
     username = forms.CharField(label="User")
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
 
-    
+
 
 class NewEmail(forms.Form):
     new_email = forms.EmailField()
@@ -144,3 +144,8 @@ class SupprCompteForm(forms.Form):
         self.user = kwargs.pop('user')
         super(SupprCompteForm,self).__init__(*args,**kwargs)
         self.fields['user'] = forms.IntegerField(widget=forms.HiddenInput(), initial=self.user.id)
+
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField()

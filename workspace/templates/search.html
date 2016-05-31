@@ -219,175 +219,75 @@
 	<!-- =============== END BREADCRUMB ================ -->
   {% endblock %}
   {% block content %}
+
 	<!-- =============== START BLOG FILTER ================ -->
 	<section class="aquraFilter padding" id="content">
 		<div class="container">
 			<!-- start blog-filter-category -->
 			<div class="categories">
-        <form method="post" action="traitement.php">
-     <input type="text" > DD</code>
-  </form>
+        <form method="POST" action="">{% csrf_token %}{{ form.query }}</form>
 					<ul class="clearfix" data-option-key="filter">
 						<li><a href="#">Effacer filtre <i class="fa fa-filter"></i></a></li>
 						<li> <a href="#" class="selected" data-option-value="*">All</a></li>
-						<li> <a href="#" data-option-value=".news">ARTISTE</a></li>
+						<li> <a href="#" data-option-value=".artiste">ARTISTE</a></li>
 						<li> <a href="#" data-option-value=".audio">ALBUM</a></li>
 						<li> <a href="#" data-option-value=".cloud">SINGLE</a></li>
-						<li> <a href="#" data-option-value=".video">test</a></li>
-						<li> <a href="#" data-option-value=".gallery">test</a></li>
-						<li> <a href="#" data-option-value=".standard">test</a></li>
 					</ul>
 			</div><!--end categories-->
 			<!-- end blog-filter-category -->
 
-			<!-- start filter -->
-			<div class="row">
-				<div class="col-sm-12 col-xs-12">
-					<div class="aqura-filter-content">
-						<ul class="clearfix">
-							<li class="col-sm-4 col-xs-12 news gallery">
-								<div class="blogBox">
-									<div class="owl-carousel">
-									    <div class="item"><img src="assets/img/blog/blog1.jpg" alt=""></div>
-									    <div class="item"><img src="assets/img/blog/blog2.jpg" alt=""></div>
-									</div>
-									<div class="blogBoxContent">
-										<div class="blogHeader">
-											<h1><a href="blogSingle.html">Gallery Post</a></h1>
-										</div>
-										<div class="admin-list clearfix">
-											<ul>
-												<li><a href="#">08 dec 2016</a>&nbsp;/&nbsp;</li>
-												<li><a href="#">By Admin</a></li>
-											</ul>
-										</div><!-- end admin-list -->
-										<div class="blogParagraph">
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-										</div><!--end blogParagraph  -->
-										<div class="rmButton">
-											<a href="blogSingle.html">Read More</a>
-										</div>
-									</div><!-- end blogBoxContent -->
-								</div><!-- end blogBox -->
-							</li><!-- end col-sm-4 -->
-							<li class="col-sm-4 col-xs-12 video">
-								<div class="blogBox">
-									<iframe src="../../player.vimeo.com/video/73340128.html" width="500" height="281"   ></iframe>
-									<div class="blogBoxContent">
-										<div class="blogHeader">
-											<h1><a href="blogSingle.html">VIdeo Post</a></h1>
-										</div>
-										<div class="admin-list clearfix">
-											<ul>
-												<li><a href="#">08 dec 2016</a>&nbsp;/&nbsp;</li>
-												<li><a href="#">By Admin</a></li>
-											</ul>
-										</div><!-- end admin-list -->
-										<div class="blogParagraph">
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-										</div><!--end blogParagraph  -->
-										<div class="rmButton">
-											<a href="blogSingle.html">Read More</a>
-										</div>
-									</div><!-- end blogBoxContent -->
-								</div><!-- end blogBox -->
-							</li><!-- end col-sm-4 col-xs-12 -->
-							<li class="col-sm-4 col-xs-12 cloud audio">
-								<div class="blogBox">
-									<iframe height="200" src="../../w.soundcloud.com/player/indexa342.html?url=https%3A//api.soundcloud.com/tracks/73595878&amp;color=bb9b69&amp;show_artwork=false&amp;auto_play=false&amp;hide_related=false&amp;show_comments=false&amp;show_user=false&amp;show_reposts=false"></iframe>
-									<div class="blogBoxContent">
-										<div class="blogHeader">
-											<h1><a href="blogSingle.html">Soundcloud Post</a></h1>
-										</div>
-										<div class="admin-list clearfix">
-											<ul>
-												<li><a href="#">08 dec 2016</a>&nbsp;/&nbsp;</li>
-												<li><a href="#">By Admin</a></li>
-											</ul>
-										</div><!-- end admin-list -->
-										<div class="blogParagraph">
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-										</div><!--end blogParagraph  -->
-										<div class="rmButton">
-											<a href="blogSingle.html">Read More</a>
-										</div>
-									</div><!-- end blogBoxContent -->
-								</div><!-- end blogBox -->
-							</li><!-- end col-sm-4 col-xs-12 -->
+			<!-- IF RETOUR RECHERCHE EST NUL RETOURNER PAS DE RESULTAT SINON RETOURNER RESULTAT -->
 
-							<li class="col-sm-4 col-xs-12 standard ">
-								<div class="blogBox">
-									<div class="imgBox"><img src="assets/img/blog/blog22.jpg" alt="box-img"></div>
-									<div class="blogBoxContent">
-										<div class="blogHeader">
-											<h1><a href="blogSingle.html">Last Show Post</a></h1>
-										</div>
-										<div class="admin-list clearfix">
-											<ul>
-												<li><a href="#">08 dec 2016</a>&nbsp;/&nbsp;</li>
-												<li><a href="#">By Admin</a></li>
-											</ul>
-										</div><!-- end admin-list -->
-										<div class="blogParagraph">
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-										</div><!--end blogParagraph  -->
-										<div class="rmButton">
-											<a href="blogSingle.html">Read More</a>
-										</div>
-									</div><!-- end blogBoxContent -->
-								</div><!-- end blogBox -->
-							</li><!-- end col-sm-4 col-xs-12 -->
-							<li class="col-sm-4 col-xs-12 living">
-								<div class="blogBox">
-									<div class="blogBoxContent">
-										<div class="blogHeader">
-											<h1><a href="blogSingle.html">Standard Post</a></h1>
-										</div>
-										<div class="admin-list clearfix">
-											<ul>
-												<li><a href="#">08 dec 2016</a>&nbsp;/&nbsp;</li>
-												<li><a href="#">By Admin</a></li>
-											</ul>
-										</div><!-- end admin-list -->
-										<div class="blogParagraph">
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-										</div><!--end blogParagraph  -->
-										<div class="rmButton">
-											<a href="blogSingle.html">Read More</a>
-										</div>
-									</div><!-- end blogBoxContent -->
-								</div><!-- end blogBox -->
-							</li><!-- end col-sm-4 col-xs-12 -->
-							<li class="col-sm-4 col-xs-12 standard">
-								<div class="blogBox">
-									<div class="blogBoxContent">
-										<div class="blogHeader">
-											<h1><a href="blogSingle.html">Standard Post</a></h1>
-										</div>
-										<div class="admin-list clearfix">
-											<ul>
-												<li><a href="#">08 dec 2016</a>&nbsp;/&nbsp;</li>
-												<li><a href="#">By Admin</a></li>
-											</ul>
-										</div><!-- end admin-list -->
-										<div class="blogParagraph">
-											<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-										</div><!--end blogParagraph  -->
-										<div class="rmButton">
-											<a href="blogSingle.html">Read More</a>
-										</div>
-									</div><!-- end blogBoxContent -->
-								</div><!-- end blogBox -->
-							</li><!-- end col-sm-4 -->
-						</ul>
-					</div><!-- end aqura-filter-cotent -->
-				</div><!-- end col-sm-12 -->
-			</div><!-- end row -->
-			<!-- end filter -->
-		</div><!-- end container -->
-	</section>
+
+			{% if Albums or Artistes or Musiques %}
+
+						<!-- start filter -->
+
+
+						<div class="row">
+							<div class="col-sm-12 col-xs-12">
+								<div class="aqura-filter-content">
+									<ul class="clearfix">
+									{% for music in Musiques %}
+										<li class="col-sm-4 col-xs-12 artiste">
+											<div class="blogBox">
+												<div class="blogBoxContent">
+													<div class="blogHeader">
+														<h1>titre : {{ music.titre }}</h1>
+													</div>
+													<div class="admin-list clearfix">
+														<ul>
+															<li>AUTEUR : {{ music.auteur }}</li>
+
+														</ul>
+													</div><!-- end admin-list -->
+													<div class="rmButton">
+														<a href="blogSingle.html">Ajouter à ma playlist</a>
+													</div>
+													<div class="rmButton">
+														<a href="blogSingle.html">Télécharger</a>
+													</div>
+												</div><!-- end blogBoxContent -->
+											</div><!-- end blogBox -->
+										</li><!-- end col-sm-4 -->
+								{% endfor %}
+									</ul>
+								</div><!-- end aqura-filter-cotent -->
+							</div><!-- end col-sm-12 -->
+						</div><!-- end row -->
+						<!-- end filter -->
+					</div><!-- end container -->
+				</section>
+
+
+			{% else %}
+			<h1>Votre recherche n'a pas aboutie, merci.</h1>
+
 	<!-- =============== END BLOG FILTER ================ -->
-  {% endblock %}
+	{% endif %}
+	{% endblock %}
+
+
   {% block footer %}
 	<!-- =============== START FOOTER ================ -->
 	<section style="background-color:#eeeeee;">
