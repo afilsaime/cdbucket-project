@@ -272,7 +272,7 @@ class Search(FormView):
     def form_valid(self,form,**kwargs):
         query = form.cleaned_data['query']
         musiques = Music.objects.filter(titre=query)
-        artistes = User.objects.filter(usernadme=query)
+        artistes = User.objects.filter(username=query)
         albums = Album.objects.filter(titre=query)
         context = self.get_context_data(**kwargs)
         context['Albums'] = albums

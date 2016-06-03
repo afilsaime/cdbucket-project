@@ -226,6 +226,7 @@
 			<!-- start blog-filter-category -->
 			<div class="categories">
         <form method="POST" action="">{% csrf_token %}{{ form.query }}</form>
+				<!--<form method="POST" action="{% url 'search' %}">{% csrf_token %}{{ form.query }}</form>-->
 					<ul class="clearfix" data-option-key="filter">
 						<li><a href="#">Effacer filtre <i class="fa fa-filter"></i></a></li>
 						<li> <a href="#" class="selected" data-option-value="*">All</a></li>
@@ -271,6 +272,28 @@
 											</div><!-- end blogBox -->
 										</li><!-- end col-sm-4 -->
 								{% endfor %}
+
+								{% for album in Album %}
+									<li class="col-sm-4 col-xs-12 artiste">
+										<div class="blogBox">
+											<div class="blogBoxContent">
+												<div class="blogHeader">
+													<h1>titre : {{ Album.titre }}</h1>
+												</div>
+												<div class="admin-list clearfix">
+													<ul>
+														<li>AUTEUR : {{ Albums.auteur }}</li>
+														<li>AUTEUR : {{ Albums.date_publication }}</li>
+													</ul>
+												</div><!-- end admin-list -->
+												<div class="rmButton">
+													<a href="blogSingle.html">Télécharger Album</a>
+												</div>
+											</div><!-- end blogBoxContent -->
+										</div><!-- end blogBox -->
+									</li><!-- end col-sm-4 -->
+								{% endfor %}
+
 									</ul>
 								</div><!-- end aqura-filter-cotent -->
 							</div><!-- end col-sm-12 -->
