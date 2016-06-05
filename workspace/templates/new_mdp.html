@@ -244,12 +244,13 @@
 				<form action="" method="post">
 					{% csrf_token %}
 					<label>Nouveau mot de passe :</label>
-					{{ form.password }}
+					{{ form.password }}<br>
 					<label>Confirmation du nouveau mot de passe :</label>
 					{{ form.password2 }}
-					<input type="submit" value="Valider">
-				</form>
 			</center>
+				<br><br><br>	<input type="submit" value="Valider"></br>
+				</form>
+
 
 
 

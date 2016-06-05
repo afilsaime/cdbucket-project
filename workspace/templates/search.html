@@ -228,11 +228,10 @@
         <form method="POST" action="">{% csrf_token %}{{ form.query }}</form>
 				<!--<form method="POST" action="{% url 'search' %}">{% csrf_token %}{{ form.query }}</form>-->
 					<ul class="clearfix" data-option-key="filter">
-						<li><a href="#">Effacer filtre <i class="fa fa-filter"></i></a></li>
 						<li> <a href="#" class="selected" data-option-value="*">All</a></li>
 						<li> <a href="#" data-option-value=".artiste">ARTISTE</a></li>
-						<li> <a href="#" data-option-value=".audio">ALBUM</a></li>
-						<li> <a href="#" data-option-value=".cloud">SINGLE</a></li>
+						<li> <a href="#" data-option-value=".album">ALBUM</a></li>
+						<li> <a href="#" data-option-value=".musique">MUSIQUE</a></li>
 					</ul>
 			</div><!--end categories-->
 			<!-- end blog-filter-category -->
@@ -243,27 +242,29 @@
 			{% if Albums or Artistes or Musiques %}
 
 						<!-- start filter -->
-
-
 						<div class="row">
 							<div class="col-sm-12 col-xs-12">
 								<div class="aqura-filter-content">
 									<ul class="clearfix">
 									{% for music in Musiques %}
-										<li class="col-sm-4 col-xs-12 artiste">
+										<li class="col-sm-4 col-xs-12 musique">
 											<div class="blogBox">
 												<div class="blogBoxContent">
 													<div class="blogHeader">
-														<h1>titre : {{ music.titre }}</h1>
+														<h1>Titre : {{ music.titre }}</h1>
 													</div>
 													<div class="admin-list clearfix">
 														<ul>
-															<li>AUTEUR : {{ music.auteur }}</li>
-
+															<li>Auteur : {{ music.auteur }}</li>
+															<li>{{ musique.duree }}</li>
+															<li><a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></li>
 														</ul>
 													</div><!-- end admin-list -->
 													<div class="rmButton">
 														<a href="blogSingle.html">Ajouter à ma playlist</a>
+													</div>
+													<div class="rmButton">
+														<a href="blogSingle.html">Voir l'album</a>
 													</div>
 													<div class="rmButton">
 														<a href="blogSingle.html">Télécharger</a>
@@ -273,26 +274,51 @@
 										</li><!-- end col-sm-4 -->
 								{% endfor %}
 
-								{% for album in Album %}
-									<li class="col-sm-4 col-xs-12 artiste">
+								{% for album in Albums %}
+									<li class="col-sm-4 col-xs-12 album">
 										<div class="blogBox">
 											<div class="blogBoxContent">
 												<div class="blogHeader">
-													<h1>titre : {{ Album.titre }}</h1>
+													<h1>Titre : {{ album.titre }}</h1>
 												</div>
 												<div class="admin-list clearfix">
 													<ul>
-														<li>AUTEUR : {{ Albums.auteur }}</li>
-														<li>AUTEUR : {{ Albums.date_publication }}</li>
+														<li>Auteur : {{ album.artiste.username }}</li>
+														<li>Date publi.: {{ album.date_publication }}</li>
 													</ul>
 												</div><!-- end admin-list -->
 												<div class="rmButton">
-													<a href="blogSingle.html">Télécharger Album</a>
+													<a href="blogSingle.html">Consulter Album</a>
+												</div>
+												<div class="rmButton">
+													<a href="">Télécharger Album</a>
 												</div>
 											</div><!-- end blogBoxContent -->
 										</div><!-- end blogBox -->
 									</li><!-- end col-sm-4 -->
 								{% endfor %}
+
+								{% for artiste in Artistes %}
+									<li class="col-sm-4 col-xs-12 artiste">
+										<div class="blogBox">
+											<div class="blogBoxContent">
+												<div class="blogHeader">
+													<h1>Pseudo : {{ artiste.username }}</h1>
+												</div>
+												<div class="admin-list clearfix">
+													<ul>
+														<li>Nb album : </li>
+													</ul>
+												</div><!-- end admin-list -->
+												<div class="rmButton">
+													<a href="{% url 'fiche_artiste' %}">Consulter Fiche Artiste</a>
+												</div>
+											</div><!-- end blogBoxContent -->
+										</div><!-- end blogBox -->
+									</li><!-- end col-sm-4 -->
+								{% endfor %}
+
+
 
 									</ul>
 								</div><!-- end aqura-filter-cotent -->
@@ -319,12 +345,8 @@
 				<div class="row">
 					<div class="col-sm-4">
 						<div class="copyFooter">
-							<a href="#">&copy; Aqura 2015</a>
+							<a href="#">&copy; CDBUCKET 2016</a>
 						</div>
-					</div>
-
-					<div class="col-sm-4">
-
 					</div>
 					<div class="col-sm-4">
 						<div class="goTop" id="back-to-top">

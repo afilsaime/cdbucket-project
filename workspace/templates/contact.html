@@ -197,11 +197,11 @@
                             <h1>
                                 Contact
                             </h1>
-                            <p>
-                                Your time is limited, don’t waste it living someone else’s life. Don’t be trapped<br>by dogma, which is living the result of other people’s thinking.<br> Don’t let the noise of other opinions drown<br> your own inner voice.
-                            </p>
+                            <h1>
+                                Chacun de nous possède une musique d'accompagnement intérieure.<br> Et si les autres l'entendent aussi, cela s'appelle la personnalité.<br><p>Gilbert Cesbron</p>
+														</h1>
                             <a href="#content" data-easing="easeInOutQuint" data-scroll="" data-speed="900" data-url="false">
-                                View More <i class="fa fa-angle-down"></i>
+                                Demandez nous conseil. <i class="fa fa-angle-down"></i>
                             </a>
                         </div>
 					</div>
@@ -218,30 +218,33 @@
 				<div class="col-sm-4">
 					<div class="contactTop">
 						<h2>Contact Information</h2>
-						<h4>198 West 21th Street, Suite 721, New York, NY 10010.</h4>
-						<p>Lorem ipsum dolor sit amet, consectetuer odio. <br>
-						Quisque volutpat mattis eros. Nullam turpis.
+						<h4>Notre équipe est à votre disposition 24/7</h4>
+						<p>Vous souhaitez créer un compte artiste?<br>
+						Vous souhaitez être mis en contact avec un label?<br>
+						N'hésitez pas à poser toutes vos questions.
 						</p>
 						<div class="contactInfo">
 							<ul>
-								<li>Email: <a href="#">info@themebrothers.com</a></li>
-								<li>Phone: <a href="#">+4070 547 235 125</a></li>
-								<li>Fax: <a href="#">+4070 125 949 678</a></li>
+								<li>Email <a href="#">info@cdbucket.com</a></li>
+								<li>Adresse <a href="#">2 rue conté, Paris</a></li>
 							</ul>
 						</div>
 					</div>
 				</div><!-- end col-sm-4 -->
 				<div class="col-sm-7 col-sm-offset-1">
 					<div class="singleBlogForm">
-						<h2>Get in Touch</h2>
-						<form action="#" method="post" class="comment-form">
-							<input id="author" name="author" type="text" value="" aria-required="true" required="" placeholder="First Name *">
-							<input id="lastName" name="email" type="text" value="" aria-required="true" required="" placeholder="Last Name">
-							<input id="url" name="url" type="text" value="" placeholder="Subject* ">
-							<input id="address" name="url" type="text" value="" placeholder="Email Address* ">
-							<textarea name="comment" placeholder="Message..." rows="6" required=""></textarea>
-							<p class="form-submit">
-								<input name="submit" type="submit" id="submit" value="Send Email">
+						<h2>Votre demande</h2>
+							<form action="" method="post" class="comment-form">
+								<input id="author" name="author" type="text" value="" aria-required="true" required="" placeholder="Pseudo*">
+								<br>
+								<input id="url" name="sujet" type="text" value="" placeholder="Type de demande* ">
+								{{ form.sujet }}
+								<input id="address" name="user_email" type="text" value="" placeholder="Email Address* ">
+								{{ form.user_email }}
+								<textarea name="message" placeholder="Message..." rows="6" required="">{{ form.message }}</textarea>
+								<p class="form-submit">
+								{% csrf_token %}
+								<input name="submit" type="submit" id="submit" value="Envoyer">
 							</p>
 						</form>
 					</div><!-- end contactForm -->

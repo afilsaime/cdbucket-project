@@ -264,16 +264,15 @@ class SupprCompte(FormView):
 class MyPlaylist(TemplateView):
     template_name = "my_playlist.html"
 
-
 class Search(FormView):
     template_name = "search.html"
     form_class = SearchForm
 
     def form_valid(self,form,**kwargs):
         query = form.cleaned_data['query']
-        musiques = Music.objects.filter(titre=query)
-        artistes = User.objects.filter(username=query)
-        albums = Album.objects.filter(titre=query)
+        musiques = Music.objects.filter(titre__icontains=query)
+        artistes = User.objects.filter(username__icontains=query)
+        albums = Album.objects.filter(titre__icontains=query)
         context = self.get_context_data(**kwargs)
         context['Albums'] = albums
         context['Artistes'] = artistes
@@ -284,3 +283,32 @@ class Search(FormView):
 
 class Contact(TemplateView):
     template_name = "contact.html"
+
+    def form_valid(self, form):
+        user_email = form.cleaned_data['user_email']
+        #ENVOI DE MAIL
+        sujet = form.cleaned_data['sujet']
+        message = form.cleaned_data['message']
+        send_mail(sujet,message,"amaouch.w@live.fr",[user_email])
+
+        #return redirect(reverse("home"))
+        return super(Contact,self).form_valid(form)
+
+
+
+
+class fiche_artiste(TemplateView):
+    template_name = "fiche_artiste.html"
+    form_class = Fiche_artiste
+
+    def form_valid(self,form,**kwargs):
+        query = form.cleaned_data['query']
+        musiques = Music.objects.filter(titre__icontains=query)
+        artistes = User.objects.filter(username__icontains=query)
+        albums = Album.objects.filter(titre__icontains=query)
+        context = self.get_context_data(**kwargs)
+        context['Albums'] = albums
+        context['Artistes'] = artistes
+        context['Musiques'] = musiques
+
+        return self.render_to_response(context)

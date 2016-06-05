@@ -236,18 +236,19 @@
 		<div class="container">
 			<div class="sectionTitle paddingBottom">
 				<span class="heading-t3"></span>
-				<h2><a >Vous désirez supprimer votre compte ?</a></h2>
+				<h2><a >Vous désirez désactiver votre compte ?</a></h2>
 				<span class="heading-b3"></span>
 			</div><!-- end sectionTtile -->
 
 			<center>
 				<form action="" method="post">
 					{% csrf_token %}
-					<label>Votre compte sera supprimé automatiquement et vous serez désinscris de la platerforme.</label>
+					<label>Votre compte sera automatiquement désactivé, il vous suffira de vous reconnecter pour réactiver votre compte.</label>
 					{{ form.user }}
-					<input type="submit" value="Valider">
+</center>
+				<br><br><br>	<input type="submit" value="Valider"></br>
 				</form>
-			</center>
+
 
 
 	</section>

@@ -2,8 +2,11 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
+# CLASS USER gerée automatiquement par DJANGO
 from datetime import timedelta
 import os
+
+
 
 # Create your models here.
 class Registration(models.Model):

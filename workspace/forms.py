@@ -149,3 +149,11 @@ class SupprCompteForm(forms.Form):
 
 class SearchForm(forms.Form):
     query = forms.CharField()
+
+class Contact(forms.Form):
+    sujet = forms.CharField()
+    user_email = forms.EmailField()
+    message = forms.CharField()
+
+class Fiche_artiste(forms.Form):
+    Fiche_artiste = forms.CharField()

@@ -43,7 +43,7 @@
       <div class="container">
           <div class="sectionTitle paddingBottom">
               <span class="heading-t3"></span>
-              <h2><a href="albumsSingle1.html">{{ Album.titre }}</a></h2>
+              <h2><a href="">{{ Album.titre }}</a></h2>
               <span class="heading-b3"></span>
           </div><!-- end sectionTtile -->
           <div class="row">
@@ -67,7 +67,6 @@
                               <td><a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
                             </tr>
                         {% endfor %}
-
                   </table>
               </div><!-- end-col-sm-8 -->
               <div class="col-sm-3 col-sm-offset-1">
@@ -79,8 +78,16 @@
                               <li>Artiste: <span>{{ Album.artiste }}</span></li>
                               <li>Publication: <span>{{ Album.date_publication }}</span></li>
                               <li>Duree: <span>{{ Album.duree_totale }}</span></li>
-                          </ul>
-                      </div><!-- end widget -->
+															<p class="form-submit">
+															{% if user.Group = Artistes %}
+															<br>
+															<a href="{% url 'ajout_musique' %}" value="Ajouter une nouvelle musique"><h3>Ajouter une musique à un Album</h3></a><br>
+															<a href="{% url 'ajout_album' %}" value="Créer un Nouvel Album"><h3>Créer un Nouvel Album</h3></a>
+															{% endif %}
+														</p>
+													</ul>
+													<br><br>
+												</div><!-- end widget -->
                     </div><!-- end sidebarAlbum -->
                 </div><!-- end col-sm-3 col-sm-offset-1 -->
             </div><!-- end row -->
@@ -99,17 +106,6 @@
 						</div>
 					</div>
 					<div class="col-sm-4">
-						<nav class="social-icons">
-							<ul class="clearfix">
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-twitter"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-facebook"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-apple"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-lastfm"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-soundcloud"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-youtube-play"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-vimeo"></i><span></span></a></li>
-                			</ul>
-						</nav>
 					</div>
 					<div class="col-sm-4">
 						<div class="goTop" id="back-to-top">

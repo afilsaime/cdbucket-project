@@ -27,4 +27,5 @@ urlpatterns = [
     url(r'^my_playlist/$', MyPlaylist.as_view(), name="my_playlist"),
     url(r'^search/$', login_required(Search.as_view()), name="search"),
     url(r'^contact/$', login_required(Contact.as_view()), name="contact"),
+    url(r'^fiche_artiste/$', login_required(fiche_artiste.as_view()), name="fiche_artiste"),
 ]
