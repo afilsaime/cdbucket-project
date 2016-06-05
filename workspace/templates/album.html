@@ -59,7 +59,7 @@
                             <tr>
                               <td class="padTable"><a href="#" class="btnPlay song"
                              data-mp3="{{ musique.path.url }}"
-                             data-artist="{{ Album.artiste }}"
+                             data-artist="{{ musique.auteur.username }}"
                              data-song="{{ musique.titre }}"
                              data-poster="{% static "assets/img/albums/cover1.jpg" %}"><i class="fa fa-play"></i></a></td>
                               <td class="tableWidth">{{ musique.titre }}</td>
@@ -123,29 +123,6 @@
 	</section>
 	<!-- =============== END FOOTER ================ -->
 	{% endblock %}
-	{% block javasscript %}
-	<!-- ================================================== -->
-	<!-- =============== START JQUERY SCRIPTS ================ -->
-	<!-- ================================================== -->
-	<script src="{% static "assets/js/jquery.js" %}"></script>
-	<script src="{% static "assets/js/bootstrap.min.js" %}"></script>
-	<script src="{% static "assets/js/plugins.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/js/playlist.js" %}"></script>
-	<script src="{% static "assets/js/mainVideo.js" %}"></script>
-	<!--[if lte IE 9 ]>
-			<script src="{% static "assets/js/placeholder.js"></script>
-		<script>
-			jQuery(function() {
-				jQuery('input, textarea').placeholder();
-			});
-		</script>
-	<![endif]-->
-	<!-- ================================================== -->
-	<!-- =============== END JQUERY SCRIPTS ================ -->
-	<!-- ================================================== -->
-	{% endblock %}
 	{% block extrajavascript %}
         <script type="text/javascript">
             $(document).ready(function(){
@@ -157,7 +134,7 @@
                 }, [
                     {% for musique in Album.liste_musique %}
                     {
-                        artist: "toto ", // the artist name
+                        artist: "{{ musique.auteur.username }}", // the artist name
                         title:"{{ musique.titre }}", // track title
                         mp3:"{{ musique.path.url }}",// mp3 path
                         oga:"{{ musique.path.url }}",// oga path

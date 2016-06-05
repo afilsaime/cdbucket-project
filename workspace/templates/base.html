@@ -9,12 +9,15 @@
         <title>Accueil</title>
         <link rel="icon" href="{% static "assets/img/content/icon.png" %}">
         <!-- ========== CSS INCLUDES ========== -->
+		<link rel="stylesheet" type="text/css" href="{% static "ModalWindowEffects/css/component.css" %}" />
         <link rel="stylesheet" type="text/css" href="{% static "CustomFileInputs/css/component.css" %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-select.css" %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-skin-slide.css" %}"/>
+
         <link rel="stylesheet" href="{% static "assets/css/master.css" %}">
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
-        <link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-select.css" %}"/>
-		<link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-skin-slide.css" %}"/>
+
     </head>
 {% endblock %}
 
@@ -115,8 +118,67 @@
       <a href="{% url 'deconnexion' %}"><i class="material-icons md-18" style="vertical-align:middle;">exit_to_app</i> Deconnexion</a>
       <!--<li><li><a href="{% url 'home' %}"><i></i>Rechercher</a></li></li>-->
       {% else %}
-      <a href="{% url 'sign-up' 'user' %}"><i class="material-icons md-18" style="vertical-align:middle;">queue</i> Inscription</a>
-      <a href="{% url 'connexion' %}"><i class="material-icons md-18" style="vertical-align:middle;" >person</i> Connexion</a>
+      <a href="#" class="md-trigger" data-modal="modal-1"><i class="material-icons md-18" style="vertical-align:middle;">queue</i> Inscription</a>
+      <a href="#" class="md-trigger" data-modal="modal-2"><i class="material-icons md-18" style="vertical-align:middle;" >person</i> Connexion</a>
+      <div class="md-modal md-effect-2" id="modal-1">
+		<div class="md-content">
+			<h3><i class="material-icons" style="vertical-align:middle;" >queue</i> Inscription</h3>
+            <div class="md-body">
+				<a href="#" class="md-trigger" data-modal="modal-3">Compte classique</a>
+                <a href="#" class="md-trigger" data-modal="modal-4">Compte artiste</a>
+            </div>
+		</div>
+	  </div>
+      <div class="md-modal md-effect-2" id="modal-2">
+			<div class="md-content">
+				<h3><i class="material-icons" style="vertical-align:middle;" >person</i> Connexion</h3>
+                <div class="md-body">
+    				<form class="" action="{% url "connexion" %}" method="POST">
+                        {% csrf_token %}
+                        <label for="id_username">Nom d'utilisateur:</label>
+                        <input id="id_username" maxlength="254" name="username" type="text">
+                        <label for="id_password">Mot de passe:</label>
+                        <input id="id_password" name="password" type="password">
+                        <input type="submit" value="Se connecter">
+                        <input type="hidden" name="next" value="{% url "connexion" %}">
+    				</form>
+                </div>
+			</div>
+		</div>
+        <div class="md-modal md-effect-2" id="modal-3">
+  			<div class="md-content">
+  				<h3><i class="material-icons" style="vertical-align:middle;" >person</i> Compte classique</h3>
+                  <div class="md-body">
+      				<form class="" action="{% url "connexion" %}" method="POST">
+                          {% csrf_token %}
+                          <label for="id_username">Nom d'utilisateur:</label>
+                          <input id="id_username" maxlength="254" name="username" type="text">
+                          <label for="id_password">Mot de passe:</label>
+                          <input id="id_password" name="password" type="password">
+                          <input type="submit" value="Se connecter">
+                          <input type="hidden" name="next" value="{% url "connexion" %}">
+      				</form>
+                  </div>
+  			</div>
+  		</div>
+        <div class="md-modal md-effect-2" id="modal-4">
+  			<div class="md-content">
+  				<h3><i class="material-icons" style="vertical-align:middle;" >person</i> Compte Artiste</h3>
+                  <div class="md-body">
+      				<form class="" action="{% url "connexion" %}" method="POST">
+                          {% csrf_token %}
+                          <label for="id_username">Nom d'utilisateur:</label>
+                          <input id="id_username" maxlength="254" name="username" type="text">
+                          <label for="id_password">Mot de passe:</label>
+                          <input id="id_password" name="password" type="password">
+                          <input type="submit" value="Se connecter">
+                          <input type="hidden" name="next" value="{% url "connexion" %}">
+      				</form>
+                  </div>
+  			</div>
+  		</div>
+        <div class="md-overlay"></div>
+
       {% endif %}
 
 
@@ -618,9 +680,11 @@
 	<script src="{% static "assets/js/jquery.js" %}"></script>
 	<script src="{% static "assets/js/bootstrap.min.js" %}"></script>
 	<script src="{% static "assets/js/plugins.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
 
+    <script src="{% static "SelectInspiration/js/classie.js" %}"></script>
+    <script src="{% static "ModalWindowEffects/js/modalEffects.js" %}"></script>
+    <script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
+	<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
 	<script src="{% static "assets/js/main.js" %}"></script>
 	<!--[if lte IE 9 ]>
 		<script src="{% static "assets/js/placeholder.js"></script>
