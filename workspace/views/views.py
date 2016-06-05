@@ -312,3 +312,9 @@ class fiche_artiste(TemplateView):
         context['Musiques'] = musiques
 
         return self.render_to_response(context)
+
+
+
+
+        class mes_albums(TemplateView):
+            template_name = "mes_albums.html"

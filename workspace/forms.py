@@ -157,3 +157,7 @@ class Contact(forms.Form):
 
 class Fiche_artiste(forms.Form):
     Fiche_artiste = forms.CharField()
+
+
+class mes_albums(forms.Form):
+    mes_albums = forms.CharField()

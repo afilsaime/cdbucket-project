@@ -28,4 +28,5 @@ urlpatterns = [
     url(r'^search/$', login_required(Search.as_view()), name="search"),
     url(r'^contact/$', login_required(Contact.as_view()), name="contact"),
     url(r'^fiche_artiste/$', login_required(fiche_artiste.as_view()), name="fiche_artiste"),
+    #url(r'^mes_albums/$', login_required(mes_albums.as_view()), name="mes_albums")
 ]
