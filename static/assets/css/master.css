@@ -7207,6 +7207,7 @@ button.close {
 }
 .form-control,
 input[type=text],
+input[type=password],
 textarea,
 .post-password-form input[type=password],
 .cart-collaterals .input-text,
@@ -7247,6 +7248,7 @@ textarea,
 }
 .form-control:hover,
 input[type=text]:hover,
+input[type=password]:hover,
 textarea:hover,
 .post-password-form input[type=password]:hover,
 .cart-collaterals .input-text:hover,

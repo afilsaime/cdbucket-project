@@ -9,7 +9,7 @@
 {% if user.is_authenticated %}
 Vous êtes connecté, {{ user.username }} !
 {% else %}
-<form method="post" action=".">
+<form method="post" action="">
 {% csrf_token %}
 {{ form.as_p }}
 <a href="{% url 'home' %}"><input type="submit" value="Se connecter" /></a>
