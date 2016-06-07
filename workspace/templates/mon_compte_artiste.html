@@ -1,4 +1,3 @@
-{% extends "base.html" %}
 {% load staticfiles %}
 {% block head %}
 <!DOCTYPE html>
@@ -124,9 +123,6 @@
 
 
 
-	<!-- si c'est un USER afficher la partie suivante -->
-
-
 	<!-- =============== START BREADCRUMB ================ -->
 	<section class="no-mb">
 		<div class="row">
@@ -162,13 +158,9 @@
 							<h3>MES INDICATEURS </h3>
 							<ul>
 								<li>Date de création du compte :<span> {{ user.date_joined }} </span></li>
-
 								<li>Votre TOP 3 des musiques les plus écoutées : <span></span></li>
-
 								<li>Votre TOP 3 des musiques les plus téléchargées : <span></span></li>
-
-
-								<li>Nombre de playlist présentes sur le site :<span></span></li>
+	              <li>Nombre de playlist présentes sur le site :<span></span></li>
 								<li>Nombre d'écoute par musique :<span></span></li>
 								<li>Nombre d'écoute TOTAL :<span></span></li>
 								<li>Nombre de téléchargement :<span></span></li>
@@ -209,91 +201,6 @@
 	</div>
 	<!-- =============== END PAGINATION ================ -->
 
-
-
-
-
-
-
-
-		{% block title %}
-		<!-- =============== START BREADCRUMB ================ -->
-		<section class="no-mb">
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="before-FullscreenSlider"></div>
-					<div class="breadcrumb-fullscreen-parent phone-menu-bg">
-						<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single4.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- =============== END BREADCRUMB ================ -->
-	  {% endblock %}
-		{% block content %}
-		<!-- =============== START ALBUM SINGLE ================ -->
-		<section class="albumSingle padding background-properties" style="background-image:url(' {% static "assets/img/albums/single44.jpg" %}');">
-			<div class="container">
-				<div class="sectionTitle paddingBottom">
-					<span class="heading-t3"></span>
-					<h2><a>Mon compte</a></h2><br>
-					<h4>Bienvenu à vous {{ user.groups }}{{ user.username }} !</h4>
-					<span class="heading-b3"></span>
-				</div><!-- end sectionTtile -->
-				<div class="row">
-					<div class="col-sm-3 col-sm-offset-1">
-						<div class="sidebarAlbum">
-							<div class="widget">
-
-								<h3>Mes Informations d'utilisateur </h3>
-								<ul>
-									<li>Date de création:<span> {{ user.date_joined }} </span></li>
-									<li>Nombre de playlist :<span></span></li>
-									<li>Nombre d'album :<span></span></li>
-									<li>Durée total audio :<span> </span></li>
-								</ul>
-								</ul>
-							</div><!-- end widget -->
-						</div><!-- end sidebarAlbum -->
-					</div><!-- end col-sm-3 col-sm-offset-1 -->
-				</div><!-- end row -->
-			</div><!-- end container -->
-		</section>
-		<!-- =============== END ALBUM SINGLE ================ -->
-
-		<!-- =============== START PAGINATION ================ -->
-		<div class="section-block  bkg-grey-ultralight pagination-2">
-			<div class="row full-width ">
-				<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-previous">
-						<span>RECOMMANDATION</span>
-					</a>
-				</div>
-				<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-next ">
-						<span>MES ALBUMS</span>
-					</a>
-				</div>
-				<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-next ">
-						<span>MES PLAYLIST</span>
-					</a>
-				</div>
-				<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-previous">
-						<span>ACCUEIL</span>
-					</a>
-				</div>
-			</div>
-		</div>
-		<!-- =============== END PAGINATION ================ -->
-
-		{% endblock %}
-
-
-
-
 	{% block footer %}
 	<!-- =============== START FOOTER ================ -->
 	<section style="background-color:#eeeeee;">
@@ -304,6 +211,19 @@
 						<div class="copyFooter">
 							<a href="#">&copy; CDBUCKET 2016</a>
 						</div>
+					</div>
+					<div class="col-sm-4">
+						<nav class="social-icons">
+							<ul class="clearfix">
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-twitter"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-facebook"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-apple"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-lastfm"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-soundcloud"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-youtube-play"></i><span></span></a></li>
+	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-vimeo"></i><span></span></a></li>
+                			</ul>
+						</nav>
 					</div>
 					<div class="col-sm-4">
 						<div class="goTop" id="back-to-top">
