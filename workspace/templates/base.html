@@ -116,6 +116,18 @@
       {% if user.is_authenticated %}
       <a href="{% url 'mon_compte' %}"><i class="material-icons md-18" style="vertical-align:middle;" >person</i> Mon Compte</a>
       <a href="{% url 'deconnexion' %}"><i class="material-icons md-18" style="vertical-align:middle;">exit_to_app</i> Deconnexion</a>
+      <a href="#" class="md-trigger" data-modal="modal-5"><i class="material-icons" style="vertical-align:middle;">search</i></a>
+      <div class="md-modal md-effect-7" id="modal-5">
+		<div class="md-content">
+			<h3><i class="material-icons" style="vertical-align:middle;">search</i> Rechercher</h3>
+            <form class="" action="{% url "search" %}" method="POST">
+                {% csrf_token %}
+                <input id="id_query" name="query" type="text">
+                <input type="submit" value="Go!" style="margin-bottom:10px;">
+            </form>
+		</div>
+	  </div>
+      <div class="md-overlay"></div>
       <!--<li><li><a href="{% url 'home' %}"><i></i>Rechercher</a></li></li>-->
       {% else %}
       <a href="#" class="md-trigger" data-modal="modal-1"><i class="material-icons md-18" style="vertical-align:middle;">queue</i> Inscription</a>
@@ -147,32 +159,38 @@
 		</div>
         <div class="md-modal md-effect-2" id="modal-3">
   			<div class="md-content">
-  				<h3><i class="material-icons" style="vertical-align:middle;" >person</i> Compte classique</h3>
+  				<h3><i class="material-icons" style="vertical-align:middle;" >hearing</i> Compte classique</h3>
                   <div class="md-body">
-      				<form class="" action="{% url "connexion" %}" method="POST">
+      				<form class="" action="{% url "sign-up" "user" %}" method="POST">
                           {% csrf_token %}
-                          <label for="id_username">Nom d'utilisateur:</label>
-                          <input id="id_username" maxlength="254" name="username" type="text">
-                          <label for="id_password">Mot de passe:</label>
+                          <label for="id_username">Identifiant:</label>
+                          <input id="id_username" maxlength="30" name="username" type="text">
+                          <label for="id_email">Adresse Mail:</label>
+                          <input id="id_email" name="email" type="email">
+                          <label for="id_password">Mot de Passe:</label>
                           <input id="id_password" name="password" type="password">
-                          <input type="submit" value="Se connecter">
-                          <input type="hidden" name="next" value="{% url "connexion" %}">
+                          <label for="id_password2">Confirmation du mot de passe:</label>
+                          <input id="id_password2" name="password2" type="password">
+                          <input type="submit" value="Submit">
       				</form>
                   </div>
   			</div>
   		</div>
         <div class="md-modal md-effect-2" id="modal-4">
   			<div class="md-content">
-  				<h3><i class="material-icons" style="vertical-align:middle;" >person</i> Compte Artiste</h3>
+  				<h3><i class="material-icons" style="vertical-align:middle;" >record_voice_over</i> Compte Artiste</h3>
                   <div class="md-body">
-      				<form class="" action="{% url "connexion" %}" method="POST">
+      				<form class="" action="{% url "sign-up" "artist" %}" method="POST">
                           {% csrf_token %}
-                          <label for="id_username">Nom d'utilisateur:</label>
-                          <input id="id_username" maxlength="254" name="username" type="text">
-                          <label for="id_password">Mot de passe:</label>
+                          <label for="id_username">Identifiant:</label>
+                          <input id="id_username" maxlength="30" name="username" type="text">
+                          <label for="id_email">Adresse Mail:</label>
+                          <input id="id_email" name="email" type="email">
+                          <label for="id_password">Mot de Passe:</label>
                           <input id="id_password" name="password" type="password">
-                          <input type="submit" value="Se connecter">
-                          <input type="hidden" name="next" value="{% url "connexion" %}">
+                          <label for="id_password2">Confirmation du mot de passe:</label>
+                          <input id="id_password2" name="password2" type="password">
+                          <input type="submit" value="Submit">
       				</form>
                   </div>
   			</div>
@@ -393,6 +411,12 @@
 
     <script src="{% static "SelectInspiration/js/classie.js" %}"></script>
     <script src="{% static "ModalWindowEffects/js/modalEffects.js" %}"></script>
+    <script>
+        // this is important for IEs
+        var polyfilter_scriptpath = '{% static "ModalWindowEffects/js/" %}';
+    </script>
+    <script src="{% static "ModalWindowEffects/js/cssParser.min.js" %}"></script>
+
     <script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
 	<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
 	<script src="{% static "assets/js/main.js" %}"></script>

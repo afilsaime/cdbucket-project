@@ -78,22 +78,22 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.mysql',
-#        'NAME': 'mysite',
-#        'USER': 'root',
-#        'PASSWORD': '',
-#        'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
-#        'PORT': '3306',
-#    }
-        'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'deezer',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
-        'PORT': '8889',
-    }
+   'default': {
+       'ENGINE': 'django.db.backends.mysql',
+       'NAME': 'mysite',
+       'USER': 'root',
+       'PASSWORD': '',
+       'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
+       'PORT': '3306',
+   }
+    #     'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'deezer',
+    #     'USER': 'root',
+    #     'PASSWORD': 'root',
+    #     'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
+    #     'PORT': '8889',
+    # }
 }
 
 

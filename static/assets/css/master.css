@@ -7207,6 +7207,7 @@ button.close {
 }
 .form-control,
 input[type=text],
+input[type=email],
 input[type=password],
 textarea,
 .post-password-form input[type=password],
