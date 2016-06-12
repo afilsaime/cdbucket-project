@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "search.html" %}
 {% load staticfiles %}
 {% block head %}
 <!DOCTYPE html>
@@ -81,8 +81,8 @@
 															<p class="form-submit">
 															{% if user.Group = Artistes %}
 															<br>
-															<a href="{% url 'ajout_musique' %}" value="Ajouter une nouvelle musique"><h3>Ajouter une musique à un Album</h3></a><br>
-															<a href="{% url 'ajout_album' %}" value="Créer un Nouvel Album"><h3>Créer un Nouvel Album</h3></a>
+															<a href="{% url 'ajout_musique' %}" value="Ajouter une nouvelle musique"><input type="button" value="Ajouter une musique à un Album"></a><br><br>
+															<a href="{% url 'ajout_album' %}" value="Créer un Nouvel Album"><input type="button" value="Créer un Nouvel Album"></a>
 															{% endif %}
 														</p>
 													</ul>

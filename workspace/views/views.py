@@ -167,6 +167,8 @@ class AccessAlbumView(DetailView):
 class monCompte(TemplateView):
     template_name = "mon_compte.html"
 
+class monCompte_artiste(TemplateView):
+    template_name = "mon_compte_artiste.html"
 
 class NewEmail(FormView):
     template_name = "new_email.html"
@@ -261,23 +263,32 @@ class SupprCompte(FormView):
         return super(SupprCompte,self).form_valid(form)
 
 
-class MyPlaylist(TemplateView):
+class MyPlaylist(DetailView):
+    context_object_name = "Album"
+    model = Album
     template_name = "my_playlist.html"
+
+    def form_valid(**kwargs):
+        albums = Album.objects.filter(type_album=playlist)
+        context = self.get_context_data(**kwargs)
+        context['Album'] = albums
+        print(albums)
+        return self.render_to_response(context)
 
 class Search(FormView):
     template_name = "search.html"
     form_class = SearchForm
 
     def form_valid(self,form,**kwargs):
+        group = Group.objects.get(name='Artistes')
         query = form.cleaned_data['query']
         musiques = Music.objects.filter(titre__icontains=query)
-        artistes = User.objects.filter(username__icontains=query)
+        artistes = group.user_set.filter(username__icontains=query)
         albums = Album.objects.filter(titre__icontains=query)
         context = self.get_context_data(**kwargs)
         context['Albums'] = albums
         context['Artistes'] = artistes
         context['Musiques'] = musiques
-
         return self.render_to_response(context)
 
 
@@ -295,26 +306,27 @@ class Contact(TemplateView):
         return super(Contact,self).form_valid(form)
 
 
-
-
-class fiche_artiste(TemplateView):
+class fiche_artiste(DetailView):
+    context_object_name = "artiste"
+    model = User
     template_name = "fiche_artiste.html"
-    form_class = Fiche_artiste
 
-    def form_valid(self,form,**kwargs):
-        query = form.cleaned_data['query']
-        musiques = Music.objects.filter(titre__icontains=query)
-        artistes = User.objects.filter(username__icontains=query)
-        albums = Album.objects.filter(titre__icontains=query)
-        context = self.get_context_data(**kwargs)
-        context['Albums'] = albums
-        context['Artistes'] = artistes
-        context['Musiques'] = musiques
-
-        return self.render_to_response(context)
+    def get_context_data(self,**kwargs):
+        pk=self.request.GET.get('pk')
+        Utilisateur = User.objects.get(id=pk)
+        print(pk)
+        context = super(fiche_artiste, self).get_context_data(**kwargs)
+        context['Albums'] = Utilisateur.album_set.all()
+        return context
 
 
 
 
-        class mes_albums(TemplateView):
-            template_name = "mes_albums.html"
+
+
+
+class mes_albums(TemplateView):
+    template_name = "mes_albums.html"
+
+class playlist_accueil(TemplateView):
+    template_name = "playlist_accueil.html"

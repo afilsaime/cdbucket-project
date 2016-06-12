@@ -210,67 +210,11 @@
 		<div class="container">
 			<div class="sectionTitle paddingBottom">
 				<span class="heading-t3"></span>
-				<h2><a>Votre Playlist</a></h2><br>
+				<h2><a>Votre/vos Playlist</a></h2><br>
 
-<!-- idée : affichage en fonction du nombre de playlist presente pour ce user dans la BDD
-Si 3 playlist afficher les 3 choix pour qu'il entre dedans sinon afficher directement la playlist en liste -->
+				<a href="{% url 'ajout_playliste' %}" value="Créer une Playlist"><input type="button" value="Créer une Playlist"></a><br><br>
 
-			  <section class="albumSingle padding background-properties" style="background-image:url(assets/img/albums/single22.jpg);">
-					<h4>Bienvenu à vous {{ user.get_username }} !</h4>
-					<span class="heading-b3"></span>
-				    <div class="container">
-			          <div class="sectionTitle paddingBottom">
-			              <span class="heading-t3"></span><br><br>
-			              <h2><a href="">{{ Album.titre }}</a></h2>
-			          </div><!-- end sectionTtile -->
-			          <div class="row">
-			              <div class="col-sm-8">
-			                  <table class="featured-songs">
-			                        <tr>
-			                          <td></td>
-			                          <td class="nameTable">Titre</td>
-			                          <td class="lengthTable">Duree</td>
-			                          <td></td>
-			                        </tr>
-			                        {% for musique in Album.liste_musique %}
-			                            <tr>
-			                              <td class="padTable"><a href="#" class="btnPlay song"
-			                             data-mp3="{{ musique.path.url }}"
-			                             data-artist="{{ musique.auteur.username }}"
-			                             data-song="{{ musique.titre }}"
-			                             data-poster="{% static "assets/img/albums/cover1.jpg" %}"><i class="fa fa-play"></i></a></td>
-			                              <td class="tableWidth">{{ musique.titre }}</td>
-			                              <td>{{ musique.duree }}</td>
-			                              <td><a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
-			                            </tr>
-			                        {% endfor %}
-			                  </table>
-			              </div><!-- end-col-sm-8 -->
-			              <div class="col-sm-3 col-sm-offset-1">
-			                  <div class="sidebarAlbum">
-			                      <div class="widget">
-			                          <h3>Details de l'album</h3>
-			                          <ul>
-			                              <li>Titre: <span>{{ Album.titre }}</span></li>
-			                              <li>Artiste: <span>{{ Album.artiste }}</span></li>
-			                              <li>Publication: <span>{{ Album.date_publication }}</span></li>
-			                              <li>Duree: <span>{{ Album.duree_totale }}</span></li>
-																		<p class="form-submit">
-																		{% if user.Group = Artistes %}
-																		<br>
-																		<a href="{% url 'ajout_musique' %}" value="Ajouter une nouvelle musique"><input type="button" value="Ajouter une musique à un Album"></a><br><br>
-																		<a href="{% url 'ajout_album' %}" value="Créer un Nouvel Album"><input type="button" value="Créer un Nouvel Album"></a>
-																		{% endif %}
-																	</p>
-																</ul>
-																<br><br>
-															</div><!-- end widget -->
-			                    </div><!-- end sidebarAlbum -->
-			                </div><!-- end col-sm-3 col-sm-offset-1 -->
-			            </div><!-- end row -->
-			        </div><!-- end container -->
-			    </section>
-			  {% endblock %}
+        {% endblock %}
 				{% block footer %}
 				<!-- =============== START FOOTER ================ -->
 				<section style="background-color:#eeeeee;">

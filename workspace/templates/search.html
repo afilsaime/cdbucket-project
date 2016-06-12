@@ -140,7 +140,7 @@
             </a>
           </li>
           <li>
-            <a href="{% url 'my_playlist' %}">
+            <a href="{% url 'playlist_accueil' %}">
               Ma Playlist
             </a>
           </li>
@@ -206,16 +206,14 @@
 				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
 					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/blog/header.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
 						<div class="breadTxt">
-                            <h1>
-                                Search
-                            </h1>
-                            <p>
-                              <h2>Vous recherchez une musique en particulier ?</h2>
-                            </p>
-                            <a href="#content" data-easing="easeInOutQuint" data-scroll="" data-speed="900" data-url="false">
-                                RECHERCHER <i class="fa fa-angle-down"></i>
-                            </a>
-                        </div>
+              <h1>
+              Search
+              </h1>
+              <p><h2>Vous recherchez une musique en particulier ?</h2></p>
+              <a href="#content" data-easing="easeInOutQuint" data-scroll="" data-speed="900" data-url="false">
+              RECHERCHER <i class="fa fa-angle-down"></i>
+              </a>
+            </div>
 					</div>
 				</div>
 			</div>
@@ -262,9 +260,19 @@
 														<ul>
 															<li>Auteur : {{ music.auteur }}</li>
 															<li>{{ musique.duree }}</li>
-															<li><a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></li>
+
+
+																	<tr>
+																		<td class="padTable"><a href="#" class="btnPlay song"
+																	 data-mp3="{{ musique.path.url }}"
+																	 data-artist="{{ musique.auteur.username }}"
+																	 data-song="{{ musique.titre }}"
+																	 data-poster="{% static "assets/img/albums/cover1.jpg" %}"><i class="fa fa-play"></i></a></td>
+																		<td class="tableWidth">{{ musique.titre }}</td>
+																		<td>{{ musique.duree }}</td>
+																		</tr>
 														</ul>
-													</div><!-- end admin-list -->
+													</div>
 													<div class="rmButton">
 														<a href="blogSingle.html">Ajouter à ma playlist</a>
 													</div>
@@ -272,7 +280,7 @@
 														<a href="blogSingle.html">Voir l'album</a>
 													</div>
 													<div class="rmButton">
-														<a href="blogSingle.html">Télécharger</a>
+														<a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3">Télécharger</a>
 													</div>
 												</div><!-- end blogBoxContent -->
 											</div><!-- end blogBox -->
@@ -293,7 +301,7 @@
 													</ul>
 												</div><!-- end admin-list -->
 												<div class="rmButton">
-													<a href="blogSingle.html">Consulter Album</a>
+													<a href="{% url "voir_album" album.id %}">Consulter Album</a>
 												</div>
 												<div class="rmButton">
 													<a href="">Télécharger Album</a>
@@ -316,15 +324,12 @@
 													</ul>
 												</div><!-- end admin-list -->
 												<div class="rmButton">
-													<a href="{% url 'fiche_artiste' %}">Consulter Fiche Artiste</a>
+													<a href="{% url 'fiche_artiste' artiste.id %}">Consulter Fiche Artiste</a>
 												</div>
 											</div><!-- end blogBoxContent -->
 										</div><!-- end blogBox -->
 									</li><!-- end col-sm-4 -->
 								{% endfor %}
-
-
-
 									</ul>
 								</div><!-- end aqura-filter-cotent -->
 							</div><!-- end col-sm-12 -->

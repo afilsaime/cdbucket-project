@@ -201,16 +201,16 @@
 				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
 					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/blog/header.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
 						<div class="breadTxt">
-                            <h1>
-                                Search
-                            </h1>
-                            <p>
-                              <h2>La fiche de votre Artiste</h2>
-                            </p>
-                            <a href="#content" data-easing="easeInOutQuint" data-scroll="" data-speed="900" data-url="false">
-                                Toutes ses musiques. <i class="fa fa-angle-down"></i>
-                            </a>
-                        </div>
+              <h1>
+                Search
+                </h1>
+                <p>
+                  <h2>La fiche de votre Artiste</h2>
+                </p>
+                <a href="#content" data-easing="easeInOutQuint" data-scroll="" data-speed="900" data-url="false">
+                  Toutes ses musiques. <i class="fa fa-angle-down"></i>
+              </a>
+              </div>
 					</div>
 				</div>
 			</div>
@@ -223,13 +223,9 @@
 	<!-- =============== START BLOG FILTER ================ -->
 	<section class="aquraFilter padding" id="content">
 		<div class="container">
-			<!-- start blog-filter-category -->
-			<div class="categories">
-        <form method="POST" action="">{% csrf_token %}{{ form.query }}</form>
-			</div>
+	     <h1>Pseudo : {{ artiste.username }}</h1>
 
-			{% if Albums or Artistes or Musiques %}
-
+			{% if Albums or Musiques %}
 						<!-- start filter -->
 						<div class="row">
 							<div class="col-sm-12 col-xs-12">
@@ -295,10 +291,6 @@
 						<!-- end filter -->
 					</div><!-- end container -->
 				</section>
-
-
-			{% else %}
-			<h1>Votre recherche n'a pas aboutie, merci.</h1>
 
 	<!-- =============== END BLOG FILTER ================ -->
 	{% endif %}

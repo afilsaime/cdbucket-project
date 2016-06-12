@@ -24,9 +24,11 @@ urlpatterns = [
     url(r'^new_email/$', login_required(NewEmail.as_view()), name="new_email"),
     url(r'^suppr_compte/$', login_required(SupprCompte.as_view()), name="suppr_compte"),
     url(r'^email_activation/(?P<key>\w+)',Email_Activation.as_view(), name="email_activation"),
-    url(r'^my_playlist/$', MyPlaylist.as_view(), name="my_playlist"),
+    url(r'^my_playlist/(?P<pk>\d+)$', MyPlaylist.as_view(), name="my_playlist"),
     url(r'^search/$', login_required(Search.as_view()), name="search"),
     url(r'^contact/$', login_required(Contact.as_view()), name="contact"),
-    url(r'^fiche_artiste/$', login_required(fiche_artiste.as_view()), name="fiche_artiste"),
-    #url(r'^mes_albums/$', login_required(mes_albums.as_view()), name="mes_albums")
+    url(r'^fiche_artiste/(?P<pk>\d+)$', login_required(fiche_artiste.as_view()), name="fiche_artiste"),
+    url(r'^mes_albums/$', login_required(mes_albums.as_view()), name="mes_albums"),
+    url(r'^mon_compte_artiste/$', login_required(monCompte_artiste.as_view()), name="mon_compte_artiste"),
+    url(r'^playlist_accueil/$', login_required(playlist_accueil.as_view()), name="playlist_accueil")
 ]
