@@ -223,79 +223,58 @@
 	<!-- =============== START BLOG FILTER ================ -->
 	<section class="aquraFilter padding" id="content">
 		<div class="container">
-	     <h1>Pseudo : {{ artiste.username }}</h1>
-
-			{% if Albums or Musiques %}
-						<!-- start filter -->
-						<div class="row">
-							<div class="col-sm-12 col-xs-12">
-								<div class="aqura-filter-content">
-									<ul class="clearfix">
-									{% for music in Musiques %}
-                  <h1>Toutes ses musiques</h1>
-										<li class="col-sm-4 col-xs-12">
-											<div class="blogBox">
-												<div class="blogBoxContent">
-													<div class="blogHeader">
-														<h1>Titre : {{ music.titre }}</h1>
-													</div>
-													<div class="admin-list clearfix">
-														<ul>
-															<li>Auteur : {{ music.auteur }}</li>
-															<li>{{ musique.duree }}</li>
-															<li><a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></li>
-														</ul>
-													</div><!-- end admin-list -->
-													<div class="rmButton">
-														<a href="blogSingle.html">Ajouter à ma playlist</a>
-													</div>
-													<div class="rmButton">
-														<a href="blogSingle.html">Voir l'album</a>
-													</div>
-													<div class="rmButton">
-														<a href="blogSingle.html">Télécharger</a>
-													</div>
-												</div><!-- end blogBoxContent -->
-											</div><!-- end blogBox -->
-										</li><!-- end col-sm-4 -->
-								{% endfor %}
-
+	     <center><span class="heading-t3"></span><h2>Album de {{ artiste.username }}</h2><br>
+{% if Albums %}
 								{% for album in Albums %}
-                <h1>Toutes ses Albums</h1>
-									<li class="col-sm-4 col-xs-12">
-										<div class="blogBox">
-											<div class="blogBoxContent">
-												<div class="blogHeader">
-													<h1>Titre : {{ album.titre }}</h1>
-												</div>
-												<div class="admin-list clearfix">
-													<ul>
-														<li>Auteur : {{ album.artiste.username }}</li>
-														<li>Date publi.: {{ album.date_publication }}</li>
-													</ul>
-												</div><!-- end admin-list -->
-												<div class="rmButton">
-													<a href="blogSingle.html">Consulter Album</a>
-												</div>
-												<div class="rmButton">
-													<a href="blogSingle.html">Télécharger Album</a>
-												</div>
-											</div><!-- end blogBoxContent -->
-										</div><!-- end blogBox -->
-									</li><!-- end col-sm-4 -->
+									          <div class="sectionTitle paddingBottom">
+								              <span class="heading-t3"></span>
+								              <h2>{{ album.titre }}</h2>
+								              <span class="heading-b3"></span>
+								          </div><!-- end sectionTtile -->
+								          <div class="row">
+								              <div class="col-sm-8">
+								                  <table class="featured-songs">
+								                        <tr>
+								                          <td></td>
+								                          <td class="nameTable">Titre</td>
+								                          <td class="lengthTable">Duree</td>
+								                          <td></td>
+								                        </tr>
+								                        {% for music in album.liste_musique %}
+								                            <tr>
+								                              <td class="padTable"><a href="#" class="btnPlay song"
+								                             data-mp3="{{ music.path.url }}"
+								                             data-artist="{{ music.auteur.username }}"
+								                             data-song="{{ music.titre }}"
+								                             data-poster="{% static "assets/img/albums/cover1.jpg" %}"><i class="fa fa-play"></i></a></td>
+								                              <td class="tableWidth">{{ music.titre }}</td>
+								                              <td>{{ music.duree }}</td>
+								                              <td><a href="{{ music.path.url }}" download="{{ music.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
+								                            </tr>
+																				{% endfor %}
+								                  </table>
+								              </div><!-- end-col-sm-8 -->
+								              <div class="col-sm-3 col-sm-offset-1">
+								                  <div class="sidebarAlbum">
+								                      <div class="widget">
+								                          <h3>Details de l'album</h3>
+								                          <ul>
+								                              <li>Titre: <span>{{ album.titre }}</span></li>
+								                              <li>Artiste: <span>{{ album.artiste }}</span></li>
+								                              <li>Publication: <span>{{ album.date_publication }}</span></li>
+								                              <li>Duree: <span>{{ album.duree_totale }}</span></li>
+																							<p class="form-submit">
+																						</p>
+																					</ul>
+																					<br><br>
+																				</div><!-- end widget -->
+								                    </div><!-- end sidebarAlbum -->
+								                </div><!-- end col-sm-3 col-sm-offset-1 -->
+								            </div><!-- end row -->
 								{% endfor %}
-									</ul>
-								</div><!-- end aqura-filter-cotent -->
-							</div><!-- end col-sm-12 -->
-						</div><!-- end row -->
-						<!-- end filter -->
-					</div><!-- end container -->
-				</section>
-
 	<!-- =============== END BLOG FILTER ================ -->
 	{% endif %}
 	{% endblock %}
-
 
   {% block footer %}
 	<!-- =============== START FOOTER ================ -->

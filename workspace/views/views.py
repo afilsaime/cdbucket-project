@@ -223,8 +223,6 @@ class NewMDP(FormView):
         user.set_password(password)
         user.save()
 
-
-
         #ENVOI DE MAIL
         #sujet = "Nouveau mot de passe"
     #    titre = "<h1>Mis à jour mot de passe</h1></br></br>"
@@ -311,16 +309,13 @@ class fiche_artiste(DetailView):
     model = User
     template_name = "fiche_artiste.html"
 
+
     def get_context_data(self,**kwargs):
-        pk=self.request.GET.get('pk')
-        Utilisateur = User.objects.get(id=pk)
-        print(pk)
         context = super(fiche_artiste, self).get_context_data(**kwargs)
-        context['Albums'] = Utilisateur.album_set.all()
+        utilisateur = super(fiche_artiste, self).get_object()
+        albums = Album.objects.filter(artiste=utilisateur.id).exclude(type_album='PL')
+        context['Albums'] = albums
         return context
-
-
-
 
 
 

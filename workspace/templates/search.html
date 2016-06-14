@@ -254,34 +254,22 @@
 											<div class="blogBox">
 												<div class="blogBoxContent">
 													<div class="blogHeader">
-														<h1>Titre : {{ music.titre }}</h1>
+														<h1>{{ music.auteur }} - {{ music.titre }}</h1>
 													</div>
 													<div class="admin-list clearfix">
-														<ul>
-															<li>Auteur : {{ music.auteur }}</li>
-															<li>{{ musique.duree }}</li>
-
-
-																	<tr>
-																		<td class="padTable"><a href="#" class="btnPlay song"
-																	 data-mp3="{{ musique.path.url }}"
-																	 data-artist="{{ musique.auteur.username }}"
-																	 data-song="{{ musique.titre }}"
-																	 data-poster="{% static "assets/img/albums/cover1.jpg" %}"><i class="fa fa-play"></i></a></td>
-																		<td class="tableWidth">{{ musique.titre }}</td>
-																		<td>{{ musique.duree }}</td>
-																		</tr>
+														<ul><br>
+															<li>Durée : {{ music.duree }}</li>
 														</ul>
 													</div>
 													<div class="rmButton">
-														<a href="blogSingle.html">Ajouter à ma playlist</a>
+														<a href="">Ajouter à ma playlist</a>
 													</div>
 													<div class="rmButton">
-														<a href="blogSingle.html">Voir l'album</a>
+														<a href="{% url "voir_album" music.album.id %}">Voir l'album</a>
 													</div>
-													<div class="rmButton">
-														<a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3">Télécharger</a>
-													</div>
+													<tr>
+													 <td><a href="{{ music.path.url }}" download="{{ music.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
+													</tr>
 												</div><!-- end blogBoxContent -->
 											</div><!-- end blogBox -->
 										</li><!-- end col-sm-4 -->
@@ -296,12 +284,14 @@
 												</div>
 												<div class="admin-list clearfix">
 													<ul>
-														<li>Auteur : {{ album.artiste.username }}</li>
-														<li>Date publi.: {{ album.date_publication }}</li>
+														<li>Album de {{ album.artiste.username }} publié le {{ album.date_publication }}</li>
 													</ul>
 												</div><!-- end admin-list -->
 												<div class="rmButton">
 													<a href="{% url "voir_album" album.id %}">Consulter Album</a>
+												</div>
+												<div class="rmButton">
+													<a href="">Ecouter</a>
 												</div>
 												<div class="rmButton">
 													<a href="">Télécharger Album</a>
@@ -318,11 +308,6 @@
 												<div class="blogHeader">
 													<h1>Pseudo : {{ artiste.username }}</h1>
 												</div>
-												<div class="admin-list clearfix">
-													<ul>
-														<li>Nb album : </li>
-													</ul>
-												</div><!-- end admin-list -->
 												<div class="rmButton">
 													<a href="{% url 'fiche_artiste' artiste.id %}">Consulter Fiche Artiste</a>
 												</div>
@@ -340,7 +325,8 @@
 
 
 			{% else %}
-			<h1>Votre recherche n'a pas aboutie, merci.</h1>
+			<h2>Votre recherche n'a pas aboutie, merci.</h2><br>
+
 
 	<!-- =============== END BLOG FILTER ================ -->
 	{% endif %}

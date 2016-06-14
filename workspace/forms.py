@@ -134,7 +134,6 @@ class NewPassword(forms.Form):
                 msg = "La taille du mot de passe doit être d'au moins 8 caracteres"
                 self.add_error("password",msg)
 
-
         return cleaned_data
 
 
