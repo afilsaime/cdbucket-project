@@ -79,7 +79,7 @@
                               <li>Publication: <span>{{ Album.date_publication }}</span></li>
                               <li>Duree: <span>{{ Album.duree_totale }}</span></li>
 															<p class="form-submit">
-															{% if user.Group = Artistes %}
+															{% if group = 'Artistes' %}
 															<br>
 															<a href="{% url 'ajout_musique' %}" value="Ajouter une nouvelle musique"><h3>Ajouter une musique à un Album</h3></a><br>
 															<a href="{% url 'ajout_album' %}" value="Créer un Nouvel Album"><h3>Créer un Nouvel Album</h3></a>
@@ -142,6 +142,6 @@
 	<!-- =============== END JQUERY SCRIPTS ================ -->
 	<!-- ================================================== -->
 	{% endblock %}
-	
+
 </body>
 </html>

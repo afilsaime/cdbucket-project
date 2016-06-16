@@ -14,6 +14,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.core.exceptions import ObjectDoesNotExist
 import datetime
 import uuid
 
@@ -164,8 +165,35 @@ class AccessAlbumView(DetailView):
     model = Album
     template_name = "album.html"
 
+
+    def get_context_data(self,**kwargs):
+        context = super(AccessAlbumView, self).get_context_data(**kwargs)
+
+        try:
+            groupes = self.request.user.groups.get(name="Artistes")
+            context['group'] = groupes.name
+
+        except ObjectDoesNotExist:
+            context['group'] = "User"
+
+        return context
+
+
 class monCompte(TemplateView):
     template_name = "mon_compte.html"
+    users_in_group = Group.objects.get(name="Artistes").user_set.all()
+
+    def get_context_data(self,**kwargs):
+        context = super(monCompte, self).get_context_data(**kwargs)
+
+        try:
+            groupes = self.request.user.groups.get(name="Artistes")
+            context['group'] = groupes.name
+
+        except ObjectDoesNotExist:
+            context['group'] = "User"
+
+        return context
 
 class monCompte_artiste(TemplateView):
     template_name = "mon_compte_artiste.html"
@@ -316,8 +344,6 @@ class fiche_artiste(DetailView):
         albums = Album.objects.filter(artiste=utilisateur.id).exclude(type_album='PL')
         context['Albums'] = albums
         return context
-
-
 
 
 class mes_albums(TemplateView):
