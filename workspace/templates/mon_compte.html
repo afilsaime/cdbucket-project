@@ -16,15 +16,15 @@
 </head>
 {% endblock %}
 <body>
-    {% block loader %}
-        <div class="page-loader">
-             <div class="vertical-align align-center">
-                  <img src="{% static "assets/loader/loader.gif" %}" alt="" class="loader-img">
-             </div>
-        </div>
-    {% endblock %}
+	{% block loader %}
+	<div class="page-loader">
+		<div class="vertical-align align-center">
+			<img src="{% static "assets/loader/loader.gif" %}" alt="" class="loader-img">
+		</div>
+	</div>
+	{% endblock %}
 
-		{% block headerNav %}
+	{% block headerNav %}
 	<!-- =============== START TOP HEADER ================ -->
 	<div class="topHeader" >
 		<div class="header">
@@ -34,7 +34,7 @@
 					</div><!-- end myCart -->
 					<div class="cartParent">
 						<div class="cartItems">
-							</div><!-- end cartItems -->
+						</div><!-- end cartItems -->
 					</div><!-- end cartParent -->
 				</div><!--end cartContainer  -->
 				<!-- Open Menu Button -->
@@ -57,7 +57,11 @@
 				</div>
 				<!-- Menu Fixed Primary List -->
 				<ul>
-					<!-- Menu Fixed Item -->
+					<li>
+						<a href="{% url 'mon_compte' %}">
+							Mes infos
+						</a>
+					</li>
 					<li>
 						<a href="{% url 'home' %}">
 							Mes albums
@@ -114,8 +118,8 @@
 		</div><!-- end menu-fixed-container -->
 		<!-- =============== STAR LOGO ================ -->
 		<div class="logo-container-top">
-	        <a href="{% url 'home' %}">Cdbucket</a>
-	    </div><!-- end logo-container-top -->
+			<a href="{% url 'home' %}">Cdbucket</a>
+		</div><!-- end logo-container-top -->
 
 		<!-- =============== END LOGO ================ -->
 	</div><!-- end topHeader -->
@@ -124,9 +128,8 @@
 
 
 
-	<!-- si c'est un USER afficher la partie suivante -->
-
-
+	{% block title %}
+	{% if group == "Artistes" %}
 	<!-- =============== START BREADCRUMB ================ -->
 	<section class="no-mb">
 		<div class="row">
@@ -141,8 +144,26 @@
 	</section>
 	<!-- =============== END BREADCRUMB ================ -->
 
+	{% else %}
+	<!-- =============== START BREADCRUMB ================ -->
+	<section class="no-mb">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="before-FullscreenSlider"></div>
+				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
+					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single4.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- =============== END BREADCRUMB ================ -->
+	{% endif %}
+	{% endblock %}
 
 
+	{% block content %}
+	{% if group == "Artistes" %}
 	<!-- =============== START ALBUM SINGLE ================ -->
 	<section class="albumSingle padding background-properties" style="background-image:url(' {% static "assets/img/albums/single44.jpg" %}');">
 		<div class="container">
@@ -157,17 +178,11 @@
 					<div class="sidebarAlbum">
 						<div class="widget">
 							<h3>MES INFORMATIONS D'ARTISTE </h3>
-
-
 							<h3>MES INDICATEURS </h3>
 							<ul>
 								<li>Date de création du compte :<span> {{ user.date_joined }} </span></li>
-
 								<li>Votre TOP 3 des musiques les plus écoutées : <span></span></li>
-
 								<li>Votre TOP 3 des musiques les plus téléchargées : <span></span></li>
-
-
 								<li>Nombre de playlist présentes sur le site :<span></span></li>
 								<li>Nombre d'écoute par musique :<span></span></li>
 								<li>Nombre d'écoute TOTAL :<span></span></li>
@@ -182,165 +197,116 @@
 	</section>
 	<!-- =============== END ALBUM SINGLE ================ -->
 
-	<!-- =============== START PAGINATION ================ -->
-	<div class="section-block  bkg-grey-ultralight pagination-2">
-		<div class="row full-width ">
-			<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="{% url 'home' %}" class="pagination-previous">
-					<span>RECOMMANDATION</span>
-				</a>
-			</div>
-			<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="{% url 'home' %}" class="pagination-next ">
-					<span>MES ALBUMS</span>
-				</a>
-			</div>
-			<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="{% url 'home' %}" class="pagination-next ">
-					<span>MES PLAYLIST</span>
-				</a>
-			</div>
-			<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="{% url 'home' %}" class="pagination-previous">
-					<span>ACCUEIL</span>
-				</a>
+	{% else %}
+
+	<!-- =============== START ALBUM SINGLE ================ -->
+	<section class="albumSingle padding background-properties" style="background-image:url(' {% static "assets/img/albums/single44.jpg" %}');">
+		<div class="container">
+			<div class="sectionTitle paddingBottom">
+				<span class="heading-t3"></span>
+				<h2><a>Mon compte</a></h2><br>
+				<h4>Bienvenu à vous {{ group }} !</h4>
+				<span class="heading-b3"></span>
+			</div><!-- end sectionTtile -->
+			<div class="row">
+				<div class="col-sm-3 col-sm-offset-1">
+					<div class="sidebarAlbum">
+						<div class="widget">
+
+							<h3>Mes Informations d'utilisateur </h3>
+							<ul>
+								<li>Date de création:<span> {{ user.date_joined }} </span></li>
+								<li>Nombre de playlist :<span></span></li>
+								<li>Nombre d'album :<span></span></li>
+								<li>Durée total audio :<span> </span></li>
+							</ul>
+						</ul>
+					</div><!-- end widget -->
+				</div><!-- end sidebarAlbum -->
+			</div><!-- end col-sm-3 col-sm-offset-1 -->
+		</div><!-- end row -->
+	</div><!-- end container -->
+</section>
+<!-- =============== END ALBUM SINGLE ================ -->
+{% endif %}
+{% endblock %}
+
+
+
+{% block footer %}
+
+<!-- =============== START PAGINATION ================ -->
+<div class="section-block  bkg-grey-ultralight pagination-2">
+	<div class="row full-width ">
+		<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
+			<a href="{% url 'home' %}" class="pagination-previous">
+				<span>RECOMMANDATION</span>
+			</a>
+		</div>
+		<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
+			<a href="{% url 'home' %}" class="pagination-next ">
+				<span>MES ALBUMS</span>
+			</a>
+		</div>
+		<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
+			<a href="{% url 'home' %}" class="pagination-next ">
+				<span>MES PLAYLIST</span>
+			</a>
+		</div>
+		<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
+			<a href="{% url 'home' %}" class="pagination-previous">
+				<span>ACCUEIL</span>
+			</a>
+		</div>
+	</div>
+</div>
+<!-- =============== END PAGINATION ================ -->
+<!-- =============== START FOOTER ================ -->
+<section style="background-color:#eeeeee;">
+	<div class="footer footerPadding">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="copyFooter">
+						<a href="#">&copy; CDBUCKET 2016</a>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="goTop" id="back-to-top">
+						<i class="fa fa-angle-up"></i>
+						<a href="#">Go Top</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	<!-- =============== END PAGINATION ================ -->
-
-
-
-
-
-
-
-
-		{% block title %}
-		<!-- =============== START BREADCRUMB ================ -->
-		<section class="no-mb">
-			<div class="row">
-				<div class="col-sm-12">
-					<div class="before-FullscreenSlider"></div>
-					<div class="breadcrumb-fullscreen-parent phone-menu-bg">
-						<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single4.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<!-- =============== END BREADCRUMB ================ -->
-	  {% endblock %}
-		{% block content %}
-		<!-- =============== START ALBUM SINGLE ================ -->
-		<section class="albumSingle padding background-properties" style="background-image:url(' {% static "assets/img/albums/single44.jpg" %}');">
-			<div class="container">
-				<div class="sectionTitle paddingBottom">
-					<span class="heading-t3"></span>
-					<h2><a>Mon compte</a></h2><br>
-					<h4>Bienvenu à vous {{ user.groups }}{{ user.username }} !</h4>
-					<span class="heading-b3"></span>
-				</div><!-- end sectionTtile -->
-				<div class="row">
-					<div class="col-sm-3 col-sm-offset-1">
-						<div class="sidebarAlbum">
-							<div class="widget">
-
-								<h3>Mes Informations d'utilisateur </h3>
-								<ul>
-									<li>Date de création:<span> {{ user.date_joined }} </span></li>
-									<li>Nombre de playlist :<span></span></li>
-									<li>Nombre d'album :<span></span></li>
-									<li>Durée total audio :<span> </span></li>
-								</ul>
-								</ul>
-							</div><!-- end widget -->
-						</div><!-- end sidebarAlbum -->
-					</div><!-- end col-sm-3 col-sm-offset-1 -->
-				</div><!-- end row -->
-			</div><!-- end container -->
-		</section>
-		<!-- =============== END ALBUM SINGLE ================ -->
-
-		<!-- =============== START PAGINATION ================ -->
-		<div class="section-block  bkg-grey-ultralight pagination-2">
-			<div class="row full-width ">
-				<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-previous">
-						<span>RECOMMANDATION</span>
-					</a>
-				</div>
-				<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-next ">
-						<span>MES ALBUMS</span>
-					</a>
-				</div>
-				<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-next ">
-						<span>MES PLAYLIST</span>
-					</a>
-				</div>
-				<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-					<a href="{% url 'home' %}" class="pagination-previous">
-						<span>ACCUEIL</span>
-					</a>
-				</div>
-			</div>
-		</div>
-		<!-- =============== END PAGINATION ================ -->
-
-		{% endblock %}
-
-
-
-
-	{% block footer %}
-	<!-- =============== START FOOTER ================ -->
-	<section style="background-color:#eeeeee;">
-		<div class="footer footerPadding">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-4">
-						<div class="copyFooter">
-							<a href="#">&copy; CDBUCKET 2016</a>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<div class="goTop" id="back-to-top">
-							<i class="fa fa-angle-up"></i>
-							<a href="#">Go Top</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- =============== END FOOTER ================ -->
-	{% endblock %}
-	{% block javasscript %}
-	<!-- ================================================== -->
-	<!-- =============== START JQUERY SCRIPTS ================ -->
-	<!-- ================================================== -->
-	<script src="{% static "assets/js/jquery.js" %}"></script>
-	<script src="{% static "assets/js/bootstrap.min.js" %}"></script>
-	<script src="{% static "assets/js/plugins.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/js/playlist.js" %}"></script>
-	<script src="{% static "assets/js/mainVideo.js" %}"></script>
-	<!--[if lte IE 9 ]>
-			<script src="{% static "assets/js/placeholder.js"></script>
-		<script>
-			jQuery(function() {
-				jQuery('input, textarea').placeholder();
-			});
-		</script>
-	<![endif]-->
-	<!-- ================================================== -->
-	<!-- =============== END JQUERY SCRIPTS ================ -->
-	<!-- ================================================== -->
-	{% endblock %}
-	{% block extrajavascript %}
-	{% endblock %}
+</section>
+<!-- =============== END FOOTER ================ -->
+{% endblock %}
+{% block javasscript %}
+<!-- ================================================== -->
+<!-- =============== START JQUERY SCRIPTS ================ -->
+<!-- ================================================== -->
+<script src="{% static "assets/js/jquery.js" %}"></script>
+<script src="{% static "assets/js/bootstrap.min.js" %}"></script>
+<script src="{% static "assets/js/plugins.js" %}"></script>
+<script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
+<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
+<script type="text/javascript" src="{% static "assets/js/playlist.js" %}"></script>
+<script src="{% static "assets/js/mainVideo.js" %}"></script>
+<!--[if lte IE 9 ]>
+<script src="{% static "assets/js/placeholder.js"></script>
+<script>
+jQuery(function() {
+jQuery('input, textarea').placeholder();
+});
+</script>
+<![endif]-->
+<!-- ================================================== -->
+<!-- =============== END JQUERY SCRIPTS ================ -->
+<!-- ================================================== -->
+{% endblock %}
+{% block extrajavascript %}
+{% endblock %}
 </body>
 </html>

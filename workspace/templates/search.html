@@ -209,7 +209,11 @@
 						<h1>
 							Search
 						</h1>
+<<<<<<< HEAD
 						<p><h2>Vous recherchez une musique en particulier ?</h2></p>
+=======
+						<p><h2>Une mélodie particulière ?</h2></p>
+>>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
 						<a href="#content" data-easing="easeInOutQuint" data-scroll="" data-speed="900" data-url="false">
 							RECHERCHER <i class="fa fa-angle-down"></i>
 						</a>
@@ -222,6 +226,7 @@
 <!-- =============== END BREADCRUMB ================ -->
 {% endblock %}
 {% block content %}
+<<<<<<< HEAD
 
 <!-- =============== START BLOG FILTER ================ -->
 <section class="aquraFilter padding" id="content">
@@ -260,8 +265,27 @@
 										<ul>
 											<li>Auteur : {{ music.auteur }}</li>
 											<li>{{ musique.duree }}</li>
+=======
+>>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
 
+<!-- =============== START BLOG FILTER ================ -->
+<section class="aquraFilter padding" id="content">
+	<div class="container">
+		<!-- start blog-filter-category -->
+		<h3> Rechercher une musique, un abum, un artiste... </h3>
+		<div class="categories">
+			<form method="POST" action="">{% csrf_token %}{{ form.query }}</form>
+			
+			<ul class="clearfix" data-option-key="filter">
+				<li> <a href="#" class="selected" data-option-value="*">All</a></li>
+				<li> <a href="#" data-option-value=".artiste">ARTISTE</a></li>
+				<li> <a href="#" data-option-value=".album">ALBUM</a></li>
+				<li> <a href="#" data-option-value=".musique">MUSIQUE</a></li>
+			</ul>
+		</div><!--end categories-->
+		<!-- end blog-filter-category -->
 
+<<<<<<< HEAD
 											<tr>
 												<td class="padTable"><a href="#" class="btnPlay song"
 													data-mp3="{{ musique.path.url }}"
@@ -337,16 +361,109 @@
 			<!-- end filter -->
 		</div><!-- end container -->
 	</section>
+=======
+		<!-- IF RETOUR RECHERCHE EST NUL RETOURNER PAS DE RESULTAT SINON RETOURNER RESULTAT -->
 
 
+		{% if Albums or Artistes or Musiques %}
+>>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
+
+		<!-- start filter -->
+		<div class="row">
+			<div class="col-sm-12 col-xs-12">
+				<div class="aqura-filter-content">
+					<ul class="clearfix">
+						{% for music in Musiques %}
+						<li class="col-sm-3 col-xs-12 musique">
+							<div class="blogBox">
+								<div class="blogBoxContent">
+									<div class="blogHeader">
+										<h1>{{ music.titre }}</h1>
+									</div>
+									<div class="admin-list clearfix">
+										<ul>
+											<li>{{ music.auteur }}</li>
+										</ul>
+									</div>
+									<div class="admin-list clearfix">
+										<ul>
+											<li>Durée : {{ music.duree }}</li>
+										</ul>
+									</div>
+									<div class="rmButton">
+										<a href="">Ajouter à ma playlist</a>
+									</div>
+									<div class="rmButton">
+										<a href="{% url "voir_album" music.album.id %}">Voir l'album</a>
+									</div>
+									<tr>
+										<td><a href="{{ music.path.url }}" download="{{ music.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
+									</tr>
+								</div><!-- end blogBoxContent -->
+							</div><!-- end blogBox -->
+						</li><!-- end col-sm-4 -->
+						{% endfor %}
+
+<<<<<<< HEAD
 	{% else %}
 	<h1>Votre recherche n'a pas aboutie, merci.</h1>
 
 	<!-- =============== END BLOG FILTER ================ -->
 	{% endif %}
 	{% endblock %}
+=======
+						{% for album in Albums %}
+						<li class="col-sm-3 col-xs-12 album">
+							<div class="blogBox">
+								<div class="blogBoxContent">
+									<div class="blogHeader">
+										<h1>{{ album.titre }}</h1>
+									</div>
+									<div class="admin-list clearfix">
+										<ul>
+											<li>Album de {{ album.artiste.username }} publié le {{ album.date_publication }}</li>
+										</ul>
+									</div><!-- end admin-list -->
+									<div class="rmButton">
+										<a href="{% url "voir_album" album.id %}">Consulter Album</a>
+									</div>
+									<div class="rmButton">
+										<a href="">Télécharger Album</a>
+									</div>
+								</div><!-- end blogBoxContent -->
+							</div><!-- end blogBox -->
+						</li><!-- end col-sm-4 -->
+						{% endfor %}
+>>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
 
+						{% for artiste in Artistes %}
+						<li class="col-sm-3 col-xs-12 artiste">
+							<div class="blogBox">
+								<div class="blogBoxContent">
+									<div class="blogHeader">
+										<h1>{{ artiste.username }}</h1>
+									</div>
+									<div class="rmButton">
+										<a href="{% url 'fiche_artiste' artiste.id %}">Consulter Fiche Artiste</a>
+									</div>
+								</div><!-- end blogBoxContent -->
+							</div><!-- end blogBox -->
+						</li><!-- end col-sm-4 -->
+						{% endfor %}
+					</ul>
+				</div><!-- end aqura-filter-cotent -->
+			</div><!-- end col-sm-12 -->
+		</div><!-- end row -->
+		<!-- end filter -->
+	</div><!-- end container -->
+</section>
+{% else %}
+<h2>Votre recherche n'a pas aboutie, merci.</h2><br>
+<!-- =============== END BLOG FILTER ================ -->
+{% endif %}
+{% endblock %}
 
+<<<<<<< HEAD
 	{% block footer %}
 	<!-- =============== START FOOTER ================ -->
 	<section style="background-color:#eeeeee;">
@@ -357,16 +474,28 @@
 						<div class="copyFooter">
 							<a href="#">&copy; CDBUCKET 2016</a>
 						</div>
+=======
+{% block footer %}
+<!-- =============== START FOOTER ================ -->
+<section style="background-color:#eeeeee;">
+	<div class="footer footerPadding">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="copyFooter">
+						<a href="#">&copy; CDBUCKET 2016</a>
+>>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
 					</div>
-					<div class="col-sm-4">
-						<div class="goTop" id="back-to-top">
-							<i class="fa fa-angle-up"></i>
-							<a href="#">Go Top</a>
-						</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="goTop" id="back-to-top">
+						<i class="fa fa-angle-up"></i>
+						<a href="#">Go Top</a>
 					</div>
 				</div>
 			</div>
 		</div>
+<<<<<<< HEAD
 	</section>
 	<!-- =============== END FOOTER ================ -->
 	{% endblock %}
@@ -386,6 +515,28 @@
 	<script>
 	jQuery(function() {
 	jQuery('input, textarea').placeholder();
+=======
+	</div>
+</section>
+<!-- =============== END FOOTER ================ -->
+{% endblock %}
+{% block javasscript %}
+<!-- ================================================== -->
+<!-- =============== START JQUERY SCRIPTS ================ -->
+<!-- ================================================== -->
+<script src="{% static "assets/js/jquery.js" %}"></script>
+<script src="{% static "assets/js/bootstrap.min.js" %}"></script>
+<script src="{% static "assets/js/plugins.js" %}"></script>
+<script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
+<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
+<script type="text/javascript" src="{% static "assets/js/playlist.js" %}"></script>
+<script src="{% static "assets/js/mainVideo.js" %}"></script>
+<!--[if lte IE 9 ]>
+<script src="{% static "assets/js/placeholder.js"></script>
+<script>
+jQuery(function() {
+jQuery('input, textarea').placeholder();
+>>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
 });
 </script>
 <![endif]-->
