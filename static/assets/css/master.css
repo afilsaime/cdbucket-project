@@ -14510,7 +14510,8 @@ body ul {
 .albumSingle table tr:hover {
   background-color: rgba(255, 255, 255, 0.5);
 }
-.albumSingle table .btnPlay {
+.albumSingle table .btnPlay,
+.albumSingle table .btnPause{
   padding-left: 2rem;
   width: 26px;
   height: 26px;
@@ -14521,10 +14522,12 @@ body ul {
   text-align: center;
   line-height: 26px;
 }
-.albumSingle table .btnPlay i {
+.albumSingle table .btnPlay i,
+.albumSingle table .btnPause i{
   font-size: 12px;
 }
-.albumSingle table .btnPlay:before {
+.albumSingle table .btnPlay:before,
+.albumSingle table .btnPause:before {
   content: '';
   position: absolute;
   width: 100%;
@@ -14554,11 +14557,13 @@ body ul {
   -o-transition: all 0.2s linear;
   transition: all 0.2s linear;
 }
-.albumSingle table .btnPlay:hover {
+.albumSingle table .btnPlay:hover,
+.albumSingle table .btnPause:hover {
   color: #fff;
   border-color: transparent;
 }
-.albumSingle table .btnPlay:hover:before {
+.albumSingle table .btnPlay:hover:before,
+.albumSingle table .btnPause:hover:before {
   opacity: 1;
   -webkit-transform: scale(1);
   -moz-transform: scale(1);

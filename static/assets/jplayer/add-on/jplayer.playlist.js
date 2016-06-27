@@ -82,12 +82,15 @@
 
 		// Create an ended event handler to move to the next item
 		$(this.cssSelector.jPlayer).bind($.jPlayer.event.ended, function() {
+			console.log("ended");
 			self.next();
 		});
 
 		// Create a play event handler to pause other instances
 		$(this.cssSelector.jPlayer).bind($.jPlayer.event.play, function() {
 			$(this).jPlayer("pauseOthers");
+			console.log($(this).data("jPlayer").status.currentTime);
+
 		});
 
 		// Create a resize event handler to show the title in full screen mode.
@@ -229,7 +232,7 @@
 				$(this.cssSelector.playlist + " ul").slideUp(displayTime, function() {
 					var $this = $(this);
 					$(this).empty();
-					
+
 					$.each(self.playlist, function(i) {
 						$this.append(self._createListItem(self.playlist[i]));
 					});
@@ -263,7 +266,7 @@
 
 			// The title is given next in the HTML otherwise the float:right on the free media corrupts in IE6/7
 			listItem += "<a href='javascript:;' class='" + this.options.playlistOptions.itemClass + "' tabindex='0'>" + (media.artist ? " <span class='jp-artist'> " + media.artist + "</span> -" : "") + (media.title ? " <span class='jp-title'> " + media.title + "</span> " : "") + "</a>";
-			
+
 			listItem += (media.duration ? " <span class='time'> " + media.duration + "</span>" : "");
 			listItem += "<div class='buy-wrapper'>";
 			listItem += (media.buy1 ? "<a class='jp-buy1' href='" + media.buy1 + "'><i class='fa fa-headphones'></i></a>" : "");

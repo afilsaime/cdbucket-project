@@ -102,6 +102,9 @@ class LikeMusic(models.Model):
     user = models.ForeignKey(User)
     music = models.ForeignKey(Music)
 
+    def __str__(self):
+        return "{0}|{1}".format(self.user.username,self.music)
+
 class LikeAlbum(models.Model):
     user = models.ForeignKey(User)
     album = models.ForeignKey(Album)

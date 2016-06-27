@@ -14,6 +14,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
+from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
+import json
 import datetime
 import uuid
 
@@ -164,6 +167,18 @@ class AccessAlbumView(DetailView):
     model = Album
     template_name = "album.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(AccessAlbumView, self).get_context_data(**kwargs)
+        user = self.request.user
+        liked_musics = user.likemusic_set.filter(music__album=self.get_object()).values_list('music',flat=True)
+        context['Liked_musics'] = liked_musics
+        try:
+            albums_liked = user.likealbum_set.get(album=self.get_object())
+            context['is_liked'] = True
+        except ObjectDoesNotExist:
+            context['is_liked'] = False
+        return context
+
 class monCompte(TemplateView):
     template_name = "mon_compte.html"
 
@@ -312,18 +327,84 @@ class fiche_artiste(DetailView):
     template_name = "fiche_artiste.html"
 
     def get_context_data(self,**kwargs):
-        pk=self.request.GET.get('pk')
-        Utilisateur = User.objects.get(id=pk)
-        print(pk)
-        context = super(fiche_artiste, self).get_context_data(**kwargs)
-        context['Albums'] = Utilisateur.album_set.all()
+        context = self.get_context_data(**kwargs)
+        utilisateur = self.get_object()
+        albums = Album.objects.filter(artiste=utilisateur).exclude(type_album='PL')
+        context['Albums'] = utilisateur
+
         return context
 
 
 
 
 
+def toggle_like(request):
+    if request.method == 'POST':
+        idmusic = request.POST.get('music')
+        response_data = {}
+        music = Music.objects.get(id=idmusic)
+        user = request.user
+        try:
+            likeToDelete = user.likemusic_set.get(music=music)
+            likeToDelete.delete()
 
+            response_data['result'] = 'Like deleted!'
+
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
+        except ObjectDoesNotExist:
+            like = LikeMusic(music=music, user=request.user)
+            like.save()
+
+            response_data['result'] = 'Like added!'
+            response_data['likepk'] = like.id
+            response_data['user'] = like.user.username
+
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def toggle_like_album(request):
+    if request.method == 'POST':
+        idalbum = request.POST.get('album')
+        response_data = {}
+        album = Album.objects.get(id=idalbum)
+        user = request.user
+        try:
+            likeToDelete = user.likealbum_set.get(album=album)
+            likeToDelete.delete()
+
+            response_data['status'] = 'deleted'
+
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
+        except ObjectDoesNotExist:
+            like = LikeAlbum(album=album, user=request.user)
+            like.save()
+
+            response_data['status'] = 'added'
+            response_data['likepk'] = like.id
+            response_data['user'] = like.user.username
+
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
 class mes_albums(TemplateView):
     template_name = "mes_albums.html"

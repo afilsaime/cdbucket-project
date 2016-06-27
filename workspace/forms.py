@@ -160,3 +160,9 @@ class Fiche_artiste(forms.Form):
 
 class mes_albums(forms.Form):
     mes_albums = forms.CharField()
+
+class CreateLikeForm(forms.Form):
+    music = forms.HiddenInput()
+
+class CreateLikeAlbumForm(forms.Form):
+    album = forms.HiddenInput()
