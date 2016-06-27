@@ -83,7 +83,6 @@
                               <li>Artiste: <span>{{ Album.artiste }}</span></li>
                               <li>Publication: <span>{{ Album.date_publication }}</span></li>
                               <li>Duree: <span>{{ Album.duree_totale }}</span></li>
-<<<<<<< HEAD
 
 							</ul>
 							{% if is_liked %}
@@ -92,19 +91,6 @@
 								<button type="button" class="idlike-album album-unclicked" id="{{ Album.id }}"><i class="material-icons" style="vertical-align:middle;font-size:14px">favorite</i> Ajouter aux favoris</button>
 							{% endif %}
 						</div>
-						<!-- end widget -->
-=======
-															<p class="form-submit">
-															{% if group = "Artistes" %}
-															<br>
-															<a href="{% url 'ajout_musique' %}" value="Ajouter une nouvelle musique"><input type="button" value="Ajouter une musique à un Album"></a><br><br>
-															<a href="{% url 'ajout_album' %}" value="Créer un Nouvel Album"><input type="button" value="Créer un Nouvel Album"></a>
-															{% endif %}
-														</p>
-													</ul>
-
-												</div><!-- end widget -->
->>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
                     </div><!-- end sidebarAlbum -->
                 </div><!-- end col-sm-3 col-sm-offset-1 -->
             </div><!-- end row -->

@@ -14,13 +14,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
-<<<<<<< HEAD
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 import json
-=======
-from django.core.exceptions import ObjectDoesNotExist
->>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
 import datetime
 import uuid
 
@@ -171,7 +167,6 @@ class AccessAlbumView(DetailView):
     model = Album
     template_name = "album.html"
 
-<<<<<<< HEAD
     def get_context_data(self, **kwargs):
         context = super(AccessAlbumView, self).get_context_data(**kwargs)
         user = self.request.user
@@ -180,26 +175,14 @@ class AccessAlbumView(DetailView):
         try:
             albums_liked = user.likealbum_set.get(album=self.get_object())
             context['is_liked'] = True
-        except ObjectDoesNotExist:
-            context['is_liked'] = False
-        return context
-
-=======
-
-    def get_context_data(self,**kwargs):
-        context = super(AccessAlbumView, self).get_context_data(**kwargs)
-
-        try:
             groupes = self.request.user.groups.get(name="Artistes")
             context['group'] = groupes.name
-
         except ObjectDoesNotExist:
+            context['is_liked'] = False
             context['group'] = "User"
-
         return context
 
 
->>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
 class monCompte(TemplateView):
     template_name = "mon_compte.html"
     users_in_group = Group.objects.get(name="Artistes").user_set.all()
@@ -360,22 +343,12 @@ class fiche_artiste(DetailView):
 
 
     def get_context_data(self,**kwargs):
-<<<<<<< HEAD
-        context = self.get_context_data(**kwargs)
-        utilisateur = self.get_object()
-        albums = Album.objects.filter(artiste=utilisateur).exclude(type_album='PL')
-        context['Albums'] = utilisateur
-=======
         context = super(fiche_artiste, self).get_context_data(**kwargs)
         utilisateur = super(fiche_artiste, self).get_object()
         albums = Album.objects.filter(artiste=utilisateur.id).exclude(type_album='PL')
         context['Albums'] = albums
         return context
->>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
 
-        return context
-
-<<<<<<< HEAD
 
 
 
@@ -448,8 +421,7 @@ def toggle_like_album(request):
             content_type="application/json"
         )
 
-=======
->>>>>>> 4fec7fc8bc700e06f287245904d90c95b0d8303a
+
 class mes_albums(TemplateView):
     template_name = "mes_albums.html"
 
