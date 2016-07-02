@@ -108,3 +108,8 @@ class LikeMusic(models.Model):
 class LikeAlbum(models.Model):
     user = models.ForeignKey(User)
     album = models.ForeignKey(Album)
+
+class MusicListen(models.Model):
+    user = models.ForeignKey(User)
+    music = models.ForeignKey(Music)
+    date = models.DateTimeField(auto_now_add = True)

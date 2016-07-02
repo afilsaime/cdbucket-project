@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^home/$',TemplateView.as_view(template_name="base.html"),name="home"),
     url(r'^comptes/activation/(?P<key>\w+)',ActivationView.as_view(), name="activation"),
     url(r'^music/add$', CreateMusicView.as_view(), name="ajout_musique"),
-    url(r'^music/listen/(?P<pk>\d+)$',AccessMusicView.as_view(),name="ecouter_musique"),
+    #url(r'^music/listen/(?P<pk>\d+)$',AccessMusicView.as_view(),name="ecouter_musique"),
     url(r'^album/listen/(?P<pk>\d+)$',AccessAlbumView.as_view(),name="voir_album"),
     url(r'^album/add$', AddAlbumView.as_view(), name="ajout_album"),
     url(r'^playlist/add$', login_required(AddPlaylistView.as_view()), name="ajout_playliste"),
@@ -31,7 +31,9 @@ urlpatterns = [
     url(r'^mes_albums/$', login_required(mes_albums.as_view()), name="mes_albums"),
     url(r'^mon_compte_artiste/$', login_required(monCompte_artiste.as_view()), name="mon_compte_artiste"),
     url(r'^playlist_accueil/$', login_required(playlist_accueil.as_view()), name="playlist_accueil"),
+    #AJAX
     url(r'^like/toggle/$', login_required(toggle_like), name="toggle_like"),
-    url(r'^like_album/toggle/$', login_required(toggle_like_album), name="toggle_like_album")
+    url(r'^like_album/toggle/$', login_required(toggle_like_album), name="toggle_like_album"),
+    url(r'^music/listen/$', login_required(add_music_listen), name="add_music_listen")
 
 ]

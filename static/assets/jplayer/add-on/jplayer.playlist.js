@@ -105,13 +105,13 @@
 		// Create click handlers for the extra buttons that do playlist functions.
 		$(this.cssSelector.previous).click(function(e) {
 			e.preventDefault();
-			self.previous();
+			
 			self.blur(this);
 		});
 
 		$(this.cssSelector.next).click(function(e) {
 			e.preventDefault();
-			self.next();
+
 			self.blur(this);
 		});
 

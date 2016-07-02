@@ -421,6 +421,29 @@ def toggle_like_album(request):
             content_type="application/json"
         )
 
+def add_music_listen(request):
+    if request.method == 'POST':
+        idmusic = request.POST.get('music')
+        response_data = {}
+        music = Music.objects.get(id=idmusic)
+        user = request.user
+
+        musicListen = MusicListen(user=user,music=music)
+        musicListen.save()
+        response_data['status'] = 'listen added'
+        response_data['listenpk'] = musicListen.id
+        response_data['user'] = musicListen.user.username
+        response_data['date'] = "{0}/{1}/{2}".format(musicListen.date.day,musicListen.date.month,musicListen.date.year)
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
 
 class mes_albums(TemplateView):
     template_name = "mes_albums.html"

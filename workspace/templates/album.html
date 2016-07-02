@@ -58,7 +58,7 @@
                         </tr>
                         {% for musique in Album.liste_musique %}
                             <tr>
-                              <td class="padTable"><a href="#" class="btnPlay song {% if forloop.counter0 == 0 %}play{% endif %}"
+                              <td class="padTable"><a href="#" data-music-id="{{ musique.id }}" class="btnPlay song {% if forloop.counter0 == 0 %}play{% endif %}"
                               data-count="{{ forloop.counter0 }}"><i class="fa fa-play"></i></a></td>
                               <td class="tableWidth">{{ musique.titre }}</td>
                               <td>{{ musique.duree }}</td>
@@ -217,13 +217,27 @@
 			   });
 
 			   $('.jp-next').click(function(){
-				   console.log("next");
+				   myPlaylist.next();
 				   if($('.play').hasClass("btnPause")){
 					   $('.play i').toggleClass('fa-play fa-pause');
 					   $('.play').toggleClass("btnPlay btnPause");
 				   }
 				   $('.play').toggleClass("play prev");
-				   $(".song").not($(".prev")).first().addClass("play");
+				   $(".song").eq(myPlaylist.current).addClass("play");
+				   $('.prev').removeClass("prev");
+				   $('.play i').toggleClass('fa-play fa-pause');
+				   $('.play').toggleClass("btnPlay btnPause");
+
+			   });
+
+			   $('.jp-previous').click(function(){
+				   myPlaylist.previous();
+				   if($('.play').hasClass("btnPause")){
+					   $('.play i').toggleClass('fa-play fa-pause');
+					   $('.play').toggleClass("btnPlay btnPause");
+				   }
+				   $('.play').toggleClass("play prev");
+				   $(".song").eq(myPlaylist.current).addClass("play");
 				   $('.prev').removeClass("prev");
 				   $('.play i').toggleClass('fa-play fa-pause');
 				   $('.play').toggleClass("btnPlay btnPause");
@@ -239,6 +253,21 @@
 					   $(this).addClass('jp-playlist-current');
 					   $(this).find('ul li a.jp-playlist-item').addClass('jp-playlist-current');
 				   });
+			   });
+			   $("#jquery_jplayer_N").unbind($.jPlayer.event.ended);
+			   $("#jquery_jplayer_N").bind($.jPlayer.event.ended,function(){
+				   console.log("2ended");
+				   add_music_listen();
+				   if($('.play').hasClass("btnPause")){
+					   $('.play i').toggleClass('fa-play fa-pause');
+					   $('.play').toggleClass("btnPlay btnPause");
+				   }
+				   $('.play').toggleClass("play prev");
+				   $(".song").not($(".prev")).first().addClass("play");
+				   $('.prev').removeClass("prev");
+				   $('.play i').toggleClass('fa-play fa-pause');
+				   $('.play').toggleClass("btnPlay btnPause");
+				   myPlaylist.next();
 			   });
 
 
@@ -314,7 +343,6 @@
 
 				function toggle_like(){
 					console.log("toggle-like is working");
-					var csrftoken = getCookie('csrftoken');
 					doRequest("{% url "toggle_like" %}","POST",{ music : $('#likemusic').val() },function(json){
 						$('#'+$('#likemusic').val()).toggleClass("clicked unclicked");
 						$('#likemusic').val('');
@@ -326,7 +354,6 @@
 
 				function toggle_like_album(){
 					console.log("toggle-like is working");
-					var csrftoken = getCookie('csrftoken');
 					doRequest("{% url "toggle_like_album" %}","POST",{ album : $('#likealbum').val() },function(json){
 						$('#'+$('#likealbum').val()).toggleClass("album-clicked album-unclicked");
 						$('#likealbum').val('');
@@ -340,6 +367,12 @@
 						console.log("success");
 					});
 
+				};
+
+				function add_music_listen(){
+					doRequest("{% url "add_music_listen" %}","POST",{music : $(".play").attr('data-music-id') },function(json){
+						console.log(json);
+					});
 				};
 
 

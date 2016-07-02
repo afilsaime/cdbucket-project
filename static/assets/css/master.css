@@ -15486,7 +15486,7 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
   width: 25.5px;
   height: 20px;
   overflow: hidden;
-  background-color: #f2f2f2;
+  background-color: #000;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
   border-left: 1px solid rgba(0, 0, 0, 0.15);
   border-right: 1px solid rgba(0, 0, 0, 0.15);
@@ -15526,7 +15526,7 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
   font-size: 16px;
   line-height: 20px;
   text-align: center;
-  color: #141414;
+  color: #d9d9d9;
   -webkit-transition-delay: 0;
   transition-delay: 0;
   -webkit-transition-property: all;
@@ -15567,11 +15567,11 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
   display: block;
   position: relative;
   z-index: 600;
-  background: #f2f2f2;
+  background: #0d0d0d;
 }
 .jplayer-home .jp-gui #nowPlaying .artist-name {
   font-size: 1.1rem;
-  color: #333;
+  color: #ffffff;
   font-weight: 300;
   font-family: 'PT Sans', sans-serif;
   letter-spacing: 0.2px;
@@ -15580,7 +15580,7 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
 }
 .jplayer-home .jp-gui #nowPlaying .track-name {
   font-size: 1.1rem;
-  color: #999;
+  color: #c7c7c7;
   font-weight: 300;
   font-family: 'PT Sans', sans-serif;
   letter-spacing: 0.2px;
@@ -15600,19 +15600,19 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
   display: block;
   position: relative;
   overflow: hidden;
-  height: 1px;
+  height: 5px;
   width: 100%;
-  background-color: #d4d4d4;
-  top: -19px;
+  background-color: rgba(214, 214, 214, 0);
+  top: -21px;
 }
 .jplayer-home .jp-gui .jp-interface .progress-wrapper .jp-progress .jp-seek-bar {
-  background-color: #c7c7c7;
+  background-color: rgba(199, 199, 199, 0.44);
   width: 0px;
   height: 100%;
   cursor: pointer;
 }
 .jplayer-home .jp-gui .jp-interface .progress-wrapper .jp-progress .jp-seek-bar .jp-play-bar {
-  background: #bb9b69;
+  background: rgb(255, 181, 10);
   width: 0px;
   height: 100%;
 }
@@ -15910,8 +15910,16 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
 .jplayer-home .jp-previous i,
 .jplayer-home .jp-next i {
   font-size: 1.5rem;
-  color: #333;
+  color: #dddddd;
+  transition: color 0.5s;
 }
+
+.jplayer-home .jp-play:hover i,
+.jplayer-home .jp-previous:hover i,
+.jplayer-home .jp-next:hover i {
+  color: rgb(255, 181, 10);
+}
+
 .jplayer-home .jp-play {
   width: 2.3rem;
   padding-left: 3rem;
@@ -15937,7 +15945,7 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
 }
 .jplayerButton span {
   display: block;
-  background: #848484;
+  background: #0d0d0d;
   height: 2px;
   width: 17px!important;
   margin-bottom: 3px;
