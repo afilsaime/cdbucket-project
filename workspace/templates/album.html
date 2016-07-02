@@ -58,7 +58,7 @@
                         </tr>
                         {% for musique in Album.liste_musique %}
                             <tr>
-                              <td class="padTable"><a href="#" class="btnPlay song"
+                              <td class="padTable"><a href="#" class="btnPlay song {% if forloop.counter0 == 0 %}play{% endif %}"
                               data-count="{{ forloop.counter0 }}"><i class="fa fa-play"></i></a></td>
                               <td class="tableWidth">{{ musique.titre }}</td>
                               <td>{{ musique.duree }}</td>
@@ -172,19 +172,25 @@
 
 				  if (!$(this).hasClass('btnPlay')) {
 					  console.log("cliiiick");
-					  $('.jp-play').click();
+					  myPlaylist.pause();
+					  //$('.jp-play').click();
 		   //           $(".featured-songs").find(".song").addClass("play");
-					  $(".featured-songs").find(".song").not($this).removeClass("play");
+					  $(".featured-songs").find(".song").not($(this)).removeClass("play");
 					  $(this).find('i').removeClass('fa-pause').addClass('fa-play');
 					  $(this).toggleClass("btnPlay btnPause");
 
 				  } else {
 					  var $this = $(this);
 					  console.log("clicked");
-					  myPlaylist.play($this.attr("data-count"));
+					  if($this.attr("data-count")==myPlaylist.current){
+						myPlaylist.play();
+					  }
+					  else{
+						myPlaylist.play($this.attr("data-count"));
+					  }
 					  //myPlaylist.play(-1);
 					  $(".featured-songs").find(".song").not($this).removeClass("play");
-					  $this.toggleClass("play");
+					  $this.addClass("play");
 					  $(".featured-songs").find('.song i').removeClass('fa-pause').addClass('fa-play');
 					  $(this).find('i').removeClass('fa-play').addClass('fa-pause');
 					  $(this).toggleClass("btnPlay btnPause");
@@ -193,12 +199,36 @@
 			  });//End Click
 			   $('.jp-play').click(function() {
 				   if ( $(this).closest('.jplayer-home').hasClass('jp-state-playing') ) {
-					   $('.btnPlay').removeClass('play');
+					   //$('.btnPlay').removeClass('play');
 					   $('.btnPlay').find('i').removeClass('fa-pause').addClass('fa-play');
-					   $('.jp-playlist ul li').removeClass('jp-playlist-current')
-					   $('.jp-playlist ul li .jp-playlist-item').removeClass('jp-playlist-current')
+					   //$('.jp-playlist ul li').removeClass('jp-playlist-current');
+					   //$('.jp-playlist ul li .jp-playlist-item').removeClass('jp-playlist-current');
+					  console.log("APPPCC");
+					  $('.play i').toggleClass('fa-play fa-pause');
+					  $('.play').toggleClass("btnPlay btnPause");
+					  //$('.play').removeClass("play");
+				   }
+				   else{
+					   console.log("AIIA");
+
+					   $('.play i').toggleClass('fa-play fa-pause');
+					   $('.play').toggleClass("btnPlay btnPause");
 				   }
 			   });
+
+			   $('.jp-next').click(function(){
+				   console.log("next");
+				   if($('.play').hasClass("btnPause")){
+					   $('.play i').toggleClass('fa-play fa-pause');
+					   $('.play').toggleClass("btnPlay btnPause");
+				   }
+				   $('.play').toggleClass("play prev");
+				   $(".song").not($(".prev")).first().addClass("play");
+				   $('.prev').removeClass("prev");
+				   $('.play i').toggleClass('fa-play fa-pause');
+				   $('.play').toggleClass("btnPlay btnPause");
+			   });
+
 			   $('.jplayerButton').one('click', function() {
 				   $('.jp-playlist ul li').removeClass('jp-playlist-current');
 				   $('.jp-playlist ul li a.jp-playlist-item').removeClass('jp-playlist-current');
