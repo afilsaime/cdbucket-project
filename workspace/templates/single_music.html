@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}
+    <h1>Ecoute de {{ music.titre }}</h1>
+{% endblock %}
+{% block content %}
+    <video controls>
+      <source src="{{ music.path.url }}" type="audio/mpeg">
+    </video>
+{% endblock %}

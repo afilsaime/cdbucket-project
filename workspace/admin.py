@@ -18,4 +18,5 @@ class MusicAdmin(admin.ModelAdmin):
 admin.site.register(Registration,RegistrationAdmin)
 admin.site.register(Album,AlbumAdmin)
 admin.site.register(Music,MusicAdmin)
+admin.site.register(LikeMusic)
 admin.site.register(Tag)

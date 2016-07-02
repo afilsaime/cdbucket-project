@@ -1,0 +1,385 @@
+{% extends "search.html" %}
+{% load staticfiles %}
+{% block head %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>Album</title>
+	<link rel="icon" href="assets/img/content/icon.png">
+	<!-- ========== CSS INCLUDES ========== -->
+	<link rel="stylesheet" href="{% static "assets/css/master.css" %}">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
+</head>
+{% endblock %}
+<body>
+    {% block loader %}
+        <div class="page-loader">
+             <div class="vertical-align align-center">
+                  <img src="{% static "assets/loader/loader.gif" %}" alt="" class="loader-img">
+             </div>
+        </div>
+    {% endblock %}
+	{% block title %}
+	<!-- =============== START BREADCRUMB ================ -->
+	<section class="no-mb">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="before-FullscreenSlider"></div>
+				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
+					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single4.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- =============== END BREADCRUMB ================ -->
+  {% endblock %}
+  {% block content %}
+  <section class="albumSingle padding background-properties" style="background-image:url(assets/img/albums/single22.jpg);">
+      <div class="container">
+          <div class="sectionTitle paddingBottom">
+              <span class="heading-t3"></span>
+              <h2><a href="">{{ Album.titre }}</a></h2>
+              <span class="heading-b3"></span>
+          </div><!-- end sectionTtile -->
+          <div class="row">
+              <div class="col-sm-8">
+                  <table class="featured-songs">
+                        <tr>
+                          <td></td>
+                          <td class="nameTable">Titre</td>
+                          <td class="lengthTable">Duree</td>
+                          <td></td>
+						  <td></td>
+                        </tr>
+                        {% for musique in Album.liste_musique %}
+                            <tr>
+                              <td class="padTable"><a href="#" data-music-id="{{ musique.id }}" class="btnPlay song {% if forloop.counter0 == 0 %}play{% endif %}"
+                              data-count="{{ forloop.counter0 }}"><i class="fa fa-play"></i></a></td>
+                              <td class="tableWidth">{{ musique.titre }}</td>
+                              <td>{{ musique.duree }}</td>
+                              <td><a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
+							  <td><a {% if musique.id in Liked_musics %}class="idlike clicked"{% else %}class="idlike unclicked"{% endif %} id="{{ musique.id }}"><i class="material-icons" style="vertical-align:middle">favorite</i></a></td>
+                            </tr>
+                        {% endfor %}
+                  </table>
+				  <form id="like-post" action="/toggle_like/" method="post">
+					  <input id="likemusic" type="hidden" name="music" value="">
+				  </form>
+				  <form id="like-post-album" action="/toggle_like_album/" method="post">
+					  <input id="likealbum" type="hidden" name="album" value="">
+				  </form>
+              </div><!-- end-col-sm-8 -->
+              <div class="col-sm-3 col-sm-offset-1">
+                  <div class="sidebarAlbum">
+                      <div class="widget">
+                          <h3>Details de l'album</h3>
+                          <ul>
+                              <li>Titre: <span>{{ Album.titre }}</span></li>
+                              <li>Artiste: <span>{{ Album.artiste }}</span></li>
+                              <li>Publication: <span>{{ Album.date_publication }}</span></li>
+                              <li>Duree: <span>{{ Album.duree_totale }}</span></li>
+
+							</ul>
+							{% if is_liked %}
+								<button type="button" class="idlike-album album-clicked" id="{{ Album.id }}"><i class="material-icons" style="vertical-align:middle;font-size:14px">favorite</i> Supprimer des favoris</button>
+							{% else %}
+								<button type="button" class="idlike-album album-unclicked" id="{{ Album.id }}"><i class="material-icons" style="vertical-align:middle;font-size:14px">favorite</i> Ajouter aux favoris</button>
+							{% endif %}
+						</div>
+                    </div><!-- end sidebarAlbum -->
+                </div><!-- end col-sm-3 col-sm-offset-1 -->
+            </div><!-- end row -->
+        </div><!-- end container -->
+    </section>
+  {% endblock %}
+	{% block footer %}
+	<!-- =============== START FOOTER ================ -->
+	<section style="background-color:#eeeeee;">
+		<div class="footer footerPadding">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="copyFooter">
+							<a href="#">&copy; CDBUCKET 2016</a>
+						</div>
+					</div>
+					<div class="col-sm-4">
+					</div>
+					<div class="col-sm-4">
+						<div class="goTop" id="back-to-top">
+							<i class="fa fa-angle-up"></i>
+							<a href="#">Go Top</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- =============== END FOOTER ================ -->
+	{% endblock %}
+	{% block extrajavascript %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // ========= jPlayer config 1 ==========
+                // Home player, Track player, Single post top player
+				var myPlaylist = new jPlayerPlaylist({
+				   jPlayer: "#jquery_jplayer_N",
+				   cssSelectorAncestor: "#jp_container_N"
+			   }, [
+				   {% for musique in Album.liste_musique %}
+				   {
+					   artist: "{{ musique.auteur.username }}", // the artist name
+					   title:"{{ musique.titre }}", // track title
+					   mp3:"{{ musique.path.url }}",// mp3 path
+					   oga:"{{ musique.path.url }}",// oga path
+					   poster: "{% static "assets/img/albums/cover1.jpg" %}",// poster image path
+					   duration: '{{ musique.duree }}',// duration time in playlist
+				   }{% if not forloop.last %},{% endif %}
+				   {% endfor %}
+			   ], {
+				   swfPath: "{% static "assets/jplayer/jplayer" %}",
+				   supplied: "oga, mp3",
+				   wmode: "window",
+				   useStateClassSkin: true,
+				   autoBlur: false,
+				   smoothPlayBar: true,
+				   keyEnabled: true,
+				   size: {width: "80px", height: "80px"},
+				   loop: true
+			   });
+			   // Show The Current Track !!
+			   $("#jquery_jplayer_N").on(
+				   $.jPlayer.event.ready + ' ' + $.jPlayer.event.play,
+				   function(event){
+					   var current = myPlaylist.current;
+					   var playlist = myPlaylist.playlist;
+					   $.each(playlist, function (index, obj) {
+						   if (index == current) {
+							   $("#nowPlaying").html("<span class='track-name'>" + obj.title + "</span>" + "<br>" + "<span class='artist-name'>" + obj.artist + "</span>");
+							   $("#nowPlaying").html("<span class='track-name'>" + obj.title + "</span>" + "<br>" + "<span class='artist-name'>" + obj.artist + "</span>");
+						   }
+					   });
+				   }
+			   );
+			   // Sidebar tracks
+			  $(".featured-songs").find(".song").on('click', function(e) {
+				 e.preventDefault();
+
+				  if (!$(this).hasClass('btnPlay')) {
+					  console.log("cliiiick");
+					  myPlaylist.pause();
+					  //$('.jp-play').click();
+		   //           $(".featured-songs").find(".song").addClass("play");
+					  $(".featured-songs").find(".song").not($(this)).removeClass("play");
+					  $(this).find('i').removeClass('fa-pause').addClass('fa-play');
+					  $(this).toggleClass("btnPlay btnPause");
+
+				  } else {
+					  var $this = $(this);
+					  console.log("clicked");
+					  if($this.attr("data-count")==myPlaylist.current){
+						myPlaylist.play();
+					  }
+					  else{
+						myPlaylist.play($this.attr("data-count"));
+					  }
+					  //myPlaylist.play(-1);
+					  $(".featured-songs").find(".song").not($this).removeClass("play");
+					  $this.addClass("play");
+					  $(".featured-songs").find('.song i').removeClass('fa-pause').addClass('fa-play');
+					  $(this).find('i').removeClass('fa-play').addClass('fa-pause');
+					  $(this).toggleClass("btnPlay btnPause");
+					  return false;
+				  }
+			  });//End Click
+			   $('.jp-play').click(function() {
+				   if ( $(this).closest('.jplayer-home').hasClass('jp-state-playing') ) {
+					   //$('.btnPlay').removeClass('play');
+					   $('.btnPlay').find('i').removeClass('fa-pause').addClass('fa-play');
+					   //$('.jp-playlist ul li').removeClass('jp-playlist-current');
+					   //$('.jp-playlist ul li .jp-playlist-item').removeClass('jp-playlist-current');
+					  console.log("APPPCC");
+					  $('.play i').toggleClass('fa-play fa-pause');
+					  $('.play').toggleClass("btnPlay btnPause");
+					  //$('.play').removeClass("play");
+				   }
+				   else{
+					   console.log("AIIA");
+
+					   $('.play i').toggleClass('fa-play fa-pause');
+					   $('.play').toggleClass("btnPlay btnPause");
+				   }
+			   });
+
+			   $('.jp-next').click(function(){
+				   myPlaylist.next();
+				   if($('.play').hasClass("btnPause")){
+					   $('.play i').toggleClass('fa-play fa-pause');
+					   $('.play').toggleClass("btnPlay btnPause");
+				   }
+				   $('.play').toggleClass("play prev");
+				   $(".song").eq(myPlaylist.current).addClass("play");
+				   $('.prev').removeClass("prev");
+				   $('.play i').toggleClass('fa-play fa-pause');
+				   $('.play').toggleClass("btnPlay btnPause");
+
+			   });
+
+			   $('.jp-previous').click(function(){
+				   myPlaylist.previous();
+				   if($('.play').hasClass("btnPause")){
+					   $('.play i').toggleClass('fa-play fa-pause');
+					   $('.play').toggleClass("btnPlay btnPause");
+				   }
+				   $('.play').toggleClass("play prev");
+				   $(".song").eq(myPlaylist.current).addClass("play");
+				   $('.prev').removeClass("prev");
+				   $('.play i').toggleClass('fa-play fa-pause');
+				   $('.play').toggleClass("btnPlay btnPause");
+			   });
+
+			   $('.jplayerButton').one('click', function() {
+				   $('.jp-playlist ul li').removeClass('jp-playlist-current');
+				   $('.jp-playlist ul li a.jp-playlist-item').removeClass('jp-playlist-current');
+				   $('.jp-playlist-item').click(function() {
+					   if ($(this).hasClass('jp-playlist-current')) {
+						   myPlaylist.pause();
+					   }
+					   $(this).addClass('jp-playlist-current');
+					   $(this).find('ul li a.jp-playlist-item').addClass('jp-playlist-current');
+				   });
+			   });
+			   $("#jquery_jplayer_N").unbind($.jPlayer.event.ended);
+			   $("#jquery_jplayer_N").bind($.jPlayer.event.ended,function(){
+				   console.log("2ended");
+				   add_music_listen();
+				   if($('.play').hasClass("btnPause")){
+					   $('.play i').toggleClass('fa-play fa-pause');
+					   $('.play').toggleClass("btnPlay btnPause");
+				   }
+				   $('.play').toggleClass("play prev");
+				   $(".song").not($(".prev")).first().addClass("play");
+				   $('.prev').removeClass("prev");
+				   $('.play i').toggleClass('fa-play fa-pause');
+				   $('.play').toggleClass("btnPlay btnPause");
+				   myPlaylist.next();
+			   });
+
+
+				//Ajax
+
+				function getCookie(name) {
+				    var cookieValue = null;
+				    if (document.cookie && document.cookie != '') {
+				        var cookies = document.cookie.split(';');
+				        for (var i = 0; i < cookies.length; i++) {
+				            var cookie = jQuery.trim(cookies[i]);
+				            // Does this cookie string begin with the name we want?
+				            if (cookie.substring(0, name.length + 1) == (name + '=')) {
+				                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+				                break;
+				            }
+				        }
+				    }
+				    return cookieValue;
+				};
+
+				function csrfSafeMethod(method) {
+				    // these HTTP methods do not require CSRF protection
+				    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+				};
+
+				$('#like-post').on('submit',function(e){
+					e.preventDefault();
+					console.log("form submitted!");
+					toggle_like();
+				});
+
+				$('#like-post-album').on('submit',function(e){
+					e.preventDefault();
+					console.log("form submitted!");
+					toggle_like_album();
+				});
+
+				$('.idlike').click(function(){
+					$("#likemusic").attr("value",$(this).attr("id"));
+					$('#like-post').submit();
+				});
+
+				$('.idlike-album').click(function(){
+					console.log("button clicked");
+					$("#likealbum").attr("value",$(this).attr("id"));
+					$('#like-post-album').submit();
+				});
+
+				function doRequest(target,method,data,success){
+					var csrftoken = getCookie('csrftoken');
+					$.ajaxSetup({
+					    beforeSend: function(xhr, settings) {
+					        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+					            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+					        }
+					    }
+					});
+					$.ajax({
+				        url : target,
+				        type : method,
+				        data : data,
+
+				        success : success,
+
+				        error : function(xhr,errmsg,err) {
+				            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+				                " <a href='#' class='close'>&times;</a></div>");
+				            console.log(xhr.status + ": " + xhr.responseText);
+				        }
+				    });
+				};
+
+				function toggle_like(){
+					console.log("toggle-like is working");
+					doRequest("{% url "toggle_like" %}","POST",{ music : $('#likemusic').val() },function(json){
+						$('#'+$('#likemusic').val()).toggleClass("clicked unclicked");
+						$('#likemusic').val('');
+						console.log(json);
+						console.log("success");
+					});
+
+				};
+
+				function toggle_like_album(){
+					console.log("toggle-like is working");
+					doRequest("{% url "toggle_like_album" %}","POST",{ album : $('#likealbum').val() },function(json){
+						$('#'+$('#likealbum').val()).toggleClass("album-clicked album-unclicked");
+						$('#likealbum').val('');
+						if(json['status']==="deleted"){
+							$('.idlike-album').html('<i class="material-icons" style="vertical-align:middle;font-size:14px">favorite</i> Ajouter aux favoris');
+						}
+						else if(json['status']==="added"){
+							$('.idlike-album').html('<i class="material-icons" style="vertical-align:middle;font-size:14px">favorite</i> Supprimer des favoris');
+						}
+						console.log(json);
+						console.log("success");
+					});
+
+				};
+
+				function add_music_listen(){
+					doRequest("{% url "add_music_listen" %}","POST",{music : $(".play").attr('data-music-id') },function(json){
+						console.log(json);
+					});
+				};
+
+
+
+            });
+
+        </script>
+	{% endblock %}
+</body>
+</html>

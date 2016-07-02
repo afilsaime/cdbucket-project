@@ -1,16 +1,614 @@
-<!DOCTYPE html>
-<html lang="en">
+{% load staticfiles %}
+{% block head %}
+    <!DOCTYPE html>
+    <html lang="en">
     <head>
-        <title>mysite</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-        <script   src="https://code.jquery.com/jquery-2.2.3.min.js"   integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo="   crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    </head>
+        <meta charset="UTF-8">
+        <meta name="HandheldFriendly" content="true" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <title>Accueil</title>
+        <link rel="icon" href="{% static "assets/img/content/icon.png" %}">
+        <!-- ========== CSS INCLUDES ========== -->
+		<link rel="stylesheet" type="text/css" href="{% static "ModalWindowEffects/css/component.css" %}" />
+        <link rel="stylesheet" type="text/css" href="{% static "CustomFileInputs/css/component.css" %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-select.css" %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-skin-slide.css" %}"/>
 
-    <body>
-        {% block title %}
-            <h1>CDBUCKET</h1>
-        {% endblock %}
-        {% block content %}{% endblock %}
-    </body>
+        <link rel="stylesheet" href="{% static "assets/css/master.css" %}">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
+
+    </head>
+{% endblock %}
+
+<body>
+    {% block loader %}
+        <div class="page-loader">
+             <div class="vertical-align align-center">
+                  <img src="{% static "assets/loader/loader.gif" %}" alt="" class="loader-img">
+             </div>
+        </div>
+    {% endblock %}
+    {% block player %}
+	<!-- =============== START PLAYER ================ -->
+	<div id="jp_container_N" class="jplayer-home homeCustom">
+			<div class="jp-type-playlist">
+				<div class="jp-gui">
+					<div class="minWrap">
+						<div class="custom-buttons">
+							<div id="h-player"><i class="fa fa-minus"></i></div>
+						</div>
+					</div>
+					<div class="jp-interface container">
+						<div class="jp-controls-holder">
+							<div class="jp-controls">
+								<button class="jp-previous" tabindex="0"><i class="fa fa-step-backward"></i></button>
+								<button class="jp-play" tabindex="0"><i class="fa fa-play"></i></button>
+								<!-- <button class="jp-stop" tabindex="0"><i class="flaticon-geometry60"></i></button> -->
+								<button class="jp-next" tabindex="0"><i class="fa fa-step-forward"></i>
+								</button>
+									<button id="playlist-toggle" class="jplayerButton">
+										<span class="span-1"></span>
+										<span class="span-2"></span>
+										<span class="span-3"></span>
+									</button>
+							</div><!-- .jp-controls -->
+							<!-- <div class="jp-toggles">
+								<button class="jp-repeat" tabindex="0"><i class="flaticon-round72"></i></button>
+								<button class="jp-shuffle" tabindex="0"><i class="flaticon-random9"></i></button>
+							</div> --><!-- .jp-toggles -->
+						</div><!-- .jp-controls-holder -->
+						<div class="progress-wrapper">
+							<span class="jp-current-time" role="timer" aria-label="time">&nbsp;</span>
+
+							<span class="jp-duration" role="timer" aria-label="duration">&nbsp;</span>
+							<div class="jp-progress">
+								<div class="jp-seek-bar">
+									<div class="jp-play-bar"></div>
+								</div>
+							</div><!-- .jp-progress -->
+						</div>
+						<!-- <div class="jp-details">
+							<div class="jp-title" aria-label="title">&nbsp;</div>
+						</div> -->
+						<div class="track-wrapper">
+							<div id="jquery_jplayer_N" class="jp-jplayer"></div><!-- .jp-layer PHOTO CONTAINER -->
+							<div id="nowPlaying"></div><!-- #nowPlaying -->
+						</div>
+					</div><!-- .jp-interface -->
+				</div><!-- .jp-gui -->
+				<div id="playlist-wrapper" class="playlist-wrapper">
+					<div class="jp-playlist container">
+						<div class="header-text">
+							<h1><img src="{% static "assets/img/header/logoB.png" %}" alt=""></h1>
+							<p>PLAYERLIST</p>
+						</div>
+						<div class="about-list clearfix">
+							<span class="about-name">NAME</span>
+							<span class="about-length">LENGTH</span>
+						</div>
+						<ul>
+							<!-- The method Playlist.displayPlaylist() uses this unordered list -->
+							<li>&nbsp;</li>
+						</ul>
+					</div><!-- .jp-playlist -->
+				</div>
+				<div class="jp-no-solution">
+					<span>Update Required</span>
+					To play the media you will need to either update your browser to a recent version or update your <a href="../../get.adobe.com/flashplayer/index.html" target="_blank">Flash plugin</a>.
+				</div><!-- .jp-no-solution -->
+			</div><!-- .jp-type-playlist -->
+	</div><!-- .jp-container_N -->
+	<!-- =============== END PLAYER ================ -->
+    {% endblock %}
+    {% block headerNav %}
+	<!-- =============== START TOP HEADER ================ -->
+	<div class="topHeader" >
+		<div class="logo-container-top">
+	        <a href="{% url 'home' %}">Cdbucket</a>
+	    </div>
+		<div class="header">
+
+
+
+
+      <!-- je veux ajouter une seconde condition dans le IF pour verifier que le user est toujours actif ,voir variable is_active request.user.is_active-->
+      {% if user.is_authenticated %}
+      <a href="{% url 'mon_compte' %}"><i class="material-icons md-18" style="vertical-align:middle;" >person</i> Mon Compte</a>
+      <a href="{% url 'deconnexion' %}"><i class="material-icons md-18" style="vertical-align:middle;">exit_to_app</i> Deconnexion</a>
+      <a href="#" class="md-trigger" data-modal="modal-5"><i class="material-icons" style="vertical-align:middle;">search</i></a>
+      <div class="md-modal md-effect-7" id="modal-5">
+		<div class="md-content">
+			<h3><i class="material-icons" style="vertical-align:middle;">search</i> Rechercher</h3>
+            <form class="" action="{% url "search" %}" method="POST">
+                {% csrf_token %}
+                <input id="id_query" name="query" type="text">
+                <input type="submit" value="Go!" style="margin-bottom:10px;">
+            </form>
+		</div>
+	  </div>
+      <div class="md-overlay"></div>
+      <!--<li><li><a href="{% url 'home' %}"><i></i>Rechercher</a></li></li>-->
+      {% else %}
+      <a href="#" class="md-trigger" data-modal="modal-1"><i class="material-icons md-18" style="vertical-align:middle;">queue</i> Inscription</a>
+      <a href="#" class="md-trigger" data-modal="modal-2"><i class="material-icons md-18" style="vertical-align:middle;" >person</i> Connexion</a>
+      <div class="md-modal md-effect-2" id="modal-1">
+		<div class="md-content">
+			<h3><i class="material-icons" style="vertical-align:middle;" >queue</i> Inscription</h3>
+            <div class="md-body">
+				<a href="#" class="md-trigger" data-modal="modal-3">Compte classique</a>
+                <a href="#" class="md-trigger" data-modal="modal-4">Compte artiste</a>
+            </div>
+		</div>
+	  </div>
+      <div class="md-modal md-effect-2" id="modal-2">
+			<div class="md-content">
+				<h3><i class="material-icons" style="vertical-align:middle;" >person</i> Connexion</h3>
+                <div class="md-body">
+    				<form class="" action="{% url "connexion" %}" method="POST">
+                        {% csrf_token %}
+                        <label for="id_username">Nom d'utilisateur:</label>
+                        <input id="id_username" maxlength="254" name="username" type="text">
+                        <label for="id_password">Mot de passe:</label>
+                        <input id="id_password" name="password" type="password">
+                        <input type="submit" value="Se connecter">
+                        <input type="hidden" name="next" value="{% url "connexion" %}">
+    				</form>
+                </div>
+			</div>
+		</div>
+        <div class="md-modal md-effect-2" id="modal-3">
+  			<div class="md-content">
+  				<h3><i class="material-icons" style="vertical-align:middle;" >hearing</i> Compte classique</h3>
+                  <div class="md-body">
+      				<form class="" action="{% url "sign-up" "user" %}" method="POST">
+                          {% csrf_token %}
+                          <label for="id_username">Identifiant:</label>
+                          <input id="id_username" maxlength="30" name="username" type="text">
+                          <label for="id_email">Adresse Mail:</label>
+                          <input id="id_email" name="email" type="email">
+                          <label for="id_password">Mot de Passe:</label>
+                          <input id="id_password" name="password" type="password">
+                          <label for="id_password2">Confirmation du mot de passe:</label>
+                          <input id="id_password2" name="password2" type="password">
+                          <input type="submit" value="Submit">
+      				</form>
+                  </div>
+  			</div>
+  		</div>
+        <div class="md-modal md-effect-2" id="modal-4">
+  			<div class="md-content">
+  				<h3><i class="material-icons" style="vertical-align:middle;" >record_voice_over</i> Compte Artiste</h3>
+                  <div class="md-body">
+      				<form class="" action="{% url "sign-up" "artist" %}" method="POST">
+                          {% csrf_token %}
+                          <label for="id_username">Identifiant:</label>
+                          <input id="id_username" maxlength="30" name="username" type="text">
+                          <label for="id_email">Adresse Mail:</label>
+                          <input id="id_email" name="email" type="email">
+                          <label for="id_password">Mot de Passe:</label>
+                          <input id="id_password" name="password" type="password">
+                          <label for="id_password2">Confirmation du mot de passe:</label>
+                          <input id="id_password2" name="password2" type="password">
+                          <input type="submit" value="Submit">
+      				</form>
+                  </div>
+  			</div>
+  		</div>
+        <div class="md-overlay"></div>
+
+      {% endif %}
+
+
+
+		</div><!-- end header -->
+		<!-- Menu Fixed Container -->
+
+		<!-- =============== STAR LOGO ================ -->
+		<!-- end logo-container-top -->
+		<!-- =============== END LOGO ================ -->
+	</div><!-- end topHeader -->
+	<!-- =============== END TOP HEADER ================ -->
+    {% endblock %}
+    {% block title %}
+	<!-- =============== START BREADCRUMB ================ -->
+	<section class="no-mb">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
+					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url('{% static "assets/img/starHomePage/background.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
+						<div id="home" style="position: absolute;left: 0;top: 0;">
+						    <div class="intro-header">
+						        <div class="js-height-full star" style="height: 955px;">
+						            <div class="star-pattern-1 js-height-full" style="height: 994px;"></div>
+						            <div class="col-sm-12">
+						                <div class="starTitle">
+						                	<h4>Welcome to the</h4>
+						                	<h1>CDBucket</h1>
+						                	<h4>Project</h4>
+                            </div>
+						                <canvas class="cover" width="1920" height="955"></canvas>
+						            </div>
+						        </div>
+						    </div>
+	   			    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- =============== END BREADCRUMB ================ -->
+    {% endblock %}
+    {% block content %}
+    {% if user.is_authenticated %}
+	<!-- =============== START ALBUM COVER SECTION ================ -->
+	<section style="background-color:white;" class="padding albumsHome">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="sectionTitle paddingBottom">
+	          <span class="heading-t3"></span>
+						<h2>Recommandation de musiques</h2>
+						<span class="heading-b3"></span>
+					</div><!-- end sectionTtile -->
+				</div><!-- end col-sm-12 -->
+			</div>
+			<div class="list-albums">
+				<ul class="list-feature col-md-12 col-xs-12 col-sm-12">
+					<li class="col-md-3 col-sm-3 col-xs-12">
+						<div class="album-icon">
+							<span class="thumbs-album">
+								<a href="albumsSingle1.html"><img width="270" height="270" src="{% static "assets/img/content/albumCover.png" %}" class="attachment-album-thumbnail wp-post-image" alt="album-cover-1"></a>
+							</span>
+							<span class="disk"></span>
+						</div><!-- END ALBUM ICON -->
+						<div class="name">
+							<h3>Noon Xoxo</h3>
+							<p>Chillout</p>
+						</div><!-- end name -->
+					</li>
+
+					<li class="col-md-3 col-sm-3 col-xs-12">
+						<div class="album-icon albumIcon1">
+							<span class="thumbs-album">
+								<a href="albumsSingle3.html"><img width="270" height="270" src="{% static "assets/img/content/albumCover1.png" %}" class="attachment-album-thumbnail wp-post-image" alt="album-cover-1"></a>
+							</span>
+							<span class="disk"></span>
+						</div>
+						<div class="name">
+							<h3>Stunt Vibe</h3>									<p>Chillout</p>
+						</div>
+						</li>
+						<li class="col-md-3 col-sm-3 col-xs-12">
+							<div class="album-icon albumIcon2">
+								<span class="thumbs-album">
+									<a href="albumsSingle4.html"><img width="270" height="270" src="{% static "assets/img/content/albumCover2.png" %}" class="attachment-album-thumbnail wp-post-image" alt="album-cover-1"></a>
+									</span>
+								<span class="disk"></span>
+							</div>
+							<div class="name">
+								<h3>Strange Clouds</h3>								<p>Chillout</p>
+							</div>
+						</li>
+						<li class="col-md-3 col-sm-3 col-xs-12">
+							<div class="album-icon albumIcon3">
+								<span class="thumbs-album">
+									<a href="albumsSingle2.html"><img width="270" height="270" src="{% static "assets/img/content/albumCover3.png" %}" class="attachment-album-thumbnail wp-post-image" alt="album-cover-1"></a>
+									</span>
+								<span class="disk"></span>
+							</div>
+							<div class="name">
+								<h3>Natural Earth</h3>								<p>Chillout</p>
+							</div>
+						</li>
+				</ul>
+			</div><!-- end list-albums -->
+		</div><!-- end container -->
+	</section>
+	<!-- =============== END ALBUM COVER SECTION ================ -->
+
+	<!-- =============== START EVENTS SECTION-1 ================ -->
+	<section style="" class="opacity background-properties paddingHomeEvents">
+		<div class="tableEvents">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="sectionTitle paddingBottom">
+							<span class="heading-t3"></span>
+							<h2><a href="albums.html">Dernières publications</a></h2>
+							<span class="heading-b3"></span>
+						</div><!-- end sectionTtile -->
+						<table>
+							<tr class="tableEventsTitle">
+								<th class="date"> AJOUTER A SA PLAYLIST</th>
+								<th class="venue">DATE</th>
+								<th class="location">TITRE</th>
+								<th class="tickets">DUREE</th>
+								<th></th>
+							</tr>
+							<tr>
+								<td class="aqura-date"><a href="#"><i class="fa fa-plus"></i></a></td>
+								<td class="aqura-location"><a href="singleEvent.html">Mar 06</a></td>
+								<td class="aqura-city"><a href="singleEvent.html">Cluj Napoca, Bontida Romania</a></td>
+								<td class="aqura-tickets"><a href="singleEvent.html">Tickets</a></td>
+								<td class="aqura-vip"><a href="singleEvent.html">ECOUTER</a></td>
+							</tr>
+							<tr>
+								<td class="aqura-date"><a href="#"><i class="fa fa-plus"></i></a></td>
+								<td class="aqura-location"><a href="singleEvent.html">Mar 06</a></td>
+								<td class="aqura-city"><a href="singleEvent.html">Cluj Napoca, Bontida Romania</a></td>
+								<td class="aqura-tickets"><a href="singleEvent.html">Tickets</a></td>
+								<td class="aqura-vip"><a href="singleEvent.html">ECOUTER</a></td>
+							</tr>
+							<tr>
+								<td class="aqura-date"><a href="#"><i class="fa fa-plus"></i></a></td>
+								<td class="aqura-location"><a href="singleEvent.html">Mar 06</a></td>
+								<td class="aqura-city"><a href="singleEvent.html">Cluj Napoca, Bontida Romania</a></td>
+								<td class="aqura-tickets"><a href="singleEvent.html">Tickets</a></td>
+								<td class="aqura-vip"><a href="singleEvent.html">ECOUTER</a></td>
+							</tr>
+							<tr>
+								<td class="aqura-date"><a href="#"><i class="fa fa-plus"></i></a></td>
+								<td class="aqura-location"><a href="singleEvent.html">Mar 06</a></td>
+								<td class="aqura-city"><a href="singleEvent.html">Cluj Napoca, Bontida Romania</a></td>
+								<td class="aqura-tickets"><a href="singleEvent.html">Tickets</a></td>
+								<td class="aqura-vip"><a href="singleEvent.html">ECOUTER</a></td>
+							</tr>
+							<tr>
+								<td class="aqura-date"><a href="#"><i class="fa fa-plus"></i></a></td>
+								<td class="aqura-location"><a href="singleEvent.html">Mar 06</a></td>
+								<td class="aqura-city"><a href="singleEvent.html">Cluj Napoca, Bontida Romania</a></td>
+								<td class="aqura-tickets"><a href="singleEvent.html">Tickets</a></td>
+								<td class="aqura-vip"><a href="singleEvent.html">ECOUTER</a></td>
+							</tr>
+						</table>
+					</div><!-- end col-sm-12 -->
+				</div><!-- end row -->
+			</div><!-- end container -->
+		</div><!-- end tableEvents -->
+	</section>
+	<!-- =============== END EVENTS SECTION-1 ================ -->
+
+
+{% else %}  {% endif %}
+
+    {% endblock %}
+
+    {% block footer %}
+	<!-- =============== START FOOTER ================ -->
+	<section style="background-color:#eeeeee;">
+		<div class="footer footerPadding">
+			<div class="container">
+				<div class="row">
+					<div class="col-sm-4">
+						<div class="copyFooter">
+							<a href="#">&copy; CDBUCKET 2016</a>
+						</div>
+					</div>
+					<div class="col-sm-4">
+						<nav class="social-icons">
+						</nav>
+					</div>
+					<div class="col-sm-4">
+						<div class="goTop back-to-top" id="back-to-top">
+							<i class="fa fa-angle-up"></i>
+							<a href="#">Go Top</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- =============== END FOOTER ================ -->
+    {% endblock %}
+    {% block javasscript %}
+	<!-- ================================================== -->
+	<!-- =============== START JQUERY SCRIPTS ================ -->
+	<!-- ================================================== -->
+	<script src="{% static "assets/js/jquery.js" %}"></script>
+	<script src="{% static "assets/js/bootstrap.min.js" %}"></script>
+	<script src="{% static "assets/js/plugins.js" %}"></script>
+
+    <script src="{% static "SelectInspiration/js/classie.js" %}"></script>
+    <script src="{% static "ModalWindowEffects/js/modalEffects.js" %}"></script>
+    <script>
+        // this is important for IEs
+        var polyfilter_scriptpath = '{% static "ModalWindowEffects/js/" %}';
+    </script>
+    <script src="{% static "ModalWindowEffects/js/cssParser.min.js" %}"></script>
+
+    <script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
+	<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
+	<script src="{% static "assets/js/main.js" %}"></script>
+	<!--[if lte IE 9 ]>
+		<script src="{% static "assets/js/placeholder.js"></script>
+		<script>
+			jQuery(function() {
+				jQuery('input, textarea').placeholder();
+			});
+		</script>
+	<![endif]-->
+	<!-- ================================================== -->
+	<!-- =============== END JQUERY SCRIPTS ================ -->
+	<!-- ================================================== -->
+    {% endblock %}
+    {% block extrajavascript %}
+        <script type="text/javascript">
+            $(document).ready(function(){
+                // ========= jPlayer config 1 ==========
+                // Home player, Track player, Single post top player
+                var myPlaylist = new jPlayerPlaylist({
+                    jPlayer: "#jquery_jplayer_N",
+                    cssSelectorAncestor: "#jp_container_N"
+                }, [
+                    {
+                        artist: "Tensnake ", // the artist name
+                        title:"See Right Through ft. Fiora", // track title
+                        mp3:"assets/audio/flute.mp3",// mp3 path
+                        oga:"assets/audio/flute.mp3",// oga path
+                        poster: "assets/img/content/icon.png",// poster image path
+                        duration: '03:29',// duration time in playlist
+                        buy1: '#buy1',
+                        buy2: '#buy2',
+                        buy3: '#buy3'
+                    },
+                    {
+                        artist: "Jack Ü ",
+                        title:"Take Ü There feat. Kiesza",
+                        mp3:"assets/audio/2.mp3",
+                        oga:"assets/audio/2.mp3",
+                        poster: "assets/img/content/icon.png",
+                        duration: '05:41',
+                        buy1: '#buy1',
+                        buy2: '#buy2',
+                        buy3: '#buy3'
+                    },
+                    {
+                        artist: "Bos Sinclair",
+                        title:"Cinderella",
+                        mp3:"assets/audio/3.mp3",
+                        oga:"assets/audio/3.mp3",
+                        poster: "assets/img/content/icon.png",
+                        duration: '04:05',
+                        buy1: '#buy1',
+                        buy2: '#buy2',
+                        buy3: '#buy3'
+                    },
+                    {
+                        artist: "Yiuna",
+                        title:"Lullabies",
+                        mp3:"assets/audio/4.mp3",
+                        oga:"assets/audio/4.mp3",
+                        poster: "assets/img/albums/cover4.jpg",
+                        duration: '04:27',
+                        buy1: '#buy1',
+                        buy2: '#buy2',
+                        buy3: '#buy3'
+                    },
+                    {
+                        artist: "Tensnake ", // the artist name
+                        title:"See Right Through ft. Fiora", // track title
+                        mp3:"assets/audio/flute.mp3",// mp3 path
+                        oga:"assets/audio/flute.mp3",// oga path
+                        poster: "assets/img/albums/cover2.jpg",// poster image path
+                        duration: '03:29',// duration time in playlist
+                        buy1: '#buy1',
+                        buy2: '#buy2',
+                        buy3: '#buy3'
+                    },
+                    {
+                        artist: "Jack Ü ",
+                        title:"Take Ü There feat. Kiesza",
+                        mp3:"assets/audio/2.mp3",
+                        oga:"assets/audio/2.mp3",
+                        poster: "assets/img/albums/cover1.jpg",
+                        duration: '05:41',
+                        buy1: '#buy1',
+                        buy2: '#buy2',
+                        buy3: '#buy3'
+                    },
+                    {
+                        artist: "Bos Sinclair",
+                        title:"Cinderella",
+                        mp3:"assets/audio/3.mp3",
+                        oga:"assets/audio/3.mp3",
+                        poster: "assets/img/albums/cover3.jpg",
+                        duration: '04:05',
+                        buy1: '#buy1',
+                        buy2: '#buy2',
+                        buy3: '#buy3'
+                    },
+                    {
+                        artist: "Yiuna",
+                        title:"Lullabies",
+                        mp3:"assets/audio/4.mp3",
+                        oga:"assets/audio/4.mp3",
+                        poster: "assets/img/albums/cover4.jpg",
+                        duration: '04:27',
+                        buy1: '#buy1',
+                        buy2: '#buy2',
+                        buy3: '#buy3'
+                    }
+                ], {
+                    swfPath: "assets/jplayer/jplayer",
+                    supplied: "oga, mp3",
+                    wmode: "window",
+                    useStateClassSkin: true,
+                    autoBlur: false,
+                    smoothPlayBar: true,
+                    keyEnabled: true,
+                    size: {width: "80px", height: "80px"},
+                    loop: true
+                });
+                // Show The Current Track !!
+                $("#jquery_jplayer_N").on(
+                    $.jPlayer.event.ready + ' ' + $.jPlayer.event.play,
+                    function(event){
+                        var current = myPlaylist.current;
+                        var playlist = myPlaylist.playlist;
+                        $.each(playlist, function (index, obj) {
+                            if (index == current) {
+                                $("#nowPlaying").html("<span class='track-name'>" + obj.title + "</span>" + "<br>" + "<span class='artist-name'>" + obj.artist + "</span>");
+                                $("#nowPlaying").html("<span class='track-name'>" + obj.title + "</span>" + "<br>" + "<span class='artist-name'>" + obj.artist + "</span>");
+                            }
+                        });
+                    }
+                );
+
+                // Sidebar tracks
+               $(".featured-songs").find(".song").on('click', function(e) {
+                  e.preventDefault();
+
+                   if ($(this).hasClass('play')) {
+                       myPlaylist.pause();
+            //           $(".featured-songs").find(".song").addClass("play");
+                       $(".featured-songs").find(".song").not($this).removeClass("play");
+                       $(this).find('i').removeClass('fa-pause').addClass('fa-play');
+                   } else {
+                       var $this = $(this);
+                       myPlaylist.add({
+                           mp3: $this.attr("data-mp3"),
+                           artist: $this.attr("data-artist"),
+                           title: $this.attr("data-song"),
+                           poster:$this.attr("data-poster")
+                       });
+                       myPlaylist.play(-1);
+                       $(".featured-songs").find(".song").not($this).removeClass("play");
+                       $this.toggleClass("play");
+
+                       $(".featured-songs").find('.song i').removeClass('fa-pause').addClass('fa-play');
+                       $(this).find('i').removeClass('fa-play').addClass('fa-pause');
+                       return false;
+                   }
+               });//End Click
+
+                $('.jp-play').click(function() {
+                    if ( $(this).closest('.jplayer-home').hasClass('jp-state-playing') ) {
+                        $('.btnPlay').removeClass('play');
+                        $('.btnPlay').find('i').removeClass('fa-pause').addClass('fa-play');
+
+                        $('.jp-playlist ul li').removeClass('jp-playlist-current')
+                        $('.jp-playlist ul li .jp-playlist-item').removeClass('jp-playlist-current')
+                    }
+                });
+
+                $('.jplayerButton').one('click', function() {
+                    $('.jp-playlist ul li').removeClass('jp-playlist-current');
+                    $('.jp-playlist ul li a.jp-playlist-item').removeClass('jp-playlist-current');
+
+                    $('.jp-playlist-item').click(function() {
+                        if ($(this).hasClass('jp-playlist-current')) {
+                            myPlaylist.pause();
+                        }
+                        $(this).addClass('jp-playlist-current');
+                        $(this).find('ul li a.jp-playlist-item').addClass('jp-playlist-current');
+                    });
+                });
+
+
+            });
+
+        </script>
+    {% endblock %}
+</body>
 </html>

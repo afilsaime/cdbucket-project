@@ -16,6 +16,7 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MEDIA_ROOT = os.path.join(BASE_DIR, 'ressources')
 MEDIA_URL = '/ressources/'
+LOGIN_URL = '/workspace/connexion'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -77,14 +78,22 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'mysite',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
-    }
+  'default': {
+      'ENGINE': 'django.db.backends.mysql',
+      'NAME': 'mysite',
+      'USER': 'root',
+      'PASSWORD': '',
+      'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
+      'PORT': '3306',
+  }
+ #     'default': {
+ #     'ENGINE': 'django.db.backends.mysql',
+ #     'NAME': 'deezer',
+ #     'USER': 'root',
+ #     'PASSWORD': 'root',
+ #     'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
+ #     'PORT': '8889',
+ # }
 }
 
 
@@ -128,3 +137,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+  os.path.join(BASE_DIR, 'static'),
+)

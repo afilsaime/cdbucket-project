@@ -1,0 +1,402 @@
+{% extends "search.html" %}
+{% load staticfiles %}
+{% block head %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="HandheldFriendly" content="true" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<title>Playlist</title>
+	<link rel="icon" href="assets/img/content/icon.png">
+	<!-- ========== CSS INCLUDES ========== -->
+	<link rel="stylesheet" href="{% static "assets/css/master.css" %}">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
+</head>
+{% endblock %}
+<body>
+    {% block loader %}
+        <div class="page-loader">
+             <div class="vertical-align align-center">
+                  <img src="{% static "assets/loader/loader.gif" %}" alt="" class="loader-img">
+             </div>
+        </div>
+    {% endblock %}
+		{% block player %}
+	<!-- =============== START PLAYER ================ -->
+	<div id="jp_container_N" class="jplayer-home homeNormal">
+			<div class="jp-type-playlist">
+				<div class="jp-gui">
+					<div class="minWrap">
+						<div class="custom-buttons">
+							<div id="h-player"><i class="fa fa-minus"></i></div>
+						</div>
+					</div>
+					<div class="jp-interface container">
+						<div class="jp-controls-holder">
+							<div class="jp-controls">
+								<button class="jp-previous" tabindex="0"><i class="fa fa-step-backward"></i></button>
+								<button class="jp-play" tabindex="0"><i class="fa fa-play"></i></button>
+								<button class="jp-stop" tabindex="0"><i class="flaticon-geometry60"></i></button>
+								<button class="jp-next" tabindex="0"><i class="fa fa-step-forward"></i>
+								</button>
+									<button id="playlist-toggle" class="jplayerButton">
+										<span class="span-1"></span>
+										<span class="span-2"></span>
+										<span class="span-3"></span>
+									</button>
+							</div><!-- .jp-controls -->
+							<!-- <div class="jp-toggles">
+								<button class="jp-repeat" tabindex="0"><i class="flaticon-round72"></i></button>
+								<button class="jp-shuffle" tabindex="0"><i class="flaticon-random9"></i></button>
+							</div> --><!-- .jp-toggles -->
+						</div><!-- .jp-controls-holder -->
+						<div class="progress-wrapper">
+							<span class="jp-current-time" role="timer" aria-label="time">&nbsp;</span>
+							<span class="jp-duration" role="timer" aria-label="duration">&nbsp;</span>
+							<div class="jp-progress">
+								<div class="jp-seek-bar">
+									<div class="jp-play-bar"></div>
+								</div>
+							</div><!-- .jp-progress -->
+						</div>
+						<!-- <div class="jp-details">
+							<div class="jp-title" aria-label="title">&nbsp;</div>
+						</div> -->
+						<div class="track-wrapper">
+							<div id="jquery_jplayer_N" class="jp-jplayer"></div><!-- .jp-layer PHOTO CONTAINER -->
+							<div id="nowPlaying"></div><!-- #nowPlaying -->
+						</div>
+					</div><!-- .jp-interface -->
+				</div><!-- .jp-gui -->
+				<div id="playlist-wrapper" class="playlist-wrapper">
+					<div class="jp-playlist container">
+						<div class="header-text">
+							<h1><img src="{% static "assets/img/header/logoB.png" %}" alt=""></h1>
+							<p>PLAYERLIST</p>
+						</div>
+						<div class="about-list clearfix">
+							<span class="about-name">NAME</span>
+							<span class="about-length">LENGTH</span>
+							<span class="about-available">AVAILABLE ON</span>
+						</div>
+						<ul>
+							<!-- The method Playlist.displayPlaylist() uses this unordered list -->
+							<li>&nbsp;</li>
+						</ul>
+					</div><!-- .jp-playlist -->
+				</div>
+				<div class="jp-no-solution">
+					<span>Update Required</span>
+					To play the media you will need to either update your browser to a recent version or update your <a href="../../get.adobe.com/flashplayer/index.html" target="_blank">Flash plugin</a>.
+				</div><!-- .jp-no-solution -->
+			</div><!-- .jp-type-playlist -->
+	</div><!-- .jp-container_N -->
+	<!-- =============== END PLAYER ================ -->
+	{% endblock %}
+	{% block headerNav %}
+	<!-- =============== START TOP HEADER ================ -->
+	<div class="topHeader" >
+		<div class="header">
+			<div class="rightTopHeader">
+				<div class="cartContainer">
+					<div class="myCart">
+					</div><!-- end myCart -->
+					<div class="cartParent">
+						<div class="cartItems">
+							</div><!-- end cartItems -->
+					</div><!-- end cartParent -->
+				</div><!--end cartContainer  -->
+				<!-- Open Menu Button -->
+				<a class="open-menu">
+					<!-- Buttons Bars -->
+					<span class="span-1"></span>
+					<span class="span-2"></span>
+					<span class="span-3"></span>
+				</a>
+			</div><!-- end rightTopHeader -->
+		</div><!-- end header -->
+		<!-- Menu Fixed Container -->
+		<div class="menu-fixed-container">
+			<!-- Menu Fixed Centred Container -->
+			<nav>
+				<!-- Menu Fixed Close Button -->
+				<div class="x-filter">
+					<span></span>
+					<span></span>
+				</div>
+				<!-- Menu Fixed Primary List -->
+				<ul>
+					<li>
+						<a href="{% url 'mon_compte' %}">
+							Mes infos
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'mon_compte' %}">
+							Mes albums
+						</a>
+					</li>
+					<li>
+						<a href="{% url 'playlist_accueil' %}">
+							Ma Playlist
+						</a>
+					</li>
+					<!-- Menu Fixed Item -->
+					<li>
+						<a href="#">
+							Gérer mon compte
+						</a>
+						<ul class="sub-menu">
+							<!-- Menu Fixed Sub Menu Item -->
+							<li>
+								<a href="{% url 'new_email' %}">
+									Modifier son Adresse email
+								</a>
+							</li>
+							<!-- Menu Fixed Sub Menu Item -->
+							<li>
+								<a href="{% url 'new_mdp' %}">
+									Modifier son mot de passe
+								</a>
+							</li>
+							<!-- Menu Fixed Sub Menu Item -->
+							<li>
+								<a href="{% url 'suppr_compte' %}">
+									Supprimer mon compte
+								</a>
+							</li>
+						</ul>
+						<li>
+							<a href="{% url 'contact' %}">
+								Contact
+							</a>
+						</li>
+						<li>
+							<a href="{% url 'deconnexion' %}">
+								Se deconnecter
+							</a>
+						</li>
+					</li>
+				</ul>
+				<!-- Menu Fixed Close Button -->
+				<div class="x-filter">
+					<span></span>
+					<span></span>
+				</div>
+			</nav>
+		</div><!-- end menu-fixed-container -->
+		<!-- =============== STAR LOGO ================ -->
+		<div class="logo-container-top"><a href="{% url 'home' %}">Cdbucket</a></div><!-- end logo-container-top -->
+	 <!-- =============== END LOGO ================ -->
+	</div><!-- end topHeader -->
+	<!-- =============== END TOP HEADER ================ -->
+	{% endblock %}
+	{% block title %}
+	<!-- =============== START BREADCRUMB ================ -->
+	<section class="no-mb">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="before-FullscreenSlider"></div>
+				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
+					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single2.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- =============== END BREADCRUMB ================ -->
+  {% endblock %}
+	{% block content %}
+	<!-- =============== START ALBUM SINGLE ================ -->
+	<section class="albumSingle padding background-properties" style="background-image:url(' {% static "assets/img/albums/single44.jpg" %}');">
+		<div class="container">
+			<div class="sectionTitle paddingBottom">
+				<span class="heading-t3"></span>
+				<h2><a>Votre Playlist</a></h2><br>
+
+<!-- idée : affichage en fonction du nombre de playlist presente pour ce user dans la BDD
+Si 3 playlist afficher les 3 choix pour qu'il entre dedans sinon afficher directement la playlist en liste -->
+
+			  <section class="albumSingle padding background-properties" style="background-image:url(assets/img/albums/single22.jpg);">
+					<h4>Bienvenu à vous {{ user.get_username }} !</h4>
+					<span class="heading-b3"></span>
+				    <div class="container">
+			          <div class="sectionTitle paddingBottom">
+			              <span class="heading-t3"></span><br><br>
+			              <h2><a href="">{{ Album.titre }}</a></h2>
+			          </div><!-- end sectionTtile -->
+			          <div class="row">
+			              <div class="col-sm-8">
+			                  <table class="featured-songs">
+			                        <tr>
+			                          <td></td>
+			                          <td class="nameTable">Titre</td>
+			                          <td class="lengthTable">Duree</td>
+			                          <td></td>
+			                        </tr>
+			                        {% for musique in Album.liste_musique %}
+			                            <tr>
+			                              <td class="padTable"><a href="#" class="btnPlay song"
+			                             data-mp3="{{ musique.path.url }}"
+			                             data-artist="{{ musique.auteur.username }}"
+			                             data-song="{{ musique.titre }}"
+			                             data-poster="{% static "assets/img/albums/cover1.jpg" %}"><i class="fa fa-play"></i></a></td>
+			                              <td class="tableWidth">{{ musique.titre }}</td>
+			                              <td>{{ musique.duree }}</td>
+			                              <td><a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
+			                            </tr>
+			                        {% endfor %}
+			                  </table>
+			              </div><!-- end-col-sm-8 -->
+			              <div class="col-sm-3 col-sm-offset-1">
+			                  <div class="sidebarAlbum">
+			                      <div class="widget">
+			                          <h3>Details de l'album</h3>
+			                          <ul>
+			                              <li>Titre: <span>{{ Album.titre }}</span></li>
+			                              <li>Artiste: <span>{{ Album.artiste }}</span></li>
+			                              <li>Publication: <span>{{ Album.date_publication }}</span></li>
+			                              <li>Duree: <span>{{ Album.duree_totale }}</span></li>
+																		<p class="form-submit">
+																		{% if user.Group = Artistes %}
+																		<br>
+																		<a href="{% url 'ajout_musique' %}" value="Ajouter une nouvelle musique"><input type="button" value="Ajouter une musique à un Album"></a><br><br>
+																		<a href="{% url 'ajout_album' %}" value="Créer un Nouvel Album"><input type="button" value="Créer un Nouvel Album"></a>
+																		{% endif %}
+																	</p>
+																</ul>
+																<br><br>
+															</div><!-- end widget -->
+			                    </div><!-- end sidebarAlbum -->
+			                </div><!-- end col-sm-3 col-sm-offset-1 -->
+			            </div><!-- end row -->
+			        </div><!-- end container -->
+			    </section>
+			  {% endblock %}
+				{% block footer %}
+				<!-- =============== START FOOTER ================ -->
+				<section style="background-color:#eeeeee;">
+					<div class="footer footerPadding">
+						<div class="container">
+							<div class="row">
+								<div class="col-sm-4">
+									<div class="copyFooter">
+										<a href="#">&copy; CDBUCKET 2016</a>
+									</div>
+								</div>
+								<div class="col-sm-4">
+								</div>
+								<div class="col-sm-4">
+									<div class="goTop" id="back-to-top">
+										<i class="fa fa-angle-up"></i>
+										<a href="#">Go Top</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- =============== END FOOTER ================ -->
+				{% endblock %}
+				{% block extrajavascript %}
+			        <script type="text/javascript">
+			            $(document).ready(function(){
+			                // ========= jPlayer config 1 ==========
+			                // Home player, Track player, Single post top player
+			                var myPlaylist = new jPlayerPlaylist({
+			                    jPlayer: "#jquery_jplayer_N",
+			                    cssSelectorAncestor: "#jp_container_N"
+			                }, [
+			                    {% for musique in Album.liste_musique %}
+			                    {
+			                        artist: "{{ musique.auteur.username }}", // the artist name
+			                        title:"{{ musique.titre }}", // track title
+			                        mp3:"{{ musique.path.url }}",// mp3 path
+			                        oga:"{{ musique.path.url }}",// oga path
+			                        poster: "{% static "assets/img/albums/cover2.jpg" %}",// poster image path
+			                        duration: '{{ musique.duree }}',// duration time in playlist
+
+			                    },
+			                    {% endfor %}
+			                ], {
+			                    swfPath: "{% static "assets/jplayer/jplayer" %}",
+			                    supplied: "oga, mp3",
+			                    wmode: "window",
+			                    useStateClassSkin: true,
+			                    autoBlur: false,
+			                    smoothPlayBar: true,
+			                    keyEnabled: true,
+			                    size: {width: "80px", height: "80px"},
+			                    loop: true
+			                });
+			                // Show The Current Track !!
+			                $("#jquery_jplayer_N").on(
+			                    $.jPlayer.event.ready + ' ' + $.jPlayer.event.play,
+			                    function(event){
+			                        var current = myPlaylist.current;
+			                        var playlist = myPlaylist.playlist;
+			                        $.each(playlist, function (index, obj) {
+			                            if (index == current) {
+			                                $("#nowPlaying").html("<span class='track-name'>" + obj.title + "</span>" + "<br>" + "<span class='artist-name'>" + obj.artist + "</span>");
+			                                $("#nowPlaying").html("<span class='track-name'>" + obj.title + "</span>" + "<br>" + "<span class='artist-name'>" + obj.artist + "</span>");
+			                            }
+			                        });
+			                    }
+			                );
+
+			                // Sidebar tracks
+			               $(".featured-songs").find(".song").on('click', function(e) {
+			                  e.preventDefault();
+
+			                   if ($(this).hasClass('play')) {
+			                       myPlaylist.pause();
+			            //           $(".featured-songs").find(".song").addClass("play");
+			                       $(".featured-songs").find(".song").not($this).removeClass("play");
+			                       $(this).find('i').removeClass('fa-pause').addClass('fa-play');
+			                   } else {
+			                       var $this = $(this);
+			                       myPlaylist.add({
+			                           mp3: $this.attr("data-mp3"),
+			                           artist: $this.attr("data-artist"),
+			                           title: $this.attr("data-song"),
+			                           poster:$this.attr("data-poster")
+			                       });
+			                       myPlaylist.play(-1);
+			                       $(".featured-songs").find(".song").not($this).removeClass("play");
+			                       $this.toggleClass("play");
+
+			                       $(".featured-songs").find('.song i').removeClass('fa-pause').addClass('fa-play');
+			                       $(this).find('i').removeClass('fa-play').addClass('fa-pause');
+			                       return false;
+			                   }
+			               });//End Click
+
+			                $('.jp-play').click(function() {
+			                    if ( $(this).closest('.jplayer-home').hasClass('jp-state-playing') ) {
+			                        $('.btnPlay').removeClass('play');
+			                        $('.btnPlay').find('i').removeClass('fa-pause').addClass('fa-play');
+
+			                        $('.jp-playlist ul li').removeClass('jp-playlist-current')
+			                        $('.jp-playlist ul li .jp-playlist-item').removeClass('jp-playlist-current')
+			                    }
+			                });
+
+			                $('.jplayerButton').one('click', function() {
+			                    $('.jp-playlist ul li').removeClass('jp-playlist-current');
+			                    $('.jp-playlist ul li a.jp-playlist-item').removeClass('jp-playlist-current');
+
+			                    $('.jp-playlist-item').click(function() {
+			                        if ($(this).hasClass('jp-playlist-current')) {
+			                            myPlaylist.pause();
+			                        }
+			                        $(this).addClass('jp-playlist-current');
+			                        $(this).find('ul li a.jp-playlist-item').addClass('jp-playlist-current');
+			                    });
+			                });
+			            });
+			        </script>
+				{% endblock %}
+			</body>
+			</html>
