@@ -29,11 +29,11 @@ urlpatterns = [
     url(r'^contact/$', login_required(Contact.as_view()), name="contact"),
     url(r'^fiche_artiste/(?P<pk>\d+)$', login_required(fiche_artiste.as_view()), name="fiche_artiste"),
     url(r'^mes_albums/$', login_required(mes_albums.as_view()), name="mes_albums"),
-    url(r'^mon_compte_artiste/$', login_required(monCompte_artiste.as_view()), name="mon_compte_artiste"),
     url(r'^playlist_accueil/$', login_required(playlist_accueil.as_view()), name="playlist_accueil"),
     #AJAX
     url(r'^like/toggle/$', login_required(toggle_like), name="toggle_like"),
     url(r'^like_album/toggle/$', login_required(toggle_like_album), name="toggle_like_album"),
-    url(r'^music/listen/$', login_required(add_music_listen), name="add_music_listen")
+    url(r'^music/listen/$', login_required(add_music_listen), name="add_music_listen"),
+    url(r'^music/download/$', login_required(add_music_download), name="add_music_download")
 
 ]

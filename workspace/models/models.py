@@ -113,3 +113,8 @@ class MusicListen(models.Model):
     user = models.ForeignKey(User)
     music = models.ForeignKey(Music)
     date = models.DateTimeField(auto_now_add = True)
+
+class MusicDownloads(models.Model):
+    user = models.ForeignKey(User)
+    music = models.ForeignKey(Music)
+    date = models.DateTimeField(auto_now_add = True)

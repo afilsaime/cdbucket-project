@@ -1,4 +1,4 @@
-{% extends "search.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 {% block head %}
 <!DOCTYPE html>
@@ -10,19 +10,17 @@
 	<title>Album</title>
 	<link rel="icon" href="assets/img/content/icon.png">
 	<!-- ========== CSS INCLUDES ========== -->
+	<link rel="stylesheet" type="text/css" href="{% static "ModalWindowEffects/css/component.css" %}" />
+	<link rel="stylesheet" type="text/css" href="{% static "CustomFileInputs/css/component.css" %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-select.css" %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-skin-slide.css" %}"/>
+
 	<link rel="stylesheet" href="{% static "assets/css/master.css" %}">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
 </head>
 {% endblock %}
 <body>
-    {% block loader %}
-        <div class="page-loader">
-             <div class="vertical-align align-center">
-                  <img src="{% static "assets/loader/loader.gif" %}" alt="" class="loader-img">
-             </div>
-        </div>
-    {% endblock %}
 	{% block title %}
 	<!-- =============== START BREADCRUMB ================ -->
 	<section class="no-mb">
@@ -62,7 +60,7 @@
                               data-count="{{ forloop.counter0 }}"><i class="fa fa-play"></i></a></td>
                               <td class="tableWidth">{{ musique.titre }}</td>
                               <td>{{ musique.duree }}</td>
-                              <td><a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
+                              <td><a href="{{ musique.path.url }}" class="download" id="{{ musique.id }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
 							  <td><a {% if musique.id in Liked_musics %}class="idlike clicked"{% else %}class="idlike unclicked"{% endif %} id="{{ musique.id }}"><i class="material-icons" style="vertical-align:middle">favorite</i></a></td>
                             </tr>
                         {% endfor %}
@@ -315,6 +313,12 @@
 					console.log("button clicked");
 					$("#likealbum").attr("value",$(this).attr("id"));
 					$('#like-post-album').submit();
+				});
+
+				$('.download').click(function(){
+					doRequest("{% url "add_music_download" %}","POST",{music : $(this).attr("id") },function(json){
+						console.log(json);
+					});
 				});
 
 				function doRequest(target,method,data,success){

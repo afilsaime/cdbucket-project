@@ -185,7 +185,7 @@ class AccessAlbumView(DetailView):
 
 class monCompte(TemplateView):
     template_name = "mon_compte.html"
-    users_in_group = Group.objects.get(name="Artistes").user_set.all()
+    #users_in_group = Group.objects.get(name="Artistes").user_set.all()
 
     def get_context_data(self,**kwargs):
         context = super(monCompte, self).get_context_data(**kwargs)
@@ -321,6 +321,13 @@ class Search(FormView):
         context['Musiques'] = musiques
         return self.render_to_response(context)
 
+    def get(self, request, *args, **kwargs):
+        form = SearchForm(self.request.GET or None)
+        if form.is_valid():
+            return self.form_valid(form)
+
+
+
 
 class Contact(TemplateView):
     template_name = "contact.html"
@@ -434,6 +441,30 @@ def add_music_listen(request):
         response_data['listenpk'] = musicListen.id
         response_data['user'] = musicListen.user.username
         response_data['date'] = "{0}/{1}/{2}".format(musicListen.date.day,musicListen.date.month,musicListen.date.year)
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+def add_music_download(request):
+    if request.method == 'POST':
+        idmusic = request.POST.get('music')
+        response_data = {}
+        music = Music.objects.get(id=idmusic)
+        user = request.user
+
+        musicDownloads = MusicDownloads(user=user,music=music)
+        musicDownloads.save()
+        response_data['status'] = 'download added'
+        response_data['downloadpk'] = musicDownloads.id
+        response_data['user'] = musicDownloads.user.username
+        response_data['date'] = "{0}/{1}/{2}".format(musicDownloads.date.day,musicDownloads.date.month,musicDownloads.date.year)
 
         return HttpResponse(
             json.dumps(response_data),

@@ -9986,6 +9986,13 @@ body {
   -ms-filter: grayscale(100%);
   filter: grayscale(100%);
 }
+
+.loadTitle{
+    width:240px;
+    height:52px;
+    margin-bottom:20px;
+}
+
 .vertical-align {
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
@@ -12670,7 +12677,7 @@ body > section.no-mb > div > div > div.breadcrumb-fullscreen-parent.phone-menu-b
   opacity: 1;
   visibility: visible;
 }
-.open-menu {
+/*.open-menu {
   margin-left: 1.8rem;
   float: right;
   width: 36px;
@@ -12680,7 +12687,7 @@ body > section.no-mb > div > div > div.breadcrumb-fullscreen-parent.phone-menu-b
   z-index: 6;
   top: 11px;
   position: relative;
-}
+}*/
 .open-menu span {
   display: block;
   background: #fff;
@@ -12695,9 +12702,9 @@ body > section.no-mb > div > div > div.breadcrumb-fullscreen-parent.phone-menu-b
 .open-menu span:last-child {
   margin-bottom: 0;
 }
-.open-menu.active {
+/*.open-menu.active {
   position: relative;
-}
+}*/
 .open-menu.active span:first-child {
   -webkit-transform: rotate(45deg);
   -ms-transform: rotate(45deg);
@@ -12715,9 +12722,9 @@ body > section.no-mb > div > div > div.breadcrumb-fullscreen-parent.phone-menu-b
   -o-transform: rotate(-45deg);
   transform: rotate(-45deg);
 }
-.open-menu.affix {
+/*.open-menu.affix {
   position: initial;
-}
+}*/
 .open-menu.affix span {
   background-color: #000;
 }
@@ -15501,7 +15508,7 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
   font-size: 16px;
   line-height: 20px;
   text-align: center;
-  color: #141414;
+  color: #0d0d0d;
   -webkit-transition: all 0.2s linear;
   -moz-transition: all 0.2s linear;
   -ms-transition: all 0.2s linear;
@@ -15545,7 +15552,7 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
   color: #fff;
 }
 .custom-buttons #h-player:hover {
-  background-color: #000;
+  background-color: #0d0d0d;
 }
 .jplayer-home {
   display: block;
@@ -15554,7 +15561,7 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
   height: 4.6rem;
   bottom: 0;
   width: 100%;
-  background: #f2f2f2;
+  background: #0d0d0d;
   border-top: 1px solid rgba(0, 0, 0, 0.15);
 }
 .jplayer-home.close-down {
