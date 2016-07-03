@@ -16,9 +16,11 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Count
 import json
 import datetime
 import uuid
+import collections
 
 
 
@@ -194,13 +196,116 @@ class monCompte(TemplateView):
             groupes = self.request.user.groups.get(name="Artistes")
             context['group'] = groupes.name
 
+            now = datetime.datetime.now()
+
+            this_mth = now.month
+            this_year = now.year
+
+            if this_mth == 1:
+                lst_mth = 12
+                last_year = this_year - 1
+            else:
+                lst_mth = now.month - 1
+                last_year = this_year
+
+            ecoutes = MusicListen.objects.filter(music__auteur=self.request.user)
+            ddl = MusicDownloads.objects.filter(music__auteur=self.request.user)
+            likes_m = LikeMusic.objects.filter(music__auteur=self.request.user)
+            likes_a = LikeAlbum.objects.filter(album__artiste=self.request.user)
+            ecoutes_lst_mth = 0
+            ecoutes_this_mth = 0
+            ddl_lst_mth = 0
+            ddl_ths_mth = 0
+            musics_cnt = {}
+            musics_last_mth_cnt = {}
+            musics_this_mth_cnt = {}
+            ddl_cnt = {}
+            ddl_last_mth_cnt = {}
+            ddl_this_mth_cnt = {}
+
+
+            for obj in ecoutes:
+                if obj.music.titre in musics_cnt.keys():
+                    musics_cnt[obj.music.titre] += 1
+                else:
+                    musics_cnt[obj.music.titre] = 1
+
+                if obj.date.month == lst_mth and obj.date.year == last_year:
+                    ecoutes_lst_mth += 1
+                    if obj.music.titre in musics_last_mth_cnt.keys():
+                        musics_last_mth_cnt[obj.music.titre] += 1
+                    else:
+                        musics_last_mth_cnt[obj.music.titre] = 1
+                elif obj.date.month == this_mth and obj.date.year == this_year:
+                    ecoutes_this_mth += 1
+                    if obj.music.titre in musics_this_mth_cnt.keys():
+                        musics_this_mth_cnt[obj.music.titre] += 1
+                    else:
+                        musics_this_mth_cnt[obj.music.titre] = 1
+
+            omusic_cnt = collections.OrderedDict(sorted(musics_cnt.items(), key=lambda t: t[1]))
+            omusic_last_mth = collections.OrderedDict(sorted(musics_last_mth_cnt.items(), key=lambda t: t[1]))
+            omusic_this_mth = collections.OrderedDict(sorted(musics_this_mth_cnt.items(), key=lambda t: t[1]))
+
+            if len(omusic_cnt)==0:
+                omusic_cnt['N/A']=0
+            if len(omusic_last_mth)==0:
+                omusic_last_mth['N/A']=0
+            if len(omusic_this_mth)==0:
+                omusic_this_mth['N/A']=0
+
+
+            for obj in ddl:
+                if obj.music.titre in ddl_cnt.keys():
+                    ddl_cnt[obj.music.titre] += 1
+                else:
+                    ddl_cnt[obj.music.titre] = 1
+
+                if obj.date.month == lst_mth and obj.date.year == last_year:
+                    ddl_lst_mth += 1
+                    if obj.music.titre in ddl_last_mth_cnt.keys():
+                        ddl_last_mth_cnt[obj.music.titre] += 1
+                    else:
+                        ddl_last_mth_cnt[obj.music.titre] = 1
+                elif obj.date.month == this_mth and obj.date.year == this_year:
+                    ddl_ths_mth += 1
+                    if obj.music.titre in ddl_this_mth_cnt.keys():
+                        ddl_this_mth_cnt[obj.music.titre] += 1
+                    else:
+                        ddl_this_mth_cnt[obj.music.titre] = 1
+
+            ddl_cnt = collections.OrderedDict(sorted(ddl_cnt.items(), key=lambda t: t[1]))
+            ddl_last_mth = collections.OrderedDict(sorted(ddl_last_mth_cnt.items(), key=lambda t: t[1]))
+            ddl_this_mth = collections.OrderedDict(sorted(ddl_this_mth_cnt.items(), key=lambda t: t[1]))
+
+            if len(ddl_cnt)==0:
+                ddl_cnt['N/A']=0
+            if len(ddl_last_mth)==0:
+                ddl_last_mth['N/A']=0
+            if len(ddl_this_mth)==0:
+                ddl_this_mth['N/A']=0
+
+            context['ecoutes'] = len(ecoutes)
+            context['ecoutes_lst_mth'] = ecoutes_lst_mth
+            context['ecoutes_this_mth'] = ecoutes_this_mth
+            context['best_m'] = list(omusic_cnt)[len(omusic_cnt)-1]
+            context['best_m_last_mth'] = list(omusic_last_mth)[len(omusic_last_mth)-1]
+            context['best_m_this_mth'] = list(omusic_this_mth)[len(omusic_this_mth)-1]
+            context['ddl'] = len(ddl)
+            context['ddl_lst_mth'] = ddl_lst_mth
+            context['ddl_this_mth'] = ddl_ths_mth
+            context['best_d'] = list(ddl_cnt)[len(ddl_cnt)-1]
+            context['best_d_last_mth'] = list(ddl_last_mth)[len(ddl_last_mth)-1]
+            context['best_d_this_mth'] = list(ddl_this_mth)[len(ddl_this_mth)-1]
+            context['likes_m'] = len(likes_m)
+            context['likes_a'] = len(likes_a)
+
         except ObjectDoesNotExist:
             context['group'] = "User"
 
         return context
 
-class monCompte_artiste(TemplateView):
-    template_name = "mon_compte_artiste.html"
+
 
 class NewEmail(FormView):
     template_name = "new_email.html"

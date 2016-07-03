@@ -228,3 +228,44 @@ input[type="submit"]:hover{
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
+
+#statTable{
+    border-collapse: collapse;
+
+}
+
+#statTable tr:hover{
+    background: none;
+}
+
+#statTable #corner{
+    border: none;
+    background: none;
+}
+
+#statTable th {
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    background-color: #2e9ab4;
+    color:white;
+}
+
+#statTable td{
+    border:none;
+    border-right:1px solid rgba(0, 0, 0, 0.03);
+    border-bottom:1px solid rgba(0, 0, 0, 0.03);
+    background:#94d2df;
+    color:white;
+}
+
+#statTable td[colspan="3"]{
+    border:none;
+    border-top:1px solid rgba(0, 0, 0, 0.03);
+    border-bottom:1px solid rgba(0, 0, 0, 0.03);
+    background:#94d2df;
+    color:white;
+}
+
+
+#statTable, #statTable th.top, #statTable td{
+	text-align: center;
+}

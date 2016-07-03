@@ -9,23 +9,38 @@
 			<span class="heading-b3"></span>
 		</div><!-- end sectionTtile -->
 		<div class="row">
-			<div class="col-sm-3 col-sm-offset-1">
-				<div class="sidebarAlbum">
-					<div class="widget">
-						<h3>MES INFORMATIONS D'ARTISTE </h3>
-						<h3>MES INDICATEURS </h3>
-						<ul>
-							<li>Date de création du compte :<span> {{ user.date_joined }} </span></li>
-							<li>Votre TOP 3 des musiques les plus écoutées : <span></span></li>
-							<li>Votre TOP 3 des musiques les plus téléchargées : <span></span></li>
-							<li>Nombre de playlist présentes sur le site :<span></span></li>
-							<li>Nombre d'écoute par musique :<span></span></li>
-							<li>Nombre d'écoute TOTAL :<span></span></li>
-							<li>Nombre de téléchargement :<span></span></li>
-							<li>Durée total audio :<span> </span></li>
-						</ul>
-					</div><!-- end widget -->
-				</div><!-- end sidebarAlbum -->
+			<div class="col-sm-10 col-sm-offset-1">
+				<div class="sectionTitle paddingBottom">
+					<h4>Statistiques de vos musiques </h4>
+					<span class="heading-b3"></span>
+				</div>
+
+				<table id="statTable">
+					<tr>
+						<th id="corner"></th><th class="top">Le mois dernier</th><th class="top">Ce mois ci</th><th class="top">Depuis votre inscription</th>
+					</tr>
+					<tr>
+						<th>Nombre d'écoutes</th><td>{{ ecoutes_lst_mth }}</td><td>{{ ecoutes_this_mth }}</td><td>{{ ecoutes }}</td>
+					</tr>
+					<tr>
+						<th>Nombre de telechargements</th><td>{{ ddl_lst_mth }}</td><td>{{ ddl_this_mth }}</td><td>{{ ddl }}</td>
+					</tr>
+					<tr>
+						<th>Nombre de likes (musiques)</th><td colspan="3">{{ likes_m }}</td>
+					</tr>
+					<tr>
+						<th>Nombre de likes (albums)</th><td colspan="3">{{ likes_a }}</td>
+					</tr>
+					<tr>
+						<th>Musique la plus téléchargée</th><td>{{ best_d_last_mth }}</td><td>{{ best_d_this_mth }}</td><td>{{ best_d }}</td>
+					</tr>
+					<tr>
+						<th>Musique la plus écoutée</th><td>{{ best_m_last_mth }}</td><td>{{ best_m_this_mth }}</td><td>{{ best_m }}</td>
+					</tr>
+					<tr>
+						<th>Tag le plus populaire</th><td></td><td></td><td></td>
+					</tr>
+				</table>
 			</div><!-- end col-sm-3 col-sm-offset-1 -->
 		</div><!-- end row -->
 	</div><!-- end container -->
