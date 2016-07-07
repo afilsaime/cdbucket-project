@@ -81,12 +81,11 @@
 											<div class="blogBox">
 												<div class="blogBoxContent">
 													<div class="blogHeader">
-														<h1>Titre : {{ music.titre }}</h1>
+														<h1>{{ music.titre }}</h1>
 													</div>
 													<div class="admin-list clearfix">
 														<ul>
-															<li>Auteur : {{ music.auteur }}</li>
-															<li>{{ musique.duree }}</li>
+															<li>{{ music.auteur }}</li>
 
 
 																	<tr>
@@ -119,12 +118,13 @@
 										<div class="blogBox">
 											<div class="blogBoxContent">
 												<div class="blogHeader">
-													<h1>Titre : {{ album.titre }}</h1>
+													<h1>{{ album.titre }}</h1>
 												</div>
 												<div class="admin-list clearfix">
 													<ul>
-														<li>Auteur : {{ album.artiste.username }}</li>
-														<li>Date publi.: {{ album.date_publication }}</li>
+														<li>{{ album.artiste.username }}</li>
+														<li> </li>
+														<li> | {{ album.date_publication }}</li>
 													</ul>
 												</div><!-- end admin-list -->
 												<div class="rmButton">
@@ -140,13 +140,8 @@
 										<div class="blogBox">
 											<div class="blogBoxContent">
 												<div class="blogHeader">
-													<h1>Pseudo : {{ artiste.username }}</h1>
+													<h1>{{ artiste.username }}</h1>
 												</div>
-												<div class="admin-list clearfix">
-													<ul>
-														<li>Nb album : </li>
-													</ul>
-												</div><!-- end admin-list -->
 												<div class="rmButton">
 													<a href="{% url 'fiche_artiste' artiste.id %}">Consulter Fiche Artiste</a>
 												</div>

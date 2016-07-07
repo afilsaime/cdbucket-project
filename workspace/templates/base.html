@@ -328,53 +328,23 @@
 				</div><!-- end col-sm-12 -->
 			</div>
 			<div class="list-albums">
+
+                {% for album in recommandations %}
 				<ul class="list-feature col-md-12 col-xs-12 col-sm-12">
 					<li class="col-md-3 col-sm-3 col-xs-12">
 						<div class="album-icon">
 							<span class="thumbs-album">
-								<a href="albumsSingle1.html"><img width="270" height="270" src="{% static "assets/img/content/albumCover.png" %}" class="attachment-album-thumbnail wp-post-image" alt="album-cover-1"></a>
+								<a href="{% url "voir_album" album.id %}"><img width="270" height="270" src="{% static "assets/img/content/jackette.jpg" %}" class="attachment-album-thumbnail wp-post-image" alt="album-cover-1"></a>
 							</span>
 							<span class="disk"></span>
 						</div><!-- END ALBUM ICON -->
 						<div class="name">
-							<h3>Noon Xoxo</h3>
-							<p>Chillout</p>
+							<h3>{{ album.titre }}</h3>
+							<p>{{ album.artiste }}</p>
 						</div><!-- end name -->
 					</li>
+                {% endfor %}
 
-					<li class="col-md-3 col-sm-3 col-xs-12">
-						<div class="album-icon albumIcon1">
-							<span class="thumbs-album">
-								<a href="albumsSingle3.html"><img width="270" height="270" src="{% static "assets/img/content/albumCover1.png" %}" class="attachment-album-thumbnail wp-post-image" alt="album-cover-1"></a>
-							</span>
-							<span class="disk"></span>
-						</div>
-						<div class="name">
-							<h3>Stunt Vibe</h3>									<p>Chillout</p>
-						</div>
-						</li>
-						<li class="col-md-3 col-sm-3 col-xs-12">
-							<div class="album-icon albumIcon2">
-								<span class="thumbs-album">
-									<a href="albumsSingle4.html"><img width="270" height="270" src="{% static "assets/img/content/albumCover2.png" %}" class="attachment-album-thumbnail wp-post-image" alt="album-cover-1"></a>
-									</span>
-								<span class="disk"></span>
-							</div>
-							<div class="name">
-								<h3>Strange Clouds</h3>								<p>Chillout</p>
-							</div>
-						</li>
-						<li class="col-md-3 col-sm-3 col-xs-12">
-							<div class="album-icon albumIcon3">
-								<span class="thumbs-album">
-									<a href="albumsSingle2.html"><img width="270" height="270" src="{% static "assets/img/content/albumCover3.png" %}" class="attachment-album-thumbnail wp-post-image" alt="album-cover-1"></a>
-									</span>
-								<span class="disk"></span>
-							</div>
-							<div class="name">
-								<h3>Natural Earth</h3>								<p>Chillout</p>
-							</div>
-						</li>
 				</ul>
 			</div><!-- end list-albums -->
 		</div><!-- end container -->
@@ -394,47 +364,21 @@
 						</div><!-- end sectionTtile -->
 						<table>
 							<tr class="tableEventsTitle">
-								<th class="date"> AJOUTER A SA PLAYLIST</th>
-								<th class="venue">DATE</th>
-								<th class="location">TITRE</th>
-								<th class="tickets">DUREE</th>
+								<th >TITRE</th>
+                                <th >ARTISTE</th>
+								<th >DUREE</th>
+                                <th>DATE</th>
 								<th></th>
 							</tr>
+                            {% for album in nouveautes %}
 							<tr>
-								<td class="aqura-date"><a href="#"><i class="fa fa-plus"></i></a></td>
-								<td class="aqura-location"><a href="singleEvent.html">Mar 06</a></td>
-								<td class="aqura-city"><a href="singleEvent.html">Cluj Napoca, Bontida Romania</a></td>
-								<td class="aqura-tickets"><a href="singleEvent.html">Tickets</a></td>
-								<td class="aqura-vip"><a href="singleEvent.html">ECOUTER</a></td>
+								<td ><a href="singleEvent.html">{{ album.titre }}</a></td>
+                                <td ><a href="singleEvent.html">{{ album.artiste }}</a></td>
+								<td ><a href="singleEvent.html">{{ album.duree_totale }}</a></td>
+                                <td ><a href="singleEvent.html">{{ album.date_publication }}</a></td>
+								<td class="aqura-vip"><a href="{% url "voir_album" album.id %}">ECOUTER</a></td>
 							</tr>
-							<tr>
-								<td class="aqura-date"><a href="#"><i class="fa fa-plus"></i></a></td>
-								<td class="aqura-location"><a href="singleEvent.html">Mar 06</a></td>
-								<td class="aqura-city"><a href="singleEvent.html">Cluj Napoca, Bontida Romania</a></td>
-								<td class="aqura-tickets"><a href="singleEvent.html">Tickets</a></td>
-								<td class="aqura-vip"><a href="singleEvent.html">ECOUTER</a></td>
-							</tr>
-							<tr>
-								<td class="aqura-date"><a href="#"><i class="fa fa-plus"></i></a></td>
-								<td class="aqura-location"><a href="singleEvent.html">Mar 06</a></td>
-								<td class="aqura-city"><a href="singleEvent.html">Cluj Napoca, Bontida Romania</a></td>
-								<td class="aqura-tickets"><a href="singleEvent.html">Tickets</a></td>
-								<td class="aqura-vip"><a href="singleEvent.html">ECOUTER</a></td>
-							</tr>
-							<tr>
-								<td class="aqura-date"><a href="#"><i class="fa fa-plus"></i></a></td>
-								<td class="aqura-location"><a href="singleEvent.html">Mar 06</a></td>
-								<td class="aqura-city"><a href="singleEvent.html">Cluj Napoca, Bontida Romania</a></td>
-								<td class="aqura-tickets"><a href="singleEvent.html">Tickets</a></td>
-								<td class="aqura-vip"><a href="singleEvent.html">ECOUTER</a></td>
-							</tr>
-							<tr>
-								<td class="aqura-date"><a href="#"><i class="fa fa-plus"></i></a></td>
-								<td class="aqura-location"><a href="singleEvent.html">Mar 06</a></td>
-								<td class="aqura-city"><a href="singleEvent.html">Cluj Napoca, Bontida Romania</a></td>
-								<td class="aqura-tickets"><a href="singleEvent.html">Tickets</a></td>
-								<td class="aqura-vip"><a href="singleEvent.html">ECOUTER</a></td>
-							</tr>
+							{% endfor %}
 						</table>
 					</div><!-- end col-sm-12 -->
 				</div><!-- end row -->
@@ -524,94 +468,16 @@
                     jPlayer: "#jquery_jplayer_N",
                     cssSelectorAncestor: "#jp_container_N"
                 }, [
-                    {
-                        artist: "Tensnake ", // the artist name
-                        title:"See Right Through ft. Fiora", // track title
-                        mp3:"assets/audio/flute.mp3",// mp3 path
-                        oga:"assets/audio/flute.mp3",// oga path
-                        poster: "assets/img/content/icon.png",// poster image path
-                        duration: '03:29',// duration time in playlist
-                        buy1: '#buy1',
-                        buy2: '#buy2',
-                        buy3: '#buy3'
-                    },
-                    {
-                        artist: "Jack Ü ",
-                        title:"Take Ü There feat. Kiesza",
-                        mp3:"assets/audio/2.mp3",
-                        oga:"assets/audio/2.mp3",
-                        poster: "assets/img/content/icon.png",
-                        duration: '05:41',
-                        buy1: '#buy1',
-                        buy2: '#buy2',
-                        buy3: '#buy3'
-                    },
-                    {
-                        artist: "Bos Sinclair",
-                        title:"Cinderella",
-                        mp3:"assets/audio/3.mp3",
-                        oga:"assets/audio/3.mp3",
-                        poster: "assets/img/content/icon.png",
-                        duration: '04:05',
-                        buy1: '#buy1',
-                        buy2: '#buy2',
-                        buy3: '#buy3'
-                    },
-                    {
-                        artist: "Yiuna",
-                        title:"Lullabies",
-                        mp3:"assets/audio/4.mp3",
-                        oga:"assets/audio/4.mp3",
-                        poster: "assets/img/albums/cover4.jpg",
-                        duration: '04:27',
-                        buy1: '#buy1',
-                        buy2: '#buy2',
-                        buy3: '#buy3'
-                    },
-                    {
-                        artist: "Tensnake ", // the artist name
-                        title:"See Right Through ft. Fiora", // track title
-                        mp3:"assets/audio/flute.mp3",// mp3 path
-                        oga:"assets/audio/flute.mp3",// oga path
-                        poster: "assets/img/albums/cover2.jpg",// poster image path
-                        duration: '03:29',// duration time in playlist
-                        buy1: '#buy1',
-                        buy2: '#buy2',
-                        buy3: '#buy3'
-                    },
-                    {
-                        artist: "Jack Ü ",
-                        title:"Take Ü There feat. Kiesza",
-                        mp3:"assets/audio/2.mp3",
-                        oga:"assets/audio/2.mp3",
-                        poster: "assets/img/albums/cover1.jpg",
-                        duration: '05:41',
-                        buy1: '#buy1',
-                        buy2: '#buy2',
-                        buy3: '#buy3'
-                    },
-                    {
-                        artist: "Bos Sinclair",
-                        title:"Cinderella",
-                        mp3:"assets/audio/3.mp3",
-                        oga:"assets/audio/3.mp3",
-                        poster: "assets/img/albums/cover3.jpg",
-                        duration: '04:05',
-                        buy1: '#buy1',
-                        buy2: '#buy2',
-                        buy3: '#buy3'
-                    },
-                    {
-                        artist: "Yiuna",
-                        title:"Lullabies",
-                        mp3:"assets/audio/4.mp3",
-                        oga:"assets/audio/4.mp3",
-                        poster: "assets/img/albums/cover4.jpg",
-                        duration: '04:27',
-                        buy1: '#buy1',
-                        buy2: '#buy2',
-                        buy3: '#buy3'
-                    }
+                    {% for musique in au_hazard.liste_musique %}
+ 				   {
+ 					   artist: "{{ musique.auteur.username }}", // the artist name
+ 					   title:"{{ musique.titre }}", // track title
+ 					   mp3:"{{ musique.path.url }}",// mp3 path
+ 					   oga:"{{ musique.path.url }}",// oga path
+ 					   poster: "{% static "assets/img/albums/cover1.jpg" %}",// poster image path
+ 					   duration: '{{ musique.duree }}',// duration time in playlist
+ 				   }{% if not forloop.last %},{% endif %}
+ 				   {% endfor %}
                 ], {
                     swfPath: "assets/jplayer/jplayer",
                     supplied: "oga, mp3",

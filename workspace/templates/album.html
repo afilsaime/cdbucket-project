@@ -28,7 +28,7 @@
 			<div class="col-sm-12">
 				<div class="before-FullscreenSlider"></div>
 				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
-					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single4.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
+					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single_album.jpg" %}');background-size: 1920px 1000px" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
 					</div>
 				</div>
 			</div>
@@ -37,7 +37,7 @@
 	<!-- =============== END BREADCRUMB ================ -->
   {% endblock %}
   {% block content %}
-  <section class="albumSingle padding background-properties" style="background-image:url(assets/img/albums/single22.jpg);">
+  <section class="albumSingle padding background-properties" style="background-image:url( assets/img/albums/single22.jpg);">
       <div class="container">
           <div class="sectionTitle paddingBottom">
               <span class="heading-t3"></span>
@@ -61,7 +61,7 @@
                               <td class="tableWidth">{{ musique.titre }}</td>
                               <td>{{ musique.duree }}</td>
                               <td><a href="{{ musique.path.url }}" class="download" id="{{ musique.id }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
-							  <td><a {% if musique.id in Liked_musics %}class="idlike clicked"{% else %}class="idlike unclicked"{% endif %} id="{{ musique.id }}"><i class="material-icons" style="vertical-align:middle">favorite</i></a></td>
+							  <td><a {% if musique.id in Liked_musics %}class="idlike clicked"{% else %}class="idlike unclicked"{% endif %} id="like-{{ musique.id }}"><i class="material-icons" style="vertical-align:middle">favorite</i></a></td>
                             </tr>
                         {% endfor %}
                   </table>
@@ -305,7 +305,8 @@
 				});
 
 				$('.idlike').click(function(){
-					$("#likemusic").attr("value",$(this).attr("id"));
+					var tab = $(this).attr("id").split('-')
+					$("#likemusic").attr("value",tab[1]);
 					$('#like-post').submit();
 				});
 
@@ -348,7 +349,7 @@
 				function toggle_like(){
 					console.log("toggle-like is working");
 					doRequest("{% url "toggle_like" %}","POST",{ music : $('#likemusic').val() },function(json){
-						$('#'+$('#likemusic').val()).toggleClass("clicked unclicked");
+						$('#like-'+$('#likemusic').val()).toggleClass("clicked unclicked");
 						$('#likemusic').val('');
 						console.log(json);
 						console.log("success");

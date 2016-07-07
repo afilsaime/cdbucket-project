@@ -10190,7 +10190,8 @@ body {
   width: 193px;
   height: 194px;
   float: left;
-  background: url(../img/content/disk.png) no-repeat center center;
+  background: url(../img/content/disk_a.png) no-repeat center center;
+  background-size: 193px 194px;
   z-index: 9;
 }
 .list-albums .list-feature li .albumIcon1 .disk {
@@ -15449,7 +15450,7 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
   right: -4rem;
   position: relative;
   font-size: 1.1rem;
-  color: #000;
+  color: #ffffff;
   font-family: 'Karla', sans-serif;
   font-weight: 400;
   line-height: 36px;
@@ -15459,7 +15460,7 @@ body > section.albumSingle.padding.background-properties > div > div.row > div.c
   left: -4rem;
   position: relative;
   font-size: 1.1rem;
-  color: #000;
+  color: #ffffff;
   font-family: 'Karla', sans-serif;
   font-weight: 400;
   line-height: 36px;

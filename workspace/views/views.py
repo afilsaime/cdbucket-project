@@ -16,7 +16,8 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Count, ExpressionWrapper, F, FloatField
+from django.db.models import Count, ExpressionWrapper, F, FloatField, Q
+import random
 import json
 import datetime
 import uuid
@@ -24,8 +25,71 @@ import uuid
 
 
 # Create your views here.
-class HelloWorld(TemplateView):
+#Vue de la page d'accueil
+class HomeView(TemplateView):
     template_name = "base.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView,self).get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated():
+
+            #Calcul de score pour recommandations
+            ecoutes = MusicListen.objects.filter(user=self.request.user)
+            ddl = MusicDownloads.objects.filter(user=self.request.user)
+            likes_music = LikeMusic.objects.filter(user=self.request.user)
+            likes_album = LikeAlbum.objects.filter(user=self.request.user)
+
+            tag_score = {}
+
+            ecoute_score= ecoutes.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.05,output_field=FloatField())).order_by('-nb_tag')
+            ddl_score = ddl.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
+
+            for obj in ecoute_score:
+                if obj['music__tag__intitule'] in tag_score:
+                    tag_score[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score[obj['music__tag__intitule']] = obj['nb_tag']
+
+            for obj in ddl_score:
+                if obj['music__tag__intitule'] in tag_score:
+                    tag_score[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score[obj['music__tag__intitule']] = obj['nb_tag']
+
+            for obj in likes_album:
+                for sub in obj.album.liste_tag():
+                    if sub in tag_score:
+                        tag_score[sub] += obj.album.liste_tag()[sub]*0.30
+                    else:
+                        tag_score[sub] = obj.album.liste_tag()[sub]*0.30
+
+            for obj in likes_music:
+                if obj.music.tag.intitule in tag_score:
+                    tag_score[obj.music.tag.intitule] += 0.15
+                else:
+                    tag_score[obj.music.tag.intitule] = 0.15
+
+            all_albums = Album.objects.all()
+            ordered_tag_score = sorted(tag_score.iteritems(), key=lambda (k,v): (v,k),reverse=True)
+            album_select = []
+
+            for album in all_albums:
+                current_tags = sorted(album.liste_tag().iteritems(), key=lambda (k,v): (v,k),reverse=True)
+                print(ordered_tag_score)
+                print(current_tags[0][0])
+                if current_tags[0][0] in ordered_tag_score[0]:
+
+                    album_select.append(album)
+
+            #recherche des nouveautés
+            nouveautes = Album.objects.filter(Q(type_album='AL')|Q(type_album='SI')).order_by('-date_publication')[:5]
+            au_hazard = nouveautes[random.randint(0, len(nouveautes)-1)]
+
+            context['recommandations'] = album_select[:4]
+            context['nouveautes'] = nouveautes
+            context['au_hazard'] = au_hazard
+        return context
 
 # class ListMusic(ListView):
 #     template_name = "liste.html"
@@ -215,16 +279,16 @@ class monCompte(TemplateView):
             tag_score = {}
             tag_score_last_month = {}
             tag_score_this_month = {}
-            ecoute_score= ecoutes.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.5,output_field=FloatField())).order_by('-nb_tag')
+            ecoute_score= ecoutes.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.05,output_field=FloatField())).order_by('-nb_tag')
             ddl_score = ddl.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
 
-            ecoute_score_this_month= ecoutes.filter(date__month=this_mth,date__year=this_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.5,output_field=FloatField())).order_by('-nb_tag')
+            ecoute_score_this_month= ecoutes.filter(date__month=this_mth,date__year=this_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.05,output_field=FloatField())).order_by('-nb_tag')
             ddl_score_this_month = ddl.filter(date__month=this_mth,date__year=this_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
 
-            ecoute_score_last_month = ecoutes.filter(date__month=lst_mth,date__year=last_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.5,output_field=FloatField())).order_by('-nb_tag')
+            ecoute_score_last_month = ecoutes.filter(date__month=lst_mth,date__year=last_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.05,output_field=FloatField())).order_by('-nb_tag')
             ddl_score_last_month = ddl.filter(date__month=lst_mth,date__year=last_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
 
-
+            ordered_tag_score = sorted(tag_score.iteritems(), key=lambda (k,v): (v,k),reverse=True)
 
             for obj in ecoute_score:
                 if obj['music__tag__intitule'] in tag_score:
@@ -269,43 +333,43 @@ class monCompte(TemplateView):
             for obj in likes_album:
                 for sub in obj.album.liste_tag():
                     if sub in tag_score:
-                        tag_score[sub] += obj.album.liste_tag()[sub]*0.25
+                        tag_score[sub] += obj.album.liste_tag()[sub]*0.30
                     else:
-                        tag_score[sub] = obj.album.liste_tag()[sub]*0.25
+                        tag_score[sub] = obj.album.liste_tag()[sub]*0.30
 
             for obj in likes_album.filter(date__month=lst_mth,date__year=last_year):
                 for sub in obj.album.liste_tag():
                     if sub in tag_score_last_month:
-                        tag_score_last_month[sub] += obj.album.liste_tag()[sub]*0.25
+                        tag_score_last_month[sub] += obj.album.liste_tag()[sub]*0.30
                     else:
-                        tag_score_last_month[sub] = obj.album.liste_tag()[sub]*0.25
+                        tag_score_last_month[sub] = obj.album.liste_tag()[sub]*0.30
 
             for obj in likes_album.filter(date__month=this_mth,date__year=this_year):
                 for sub in obj.album.liste_tag():
                     if sub in tag_score_this_month:
-                        tag_score_this_month[sub] += obj.album.liste_tag()[sub]*0.25
+                        tag_score_this_month[sub] += obj.album.liste_tag()[sub]*0.30
                     else:
-                        tag_score_this_month[sub] = obj.album.liste_tag()[sub]*0.25
+                        tag_score_this_month[sub] = obj.album.liste_tag()[sub]*0.30
 
             print(tag_score)
 
             for obj in likes_music:
                 if obj.music.tag.intitule in tag_score:
-                    tag_score[obj.music.tag.intitule] += 0.20
+                    tag_score[obj.music.tag.intitule] += 0.15
                 else:
-                    tag_score[obj.music.tag.intitule] = 0.20
+                    tag_score[obj.music.tag.intitule] = 0.15
 
             for obj in likes_music.filter(date__month=lst_mth,date__year=last_year):
                 if obj.music.tag.intitule in tag_score_last_month:
-                    tag_score_last_month[obj.music.tag.intitule] += 0.20
+                    tag_score_last_month[obj.music.tag.intitule] += 0.15
                 else:
-                    tag_score_last_month[obj.music.tag.intitule] = 0.20
+                    tag_score_last_month[obj.music.tag.intitule] = 0.15
 
             for obj in likes_music.filter(date__month=this_mth,date__year=this_year):
                 if obj.music.tag.intitule in tag_score_this_month:
-                    tag_score_this_month[obj.music.tag.intitule] += 0.20
+                    tag_score_this_month[obj.music.tag.intitule] += 0.15
                 else:
-                    tag_score_this_month[obj.music.tag.intitule] = 0.20
+                    tag_score_this_month[obj.music.tag.intitule] = 0.15
 
             print(tag_score)
             ordered_tag_score = sorted(tag_score.iteritems(), key=lambda (k,v): (v,k),reverse=True)
@@ -667,8 +731,14 @@ def add_music_download(request):
             content_type="application/json"
         )
 
-class mes_albums(TemplateView):
+class MyAlbumsView(TemplateView):
     template_name = "mes_albums.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(MyAlbumsView,self).get_context_data(**kwargs)
+
+        context['albums'] = Album.objects.filter(artiste=self.request.user)
+        return context
 
 class playlist_accueil(TemplateView):
     template_name = "playlist_accueil.html"
