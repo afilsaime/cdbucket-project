@@ -26,10 +26,10 @@
 						<th>Nombre de telechargements</th><td>{{ ddl_lst_mth }}</td><td>{{ ddl_this_mth }}</td><td>{{ ddl }}</td>
 					</tr>
 					<tr>
-						<th>Nombre de likes (musiques)</th><td colspan="3">{{ likes_m }}</td>
+						<th>Nombre de likes (musiques)</th><td >{{ likes_m_last_month }}</td><td >{{ likes_m_this_month }}</td><td >{{ likes_m }}</td>
 					</tr>
 					<tr>
-						<th>Nombre de likes (albums)</th><td colspan="3">{{ likes_a }}</td>
+						<th>Nombre de likes (albums)</th><td>{{ likes_a_last_month }}</td><td>{{ likes_a_this_month }}</td><td>{{ likes_a }}</td>
 					</tr>
 					<tr>
 						<th>Musique la plus téléchargée</th><td>{{ best_d_last_mth }}</td><td>{{ best_d_this_mth }}</td><td>{{ best_d }}</td>
@@ -38,7 +38,7 @@
 						<th>Musique la plus écoutée</th><td>{{ best_m_last_mth }}</td><td>{{ best_m_this_mth }}</td><td>{{ best_m }}</td>
 					</tr>
 					<tr>
-						<th>Tag le plus populaire</th><td></td><td></td><td></td>
+						<th>Tag le plus populaire</th><td>{{best_tag_last_month}}</td><td>{{best_tag_this_month}}</td><td>{{ best_tag }}</td>
 					</tr>
 				</table>
 			</div><!-- end col-sm-3 col-sm-offset-1 -->

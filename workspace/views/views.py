@@ -16,11 +16,10 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
-from django.db.models import Count
+from django.db.models import Count, ExpressionWrapper, F, FloatField
 import json
 import datetime
 import uuid
-import collections
 
 
 
@@ -210,95 +209,182 @@ class monCompte(TemplateView):
 
             ecoutes = MusicListen.objects.filter(music__auteur=self.request.user)
             ddl = MusicDownloads.objects.filter(music__auteur=self.request.user)
-            likes_m = LikeMusic.objects.filter(music__auteur=self.request.user)
-            likes_a = LikeAlbum.objects.filter(album__artiste=self.request.user)
-            ecoutes_lst_mth = 0
-            ecoutes_this_mth = 0
-            ddl_lst_mth = 0
-            ddl_ths_mth = 0
-            musics_cnt = {}
-            musics_last_mth_cnt = {}
-            musics_this_mth_cnt = {}
-            ddl_cnt = {}
-            ddl_last_mth_cnt = {}
-            ddl_this_mth_cnt = {}
+            likes_music = LikeMusic.objects.filter(music__auteur=self.request.user)
+            likes_album = LikeAlbum.objects.filter(album__artiste=self.request.user)
+
+            tag_score = {}
+            tag_score_last_month = {}
+            tag_score_this_month = {}
+            ecoute_score= ecoutes.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.5,output_field=FloatField())).order_by('-nb_tag')
+            ddl_score = ddl.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
+
+            ecoute_score_this_month= ecoutes.filter(date__month=this_mth,date__year=this_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.5,output_field=FloatField())).order_by('-nb_tag')
+            ddl_score_this_month = ddl.filter(date__month=this_mth,date__year=this_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
+
+            ecoute_score_last_month = ecoutes.filter(date__month=lst_mth,date__year=last_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.5,output_field=FloatField())).order_by('-nb_tag')
+            ddl_score_last_month = ddl.filter(date__month=lst_mth,date__year=last_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
 
 
-            for obj in ecoutes:
-                if obj.music.titre in musics_cnt.keys():
-                    musics_cnt[obj.music.titre] += 1
+
+            for obj in ecoute_score:
+                if obj['music__tag__intitule'] in tag_score:
+                    tag_score[obj['music__tag__intitule']] += obj['nb_tag']
                 else:
-                    musics_cnt[obj.music.titre] = 1
+                    tag_score[obj['music__tag__intitule']] = obj['nb_tag']
 
-                if obj.date.month == lst_mth and obj.date.year == last_year:
-                    ecoutes_lst_mth += 1
-                    if obj.music.titre in musics_last_mth_cnt.keys():
-                        musics_last_mth_cnt[obj.music.titre] += 1
-                    else:
-                        musics_last_mth_cnt[obj.music.titre] = 1
-                elif obj.date.month == this_mth and obj.date.year == this_year:
-                    ecoutes_this_mth += 1
-                    if obj.music.titre in musics_this_mth_cnt.keys():
-                        musics_this_mth_cnt[obj.music.titre] += 1
-                    else:
-                        musics_this_mth_cnt[obj.music.titre] = 1
-
-            omusic_cnt = collections.OrderedDict(sorted(musics_cnt.items(), key=lambda t: t[1]))
-            omusic_last_mth = collections.OrderedDict(sorted(musics_last_mth_cnt.items(), key=lambda t: t[1]))
-            omusic_this_mth = collections.OrderedDict(sorted(musics_this_mth_cnt.items(), key=lambda t: t[1]))
-
-            if len(omusic_cnt)==0:
-                omusic_cnt['N/A']=0
-            if len(omusic_last_mth)==0:
-                omusic_last_mth['N/A']=0
-            if len(omusic_this_mth)==0:
-                omusic_this_mth['N/A']=0
-
-
-            for obj in ddl:
-                if obj.music.titre in ddl_cnt.keys():
-                    ddl_cnt[obj.music.titre] += 1
+            for obj in ecoute_score_last_month:
+                if obj['music__tag__intitule'] in tag_score_last_month:
+                    tag_score_last_month[obj['music__tag__intitule']] += obj['nb_tag']
                 else:
-                    ddl_cnt[obj.music.titre] = 1
+                    tag_score_last_month[obj['music__tag__intitule']] = obj['nb_tag']
 
-                if obj.date.month == lst_mth and obj.date.year == last_year:
-                    ddl_lst_mth += 1
-                    if obj.music.titre in ddl_last_mth_cnt.keys():
-                        ddl_last_mth_cnt[obj.music.titre] += 1
+            for obj in ecoute_score_this_month:
+                if obj['music__tag__intitule'] in tag_score_this_month:
+                    tag_score_this_month[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score_this_month[obj['music__tag__intitule']] = obj['nb_tag']
+
+            print(tag_score)
+            for obj in ddl_score:
+                if obj['music__tag__intitule'] in tag_score:
+                    tag_score[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score[obj['music__tag__intitule']] = obj['nb_tag']
+
+            for obj in ddl_score_last_month:
+                if obj['music__tag__intitule'] in tag_score_last_month:
+                    tag_score_last_month[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score_last_month[obj['music__tag__intitule']] = obj['nb_tag']
+
+            for obj in ddl_score_this_month:
+                if obj['music__tag__intitule'] in tag_score_this_month:
+                    tag_score_this_month[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score_this_month[obj['music__tag__intitule']] = obj['nb_tag']
+
+
+            print(tag_score)
+
+            for obj in likes_album:
+                for sub in obj.album.liste_tag():
+                    if sub in tag_score:
+                        tag_score[sub] += obj.album.liste_tag()[sub]*0.25
                     else:
-                        ddl_last_mth_cnt[obj.music.titre] = 1
-                elif obj.date.month == this_mth and obj.date.year == this_year:
-                    ddl_ths_mth += 1
-                    if obj.music.titre in ddl_this_mth_cnt.keys():
-                        ddl_this_mth_cnt[obj.music.titre] += 1
+                        tag_score[sub] = obj.album.liste_tag()[sub]*0.25
+
+            for obj in likes_album.filter(date__month=lst_mth,date__year=last_year):
+                for sub in obj.album.liste_tag():
+                    if sub in tag_score_last_month:
+                        tag_score_last_month[sub] += obj.album.liste_tag()[sub]*0.25
                     else:
-                        ddl_this_mth_cnt[obj.music.titre] = 1
+                        tag_score_last_month[sub] = obj.album.liste_tag()[sub]*0.25
 
-            ddl_cnt = collections.OrderedDict(sorted(ddl_cnt.items(), key=lambda t: t[1]))
-            ddl_last_mth = collections.OrderedDict(sorted(ddl_last_mth_cnt.items(), key=lambda t: t[1]))
-            ddl_this_mth = collections.OrderedDict(sorted(ddl_this_mth_cnt.items(), key=lambda t: t[1]))
+            for obj in likes_album.filter(date__month=this_mth,date__year=this_year):
+                for sub in obj.album.liste_tag():
+                    if sub in tag_score_this_month:
+                        tag_score_this_month[sub] += obj.album.liste_tag()[sub]*0.25
+                    else:
+                        tag_score_this_month[sub] = obj.album.liste_tag()[sub]*0.25
 
-            if len(ddl_cnt)==0:
-                ddl_cnt['N/A']=0
-            if len(ddl_last_mth)==0:
-                ddl_last_mth['N/A']=0
-            if len(ddl_this_mth)==0:
-                ddl_this_mth['N/A']=0
+            print(tag_score)
 
-            context['ecoutes'] = len(ecoutes)
-            context['ecoutes_lst_mth'] = ecoutes_lst_mth
-            context['ecoutes_this_mth'] = ecoutes_this_mth
-            context['best_m'] = list(omusic_cnt)[len(omusic_cnt)-1]
-            context['best_m_last_mth'] = list(omusic_last_mth)[len(omusic_last_mth)-1]
-            context['best_m_this_mth'] = list(omusic_this_mth)[len(omusic_this_mth)-1]
-            context['ddl'] = len(ddl)
-            context['ddl_lst_mth'] = ddl_lst_mth
-            context['ddl_this_mth'] = ddl_ths_mth
-            context['best_d'] = list(ddl_cnt)[len(ddl_cnt)-1]
-            context['best_d_last_mth'] = list(ddl_last_mth)[len(ddl_last_mth)-1]
-            context['best_d_this_mth'] = list(ddl_this_mth)[len(ddl_this_mth)-1]
-            context['likes_m'] = len(likes_m)
-            context['likes_a'] = len(likes_a)
+            for obj in likes_music:
+                if obj.music.tag.intitule in tag_score:
+                    tag_score[obj.music.tag.intitule] += 0.20
+                else:
+                    tag_score[obj.music.tag.intitule] = 0.20
+
+            for obj in likes_music.filter(date__month=lst_mth,date__year=last_year):
+                if obj.music.tag.intitule in tag_score_last_month:
+                    tag_score_last_month[obj.music.tag.intitule] += 0.20
+                else:
+                    tag_score_last_month[obj.music.tag.intitule] = 0.20
+
+            for obj in likes_music.filter(date__month=this_mth,date__year=this_year):
+                if obj.music.tag.intitule in tag_score_this_month:
+                    tag_score_this_month[obj.music.tag.intitule] += 0.20
+                else:
+                    tag_score_this_month[obj.music.tag.intitule] = 0.20
+
+            print(tag_score)
+            ordered_tag_score = sorted(tag_score.iteritems(), key=lambda (k,v): (v,k),reverse=True)
+            ordered_tag_score_last_month = sorted(tag_score_last_month.iteritems(), key=lambda (k,v): (v,k),reverse=True)
+            ordered_tag_score_this_month = sorted(tag_score_this_month.iteritems(), key=lambda (k,v): (v,k),reverse=True)
+            print(ordered_tag_score)
+
+            if len(ordered_tag_score) > 0:
+                best_tag_all_time = ordered_tag_score[0][0]
+            else:
+                best_tag_all_time = 'N/A'
+
+            if len(ordered_tag_score_last_month) > 0:
+                best_tag_last_month = ordered_tag_score_last_month[0][0]
+            else:
+                best_tag_last_month = 'N/A'
+
+            if len(ordered_tag_score_this_month) > 0:
+                best_tag_this_month = ordered_tag_score_this_month[0][0]
+            else:
+                best_tag_this_month = 'N/A'
+
+            best_music_last_month = ecoutes.filter(date__month=lst_mth,date__year=last_year).values('music__titre').annotate(nb_ecoutes=Count('music__titre')).order_by('-nb_ecoutes')
+            if best_music_last_month.count() > 0:
+                best_music_last_month = best_music_last_month[0]['music__titre']
+            else:
+                best_music_last_month = 'N/A'
+
+            best_music_this_month = ecoutes.filter(date__month=this_mth,date__year=this_year).values('music__titre').annotate(nb_ecoutes=Count('music__titre')).order_by('-nb_ecoutes')
+            if best_music_this_month.count() > 0:
+                best_music_this_month = best_music_this_month[0]['music__titre']
+            else:
+                best_music_this_month = 'N/A'
+
+            best_music_all_time = ecoutes.values('music__titre').annotate(nb_ecoutes=Count('music__titre')).order_by('-nb_ecoutes')
+            if best_music_all_time.count() > 0:
+                best_music_all_time = best_music_all_time[0]['music__titre']
+            else:
+                best_music_all_time = 'N/A'
+
+            most_ddl_last_month = ddl.filter(date__month=lst_mth,date__year=last_year).values('music__titre').annotate(nb_ddl=Count('music__titre')).order_by('-nb_ddl')
+            if most_ddl_last_month.count() > 0:
+                most_ddl_last_month = most_ddl_last_month[0]['music__titre']
+            else:
+                most_ddl_last_month = 'N/A'
+
+            most_ddl_this_month = ddl.filter(date__month=this_mth,date__year=this_year).values('music__titre').annotate(nb_ddl=Count('music__titre')).order_by('-nb_ddl')
+            if most_ddl_this_month.count() > 0:
+                most_ddl_this_month = most_ddl_this_month[0]['music__titre']
+            else:
+                most_ddl_this_month = 'N/A'
+
+            most_ddl_all_time = ddl.values('music__titre').annotate(nb_ddl=Count('music__titre')).order_by('-nb_ddl')
+            if most_ddl_all_time.count() > 0:
+                most_ddl_all_time = most_ddl_all_time[0]['music__titre']
+            else:
+                most_ddl_all_time = 'N/A'
+
+            context['ecoutes'] = ecoutes.count()
+            context['ecoutes_lst_mth'] = ecoutes.filter(date__month=lst_mth,date__year=last_year).count()
+            context['ecoutes_this_mth'] = ecoutes.filter(date__month=this_mth,date__year=this_year).count()
+            context['best_m'] = best_music_all_time
+            context['best_m_last_mth'] = best_music_last_month
+            context['best_m_this_mth'] = best_music_this_month
+            context['ddl'] = ddl.count()
+            context['ddl_lst_mth'] = ddl.filter(date__month=lst_mth,date__year=last_year).count()
+            context['ddl_this_mth'] = ddl.filter(date__month=this_mth,date__year=this_year).count()
+            context['best_d'] = most_ddl_all_time
+            context['best_d_last_mth'] = most_ddl_last_month
+            context['best_d_this_mth'] = most_ddl_this_month
+            context['likes_m'] = likes_music.count()
+            context['likes_m_this_month'] = likes_music.filter(date__month=this_mth,date__year=this_year).count()
+            context['likes_m_last_month'] = likes_music.filter(date__month=lst_mth,date__year=last_year).count()
+            context['likes_a'] = likes_album.count()
+            context['likes_a_this_month'] = likes_album.filter(date__month=this_mth,date__year=this_year).count()
+            context['likes_a_last_month'] = likes_album.filter(date__month=lst_mth,date__year=last_year).count()
+            context['best_tag'] = best_tag_all_time
+            context['best_tag_last_month'] = best_tag_last_month
+            context['best_tag_this_month'] = best_tag_this_month
 
         except ObjectDoesNotExist:
             context['group'] = "User"
