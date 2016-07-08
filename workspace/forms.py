@@ -5,6 +5,8 @@ from workspace.models import *
 import os
 from django.contrib.auth import authenticate, login
 
+#Ici sont codés les differents formulaires du site.
+
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=30)
     email = forms.EmailField()

@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import views as auth_views
 from views import *
 
+#Ici sont codés les urls, chaque url fait correspondre une vue et un Template, les urls sont donc les controleurs de l'application.
+
 urlpatterns = [
     # url(r'^musiques', ListMusic.as_view(),name="listmusic"),
     # url(r'^musique/(?P<pk>\d+)$', MusicDetail.as_view(), name="detailmusic"),
