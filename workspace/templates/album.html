@@ -1,4 +1,4 @@
-{% extends "search.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 {% block head %}
 <!DOCTYPE html>
@@ -10,19 +10,17 @@
 	<title>Album</title>
 	<link rel="icon" href="assets/img/content/icon.png">
 	<!-- ========== CSS INCLUDES ========== -->
+	<link rel="stylesheet" type="text/css" href="{% static "ModalWindowEffects/css/component.css" %}" />
+	<link rel="stylesheet" type="text/css" href="{% static "CustomFileInputs/css/component.css" %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-select.css" %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static "SelectInspiration/css/cs-skin-slide.css" %}"/>
+
 	<link rel="stylesheet" href="{% static "assets/css/master.css" %}">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
 </head>
 {% endblock %}
 <body>
-    {% block loader %}
-        <div class="page-loader">
-             <div class="vertical-align align-center">
-                  <img src="{% static "assets/loader/loader.gif" %}" alt="" class="loader-img">
-             </div>
-        </div>
-    {% endblock %}
 	{% block title %}
 	<!-- =============== START BREADCRUMB ================ -->
 	<section class="no-mb">
@@ -30,7 +28,7 @@
 			<div class="col-sm-12">
 				<div class="before-FullscreenSlider"></div>
 				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
-					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single4.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
+					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single_album.jpg" %}');background-size: 1920px 1000px" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
 					</div>
 				</div>
 			</div>
@@ -39,7 +37,7 @@
 	<!-- =============== END BREADCRUMB ================ -->
   {% endblock %}
   {% block content %}
-  <section class="albumSingle padding background-properties" style="background-image:url(assets/img/albums/single22.jpg);">
+  <section class="albumSingle padding background-properties" style="background-image:url( assets/img/albums/single22.jpg);">
       <div class="container">
           <div class="sectionTitle paddingBottom">
               <span class="heading-t3"></span>
@@ -53,8 +51,11 @@
                           <td></td>
                           <td class="nameTable">Titre</td>
                           <td class="lengthTable">Duree</td>
+						  {% if Album.type_album != 'PL' %}
                           <td></td>
 						  <td></td>
+						  <td></td>
+						  {% endif %}
                         </tr>
                         {% for musique in Album.liste_musique %}
                             <tr>
@@ -62,11 +63,37 @@
                               data-count="{{ forloop.counter0 }}"><i class="fa fa-play"></i></a></td>
                               <td class="tableWidth">{{ musique.titre }}</td>
                               <td>{{ musique.duree }}</td>
-                              <td><a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
-							  <td><a {% if musique.id in Liked_musics %}class="idlike clicked"{% else %}class="idlike unclicked"{% endif %} id="{{ musique.id }}"><i class="material-icons" style="vertical-align:middle">favorite</i></a></td>
-                            </tr>
+							   {% if Album.type_album != 'PL' %}
+                              <td><a href="{{ musique.path.url }}" class="download" id="{{ musique.id }}" download="{{ musique.titre }}.mp3"><i class="material-icons ddl" style="vertical-align:middle">file_download</i></a></td>
+							  <td><a {% if musique.id in Liked_musics %}class="idlike clicked"{% else %}class="idlike unclicked"{% endif %} id="like-{{ musique.id }}"><i class="material-icons" style="vertical-align:middle">favorite</i></a></td>
+							  <td> <a href="#" class="md-trigger pl1" data-modal="modal-20" id="pl1-{{ musique.id }}"><i class="material-icons" style="vertical-align:middle;padding-right:10px;border-radius:3px;" >playlist_add</i></a></td>
+							  {% endif %}
+							</tr>
                         {% endfor %}
                   </table>
+				  <div class="md-modal md-effect-2" id="modal-20">
+						<div class="md-content">
+							<h3> Choisir la playliste</h3>
+			                <div class="md-body">
+								<table>
+									<tr>
+										<th>Playliste</th>
+										<th></th>
+									</tr>
+
+			    				{% for playlist in Playlists%}
+								<tr><td>{{playlist.titre}}</td><td><a class="pl2" id='pl2-{{ playlist.id }}' href="#">Ajouter a la playliste</a></td></tr>
+								{% endfor %}
+								</table>
+								<form id="post-add-pl" method="post" action={% url "ajouter_pl" %}>
+									{% csrf_token %}
+									<input type="hidden" id="id_playlist" name="playlist" value="">
+									<input type="hidden" id="id_music" name="music" value="">
+								</form>
+			                </div>
+						</div>
+					</div>
+					<div class="md-overlay"></div>
 				  <form id="like-post" action="/toggle_like/" method="post">
 					  <input id="likemusic" type="hidden" name="music" value="">
 				  </form>
@@ -80,15 +107,22 @@
                           <h3>Details de l'album</h3>
                           <ul>
                               <li>Titre: <span>{{ Album.titre }}</span></li>
+							  {% if Album.type_album != 'PL' %}
                               <li>Artiste: <span>{{ Album.artiste }}</span></li>
+							  {% else %}
+							   <li>Auteur: <span>{{ Album.artiste }}</span></li>
+							  {% endif %}
+
                               <li>Publication: <span>{{ Album.date_publication }}</span></li>
                               <li>Duree: <span>{{ Album.duree_totale }}</span></li>
 
 							</ul>
+							{% if Album.type_album != 'PL' %}
 							{% if is_liked %}
 								<button type="button" class="idlike-album album-clicked" id="{{ Album.id }}"><i class="material-icons" style="vertical-align:middle;font-size:14px">favorite</i> Supprimer des favoris</button>
 							{% else %}
 								<button type="button" class="idlike-album album-unclicked" id="{{ Album.id }}"><i class="material-icons" style="vertical-align:middle;font-size:14px">favorite</i> Ajouter aux favoris</button>
+							{% endif %}
 							{% endif %}
 						</div>
                     </div><!-- end sidebarAlbum -->
@@ -307,7 +341,8 @@
 				});
 
 				$('.idlike').click(function(){
-					$("#likemusic").attr("value",$(this).attr("id"));
+					var tab = $(this).attr("id").split('-')
+					$("#likemusic").attr("value",tab[1]);
 					$('#like-post').submit();
 				});
 
@@ -315,6 +350,26 @@
 					console.log("button clicked");
 					$("#likealbum").attr("value",$(this).attr("id"));
 					$('#like-post-album').submit();
+				});
+
+				$('.pl1').click(function(){
+					console.log("button clicked");
+					var tab = $(this).attr("id").split('-')
+					$("#id_music").attr("value",tab[1]);
+				});
+
+				$('.pl2').click(function(){
+					console.log("button clicked");
+					var tab = $(this).attr("id").split('-')
+					$("#id_playlist").attr("value",tab[1]);
+					$('#post-add-pl').submit();
+				});
+
+
+				$('.download').click(function(){
+					doRequest("{% url "add_music_download" %}","POST",{music : $(this).attr("id") },function(json){
+						console.log(json);
+					});
 				});
 
 				function doRequest(target,method,data,success){
@@ -344,7 +399,7 @@
 				function toggle_like(){
 					console.log("toggle-like is working");
 					doRequest("{% url "toggle_like" %}","POST",{ music : $('#likemusic').val() },function(json){
-						$('#'+$('#likemusic').val()).toggleClass("clicked unclicked");
+						$('#like-'+$('#likemusic').val()).toggleClass("clicked unclicked");
 						$('#likemusic').val('');
 						console.log(json);
 						console.log("success");

@@ -89,10 +89,10 @@ class Album(models.Model):
         q = self.music_set.all()
         taglist = {}
         for music in q:
-            if taglist[music.tag]:
-                taglist[music.tag] += 1
+            if music.tag.intitule in taglist:
+                taglist[music.tag.intitule] += 1
             else:
-                taglist[music.tag] = 0
+                taglist[music.tag.intitule] = 1
         return taglist
 
     def __str__(self):
@@ -101,6 +101,7 @@ class Album(models.Model):
 class LikeMusic(models.Model):
     user = models.ForeignKey(User)
     music = models.ForeignKey(Music)
+    date = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
         return "{0}|{1}".format(self.user.username,self.music)
@@ -108,8 +109,14 @@ class LikeMusic(models.Model):
 class LikeAlbum(models.Model):
     user = models.ForeignKey(User)
     album = models.ForeignKey(Album)
+    date = models.DateTimeField(auto_now_add = True)
 
 class MusicListen(models.Model):
+    user = models.ForeignKey(User)
+    music = models.ForeignKey(Music)
+    date = models.DateTimeField(auto_now_add = True)
+
+class MusicDownloads(models.Model):
     user = models.ForeignKey(User)
     music = models.ForeignKey(Music)
     date = models.DateTimeField(auto_now_add = True)

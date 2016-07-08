@@ -16,6 +16,8 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Count, ExpressionWrapper, F, FloatField, Q
+import random
 import json
 import datetime
 import uuid
@@ -23,8 +25,72 @@ import uuid
 
 
 # Create your views here.
-class HelloWorld(TemplateView):
+#Vue de la page d'accueil
+class HomeView(TemplateView):
     template_name = "base.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(HomeView,self).get_context_data(**kwargs)
+
+        if self.request.user.is_authenticated():
+
+            #Calcul de score pour recommandations
+            ecoutes = MusicListen.objects.filter(user=self.request.user)
+            ddl = MusicDownloads.objects.filter(user=self.request.user)
+            likes_music = LikeMusic.objects.filter(user=self.request.user)
+            likes_album = LikeAlbum.objects.filter(user=self.request.user)
+
+            tag_score = {}
+
+            ecoute_score= ecoutes.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.05,output_field=FloatField())).order_by('-nb_tag')
+            ddl_score = ddl.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
+
+            #Calcule du score des différents tags.
+            for obj in ecoute_score:
+                if obj['music__tag__intitule'] in tag_score:
+                    tag_score[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score[obj['music__tag__intitule']] = obj['nb_tag']
+
+            for obj in ddl_score:
+                if obj['music__tag__intitule'] in tag_score:
+                    tag_score[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score[obj['music__tag__intitule']] = obj['nb_tag']
+
+            for obj in likes_album:
+                for sub in obj.album.liste_tag():
+                    if sub in tag_score:
+                        tag_score[sub] += obj.album.liste_tag()[sub]*0.30
+                    else:
+                        tag_score[sub] = obj.album.liste_tag()[sub]*0.30
+
+            for obj in likes_music:
+                if obj.music.tag.intitule in tag_score:
+                    tag_score[obj.music.tag.intitule] += 0.15
+                else:
+                    tag_score[obj.music.tag.intitule] = 0.15
+
+            all_albums = Album.objects.all()
+            ordered_tag_score = sorted(tag_score.iteritems(), key=lambda (k,v): (v,k),reverse=True)
+            album_select = []
+
+            for album in all_albums:
+                current_tags = sorted(album.liste_tag().iteritems(), key=lambda (k,v): (v,k),reverse=True)
+                print(ordered_tag_score)
+                print(current_tags[0][0])
+                if current_tags[0][0] in ordered_tag_score[0]:
+
+                    album_select.append(album)
+
+            #recherche des nouveautés et mise en place dans la playlist d'une des nouveauté au hazard.
+            nouveautes = Album.objects.filter(Q(type_album='AL')|Q(type_album='SI')).order_by('-date_publication')[:5]
+            au_hazard = nouveautes[random.randint(0, len(nouveautes)-1)]
+
+            context['recommandations'] = album_select[:4]
+            context['nouveautes'] = nouveautes
+            context['au_hazard'] = au_hazard
+        return context
 
 # class ListMusic(ListView):
 #     template_name = "liste.html"
@@ -70,6 +136,7 @@ class RegistrationView(FormView):
 
         return super(RegistrationView,self).form_valid(form)
 
+#Active le compte
 class ActivationView(TemplateView):
     template_name = "activation.html"
 
@@ -83,6 +150,7 @@ class ActivationView(TemplateView):
 
         return super(ActivationView,self).dispatch(request,*args,**kwargs)
 
+#Creation de musiques
 class CreateMusicView(PermissionRequiredMixin,SuccessMessageMixin,FormView):
     template_name = "create_music.html"
     form_class = CreateMusicForm
@@ -120,6 +188,7 @@ class CreateMusicView(PermissionRequiredMixin,SuccessMessageMixin,FormView):
         music.save()
         return super(CreateMusicView,self).form_valid(form)
 
+#Creation d'album
 class AddAlbumView(PermissionRequiredMixin,SuccessMessageMixin,FormView):
     template_name = "add_album.html"
     form_class = AddAlbumForm
@@ -139,6 +208,7 @@ class AddAlbumView(PermissionRequiredMixin,SuccessMessageMixin,FormView):
         new_album = Album(titre=titre,date_publication=date,type_album=type,artiste=artiste).save()
         return super(AddAlbumView,self).form_valid(form)
 
+#Creation de Playlist
 class AddPlaylistView(SuccessMessageMixin,FormView):
     template_name = "add_playlist.html"
     form_class = AddPlaylistForm
@@ -157,21 +227,25 @@ class AddPlaylistView(SuccessMessageMixin,FormView):
         new_album = Album(titre=titre,date_publication=date,type_album=type,artiste=artiste).save()
         return super(AddPlaylistView,self).form_valid(form)
 
+#Acces aux musiques
 class AccessMusicView(DetailView):
     context_object_name = "music"
     model = Music
     template_name = "single_music.html"
 
+#Acces aux albums
 class AccessAlbumView(DetailView):
     context_object_name = "Album"
     model = Album
     template_name = "album.html"
 
+    #on renseigne aussi les playlist pour l'ajout des musiques aux playlist.
     def get_context_data(self, **kwargs):
         context = super(AccessAlbumView, self).get_context_data(**kwargs)
         user = self.request.user
         liked_musics = user.likemusic_set.filter(music__album=self.get_object()).values_list('music',flat=True)
         context['Liked_musics'] = liked_musics
+        context['Playlists'] = Album.objects.filter(artiste=self.request.user).filter(type_album='PL')
         try:
             albums_liked = user.likealbum_set.get(album=self.get_object())
             context['is_liked'] = True
@@ -182,10 +256,10 @@ class AccessAlbumView(DetailView):
             context['group'] = "User"
         return context
 
-
+#Page de stats.
 class monCompte(TemplateView):
     template_name = "mon_compte.html"
-    users_in_group = Group.objects.get(name="Artistes").user_set.all()
+    #users_in_group = Group.objects.get(name="Artistes").user_set.all()
 
     def get_context_data(self,**kwargs):
         context = super(monCompte, self).get_context_data(**kwargs)
@@ -194,13 +268,208 @@ class monCompte(TemplateView):
             groupes = self.request.user.groups.get(name="Artistes")
             context['group'] = groupes.name
 
+            now = datetime.datetime.now()
+
+            this_mth = now.month
+            this_year = now.year
+
+            if this_mth == 1:
+                lst_mth = 12
+                last_year = this_year - 1
+            else:
+                lst_mth = now.month - 1
+                last_year = this_year
+
+            ecoutes = MusicListen.objects.filter(music__auteur=self.request.user)
+            ddl = MusicDownloads.objects.filter(music__auteur=self.request.user)
+            likes_music = LikeMusic.objects.filter(music__auteur=self.request.user)
+            likes_album = LikeAlbum.objects.filter(album__artiste=self.request.user)
+
+            #Calcule du score. Poids de 0.05 pour les ecoutes, 0.5 pour les telechargements, 0.20 pour les likes musiques et 0.25 pour les likes album
+            tag_score = {}
+            tag_score_last_month = {}
+            tag_score_this_month = {}
+            ecoute_score= ecoutes.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.05,output_field=FloatField())).order_by('-nb_tag')
+            ddl_score = ddl.values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
+
+            ecoute_score_this_month= ecoutes.filter(date__month=this_mth,date__year=this_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.05,output_field=FloatField())).order_by('-nb_tag')
+            ddl_score_this_month = ddl.filter(date__month=this_mth,date__year=this_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
+
+            ecoute_score_last_month = ecoutes.filter(date__month=lst_mth,date__year=last_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count('music__tag__intitule')*0.05,output_field=FloatField())).order_by('-nb_tag')
+            ddl_score_last_month = ddl.filter(date__month=lst_mth,date__year=last_year).values('music__tag__intitule').annotate(nb_tag=ExpressionWrapper(Count(F('music__tag__intitule'))*0.5,output_field=FloatField())).order_by('-nb_tag')
+
+            ordered_tag_score = sorted(tag_score.iteritems(), key=lambda (k,v): (v,k),reverse=True)
+
+            #poids des ecoutes
+            for obj in ecoute_score:
+                if obj['music__tag__intitule'] in tag_score:
+                    tag_score[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score[obj['music__tag__intitule']] = obj['nb_tag']
+
+            for obj in ecoute_score_last_month:
+                if obj['music__tag__intitule'] in tag_score_last_month:
+                    tag_score_last_month[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score_last_month[obj['music__tag__intitule']] = obj['nb_tag']
+
+            for obj in ecoute_score_this_month:
+                if obj['music__tag__intitule'] in tag_score_this_month:
+                    tag_score_this_month[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score_this_month[obj['music__tag__intitule']] = obj['nb_tag']
+
+            print(tag_score)
+            #poids des telechargements
+            for obj in ddl_score:
+                if obj['music__tag__intitule'] in tag_score:
+                    tag_score[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score[obj['music__tag__intitule']] = obj['nb_tag']
+
+            for obj in ddl_score_last_month:
+                if obj['music__tag__intitule'] in tag_score_last_month:
+                    tag_score_last_month[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score_last_month[obj['music__tag__intitule']] = obj['nb_tag']
+
+            for obj in ddl_score_this_month:
+                if obj['music__tag__intitule'] in tag_score_this_month:
+                    tag_score_this_month[obj['music__tag__intitule']] += obj['nb_tag']
+                else:
+                    tag_score_this_month[obj['music__tag__intitule']] = obj['nb_tag']
+
+
+            print(tag_score)
+            #poids des likes albums
+            for obj in likes_album:
+                for sub in obj.album.liste_tag():
+                    if sub in tag_score:
+                        tag_score[sub] += obj.album.liste_tag()[sub]*0.30
+                    else:
+                        tag_score[sub] = obj.album.liste_tag()[sub]*0.30
+
+            for obj in likes_album.filter(date__month=lst_mth,date__year=last_year):
+                for sub in obj.album.liste_tag():
+                    if sub in tag_score_last_month:
+                        tag_score_last_month[sub] += obj.album.liste_tag()[sub]*0.30
+                    else:
+                        tag_score_last_month[sub] = obj.album.liste_tag()[sub]*0.30
+
+            for obj in likes_album.filter(date__month=this_mth,date__year=this_year):
+                for sub in obj.album.liste_tag():
+                    if sub in tag_score_this_month:
+                        tag_score_this_month[sub] += obj.album.liste_tag()[sub]*0.30
+                    else:
+                        tag_score_this_month[sub] = obj.album.liste_tag()[sub]*0.30
+
+            print(tag_score)
+            #poids des likes musiques
+            for obj in likes_music:
+                if obj.music.tag.intitule in tag_score:
+                    tag_score[obj.music.tag.intitule] += 0.15
+                else:
+                    tag_score[obj.music.tag.intitule] = 0.15
+
+            for obj in likes_music.filter(date__month=lst_mth,date__year=last_year):
+                if obj.music.tag.intitule in tag_score_last_month:
+                    tag_score_last_month[obj.music.tag.intitule] += 0.15
+                else:
+                    tag_score_last_month[obj.music.tag.intitule] = 0.15
+
+            for obj in likes_music.filter(date__month=this_mth,date__year=this_year):
+                if obj.music.tag.intitule in tag_score_this_month:
+                    tag_score_this_month[obj.music.tag.intitule] += 0.15
+                else:
+                    tag_score_this_month[obj.music.tag.intitule] = 0.15
+
+            print(tag_score)
+            ordered_tag_score = sorted(tag_score.iteritems(), key=lambda (k,v): (v,k),reverse=True)
+            ordered_tag_score_last_month = sorted(tag_score_last_month.iteritems(), key=lambda (k,v): (v,k),reverse=True)
+            ordered_tag_score_this_month = sorted(tag_score_this_month.iteritems(), key=lambda (k,v): (v,k),reverse=True)
+            print(ordered_tag_score)
+
+            #determination du tag le plus fort
+            if len(ordered_tag_score) > 0:
+                best_tag_all_time = ordered_tag_score[0][0]
+            else:
+                best_tag_all_time = 'N/A'
+
+            if len(ordered_tag_score_last_month) > 0:
+                best_tag_last_month = ordered_tag_score_last_month[0][0]
+            else:
+                best_tag_last_month = 'N/A'
+
+            if len(ordered_tag_score_this_month) > 0:
+                best_tag_this_month = ordered_tag_score_this_month[0][0]
+            else:
+                best_tag_this_month = 'N/A'
+
+            best_music_last_month = ecoutes.filter(date__month=lst_mth,date__year=last_year).values('music__titre').annotate(nb_ecoutes=Count('music__titre')).order_by('-nb_ecoutes')
+            if best_music_last_month.count() > 0:
+                best_music_last_month = best_music_last_month[0]['music__titre']
+            else:
+                best_music_last_month = 'N/A'
+
+            best_music_this_month = ecoutes.filter(date__month=this_mth,date__year=this_year).values('music__titre').annotate(nb_ecoutes=Count('music__titre')).order_by('-nb_ecoutes')
+            if best_music_this_month.count() > 0:
+                best_music_this_month = best_music_this_month[0]['music__titre']
+            else:
+                best_music_this_month = 'N/A'
+
+            best_music_all_time = ecoutes.values('music__titre').annotate(nb_ecoutes=Count('music__titre')).order_by('-nb_ecoutes')
+            if best_music_all_time.count() > 0:
+                best_music_all_time = best_music_all_time[0]['music__titre']
+            else:
+                best_music_all_time = 'N/A'
+
+            most_ddl_last_month = ddl.filter(date__month=lst_mth,date__year=last_year).values('music__titre').annotate(nb_ddl=Count('music__titre')).order_by('-nb_ddl')
+            if most_ddl_last_month.count() > 0:
+                most_ddl_last_month = most_ddl_last_month[0]['music__titre']
+            else:
+                most_ddl_last_month = 'N/A'
+
+            most_ddl_this_month = ddl.filter(date__month=this_mth,date__year=this_year).values('music__titre').annotate(nb_ddl=Count('music__titre')).order_by('-nb_ddl')
+            if most_ddl_this_month.count() > 0:
+                most_ddl_this_month = most_ddl_this_month[0]['music__titre']
+            else:
+                most_ddl_this_month = 'N/A'
+
+            most_ddl_all_time = ddl.values('music__titre').annotate(nb_ddl=Count('music__titre')).order_by('-nb_ddl')
+            if most_ddl_all_time.count() > 0:
+                most_ddl_all_time = most_ddl_all_time[0]['music__titre']
+            else:
+                most_ddl_all_time = 'N/A'
+
+            #passage des stats au context.
+            context['ecoutes'] = ecoutes.count()
+            context['ecoutes_lst_mth'] = ecoutes.filter(date__month=lst_mth,date__year=last_year).count()
+            context['ecoutes_this_mth'] = ecoutes.filter(date__month=this_mth,date__year=this_year).count()
+            context['best_m'] = best_music_all_time
+            context['best_m_last_mth'] = best_music_last_month
+            context['best_m_this_mth'] = best_music_this_month
+            context['ddl'] = ddl.count()
+            context['ddl_lst_mth'] = ddl.filter(date__month=lst_mth,date__year=last_year).count()
+            context['ddl_this_mth'] = ddl.filter(date__month=this_mth,date__year=this_year).count()
+            context['best_d'] = most_ddl_all_time
+            context['best_d_last_mth'] = most_ddl_last_month
+            context['best_d_this_mth'] = most_ddl_this_month
+            context['likes_m'] = likes_music.count()
+            context['likes_m_this_month'] = likes_music.filter(date__month=this_mth,date__year=this_year).count()
+            context['likes_m_last_month'] = likes_music.filter(date__month=lst_mth,date__year=last_year).count()
+            context['likes_a'] = likes_album.count()
+            context['likes_a_this_month'] = likes_album.filter(date__month=this_mth,date__year=this_year).count()
+            context['likes_a_last_month'] = likes_album.filter(date__month=lst_mth,date__year=last_year).count()
+            context['best_tag'] = best_tag_all_time
+            context['best_tag_last_month'] = best_tag_last_month
+            context['best_tag_this_month'] = best_tag_this_month
+
         except ObjectDoesNotExist:
             context['group'] = "User"
 
         return context
 
-class monCompte_artiste(TemplateView):
-    template_name = "mon_compte_artiste.html"
+
 
 class NewEmail(FormView):
     template_name = "new_email.html"
@@ -292,7 +561,7 @@ class SupprCompte(FormView):
         #return redirect(reverse("home"))
         return super(SupprCompte,self).form_valid(form)
 
-
+#affichage des playlists
 class MyPlaylist(DetailView):
     context_object_name = "Album"
     model = Album
@@ -305,6 +574,7 @@ class MyPlaylist(DetailView):
         print(albums)
         return self.render_to_response(context)
 
+#recherche par album, musiques et artistes
 class Search(FormView):
     template_name = "search.html"
     form_class = SearchForm
@@ -320,6 +590,13 @@ class Search(FormView):
         context['Artistes'] = artistes
         context['Musiques'] = musiques
         return self.render_to_response(context)
+
+    def get(self, request, *args, **kwargs):
+        form = SearchForm(self.request.GET or None)
+        if form.is_valid():
+            return self.form_valid(form)
+
+
 
 
 class Contact(TemplateView):
@@ -352,7 +629,7 @@ class fiche_artiste(DetailView):
 
 
 
-
+#Ajout et suppression des likes musique (AJAX)
 def toggle_like(request):
     if request.method == 'POST':
         idmusic = request.POST.get('music')
@@ -387,6 +664,7 @@ def toggle_like(request):
             content_type="application/json"
         )
 
+#Ajout et suppression des likes album (AJAX)
 def toggle_like_album(request):
     if request.method == 'POST':
         idalbum = request.POST.get('album')
@@ -421,6 +699,7 @@ def toggle_like_album(request):
             content_type="application/json"
         )
 
+#Enregistrement des ecoutes de musiques pour l'historique, a la fin de chaque écoute, un objet  est cree
 def add_music_listen(request):
     if request.method == 'POST':
         idmusic = request.POST.get('music')
@@ -445,8 +724,71 @@ def add_music_listen(request):
             content_type="application/json"
         )
 
-class mes_albums(TemplateView):
+#enregistrement des telechargements
+def add_music_download(request):
+    if request.method == 'POST':
+        idmusic = request.POST.get('music')
+        response_data = {}
+        music = Music.objects.get(id=idmusic)
+        user = request.user
+
+        musicDownloads = MusicDownloads(user=user,music=music)
+        musicDownloads.save()
+        response_data['status'] = 'download added'
+        response_data['downloadpk'] = musicDownloads.id
+        response_data['user'] = musicDownloads.user.username
+        response_data['date'] = "{0}/{1}/{2}".format(musicDownloads.date.day,musicDownloads.date.month,musicDownloads.date.year)
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+    else:
+        return HttpResponse(
+            json.dumps({"nothing to see": "this isn't happening"}),
+            content_type="application/json"
+        )
+
+#Visualisation des albums (Artistes)
+class MyAlbumsView(TemplateView):
     template_name = "mes_albums.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(MyAlbumsView,self).get_context_data(**kwargs)
+
+        context['albums'] = Album.objects.filter(artiste=self.request.user).exclude(type_album='PL')
+        return context
+
+#vue des differentes playlists de l'utilisateur courrant
 class playlist_accueil(TemplateView):
     template_name = "playlist_accueil.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(playlist_accueil,self).get_context_data(**kwargs)
+
+        context['playlist'] = Album.objects.filter(artiste=self.request.user).filter(type_album='PL')
+        return context
+
+#Ajout d'une musique a une playliste.
+class AddToPlaylist(FormView):
+    form_class = AddToPlaylistForm
+    template_name = "base.html"
+
+    def form_valid(self,form,**kwargs):
+        playlist = form.cleaned_data['playlist']
+        music = form.cleaned_data['music']
+
+        playlist = Album.objects.get(id=playlist)
+        music = Music.objects.get(id=music)
+
+        newmusic = Music()
+        newmusic.duree = music.duree
+        newmusic.titre = music.titre
+        newmusic.album = playlist
+        newmusic.tag = music.tag
+        newmusic.auteur = music.auteur
+        newmusic.active = music.active
+        newmusic.path = music.path
+
+        newmusic.save()
+        return redirect(reverse("playlist_accueil"))

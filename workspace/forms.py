@@ -5,6 +5,8 @@ from workspace.models import *
 import os
 from django.contrib.auth import authenticate, login
 
+#Ici sont codés les differents formulaires du site.
+
 class RegistrationForm(forms.Form):
     username = forms.CharField(max_length=30)
     email = forms.EmailField()
@@ -90,6 +92,10 @@ class AddAlbumForm(forms.Form):
 
 class AddPlaylistForm(forms.Form):
     titre = forms.CharField()
+
+class AddToPlaylistForm(forms.Form):
+    music = forms.IntegerField()
+    playlist = forms.IntegerField()
 
 class ConnexionForm(forms.Form):
     username = forms.CharField(label="User")

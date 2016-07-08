@@ -1,0 +1,30 @@
+{% load staticfiles %}
+	<!-- =============== START ALBUM SINGLE ================ -->
+	<section class="albumSingle padding background-properties" style="background-image:url(' {% static "assets/img/albums/single44.jpg" %}');">
+		<div class="container">
+			<div class="sectionTitle paddingBottom">
+				<span class="heading-t3"></span>
+				<h2><a>Mon compte</a></h2><br>
+				<h4>Bienvenu à vous {{ group }} !</h4>
+				<span class="heading-b3"></span>
+			</div><!-- end sectionTtile -->
+			<div class="row">
+				<div class="col-sm-3 col-sm-offset-1">
+					<div class="sidebarAlbum">
+						<div class="widget">
+
+							<h3>Mes Informations d'utilisateur </h3>
+							<ul>
+								<li>Date de création:<span> {{ user.date_joined }} </span></li>
+								<li>Nombre de playlist :<span></span></li>
+								<li>Nombre d'album :<span></span></li>
+								<li>Durée total audio :<span> </span></li>
+							</ul>
+						</ul>
+					</div><!-- end widget -->
+				</div><!-- end sidebarAlbum -->
+			</div><!-- end col-sm-3 col-sm-offset-1 -->
+		</div><!-- end row -->
+	</div><!-- end container -->
+</section>
+<!-- =============== END ALBUM SINGLE ================ -->

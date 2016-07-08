@@ -1,270 +1,48 @@
 {% load staticfiles %}
-{% block head %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="HandheldFriendly" content="true" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-	<title>mon compte</title>
-	<link rel="icon" href="assets/img/content/icon.png">
-	<!-- ========== CSS INCLUDES ========== -->
-	<link rel="stylesheet" href="{% static "assets/css/master.css" %}">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-	<link rel="stylesheet" href="{% static "assets/css/custom.css" %}">
-</head>
-{% endblock %}
-<body>
-    {% block loader %}
-        <div class="page-loader">
-             <div class="vertical-align align-center">
-                  <img src="{% static "assets/loader/loader.gif" %}" alt="" class="loader-img">
-             </div>
-        </div>
-    {% endblock %}
-
-		{% block headerNav %}
-	<!-- =============== START TOP HEADER ================ -->
-	<div class="topHeader" >
-		<div class="header">
-			<div class="rightTopHeader">
-				<div class="cartContainer">
-					<div class="myCart">
-					</div><!-- end myCart -->
-					<div class="cartParent">
-						<div class="cartItems">
-							</div><!-- end cartItems -->
-					</div><!-- end cartParent -->
-				</div><!--end cartContainer  -->
-				<!-- Open Menu Button -->
-				<a class="open-menu">
-					<!-- Buttons Bars -->
-					<span class="span-1"></span>
-					<span class="span-2"></span>
-					<span class="span-3"></span>
-				</a>
-			</div><!-- end rightTopHeader -->
-		</div><!-- end header -->
-		<!-- Menu Fixed Container -->
-		<div class="menu-fixed-container">
-			<!-- Menu Fixed Centred Container -->
-			<nav>
-				<!-- Menu Fixed Close Button -->
-				<div class="x-filter">
-					<span></span>
-					<span></span>
-				</div>
-				<!-- Menu Fixed Primary List -->
-				<ul>
-					<li>
-						<a href="{% url 'mon_compte' %}">
-							Mes infos
-						</a>
-					</li>
-					<li>
-						<a href="{% url 'home' %}">
-							Mes albums
-						</a>
-					</li>
-					<li>
-						<a href="{% url 'playlist_accueil' %}">
-							Ma Playlist
-						</a>
-					</li>
-					<!-- Menu Fixed Item -->
-					<li>
-						<a href="#">
-							Gérer mon compte
-						</a>
-						<ul class="sub-menu">
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="{% url 'new_email' %}">
-									Modifier son Adresse email
-								</a>
-							</li>
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="{% url 'new_mdp' %}">
-									Modifier son mot de passe
-								</a>
-							</li>
-							<!-- Menu Fixed Sub Menu Item -->
-							<li>
-								<a href="{% url 'suppr_compte' %}">
-									Supprimer mon compte
-								</a>
-							</li>
-						</ul>
-						<li>
-							<a href="{% url 'contact' %}">
-								Contact
-							</a>
-						</li>
-						<li>
-							<a href="{% url 'deconnexion' %}">
-								Se deconnecter
-							</a>
-						</li>
-					</li>
-				</ul>
-				<!-- Menu Fixed Close Button -->
-				<div class="x-filter">
-					<span></span>
-					<span></span>
-				</div>
-			</nav>
-		</div><!-- end menu-fixed-container -->
-		<!-- =============== STAR LOGO ================ -->
-		<div class="logo-container-top">
-	        <a href="{% url 'home' %}">Cdbucket</a>
-	    </div><!-- end logo-container-top -->
-
-		<!-- =============== END LOGO ================ -->
-	</div><!-- end topHeader -->
-	<!-- =============== END TOP HEADER ================ -->
-	{% endblock %}
-
-
-
-	<!-- =============== START BREADCRUMB ================ -->
-	<section class="no-mb">
+<!-- =============== START ALBUM SINGLE ================ -->
+<section class="albumSingle padding background-properties" style="background-image:url(' {% static "assets/img/albums/single44.jpg" %}');">
+	<div class="container">
+		<div class="sectionTitle paddingBottom">
+			<span class="heading-t3"></span>
+			<h2><a>Mon compte</a></h2><br>
+			<h4>Bienvenu à vous {{ user.get_username }} !</h4>
+			<span class="heading-b3"></span>
+		</div><!-- end sectionTtile -->
 		<div class="row">
-			<div class="col-sm-12">
-				<div class="before-FullscreenSlider"></div>
-				<div class="breadcrumb-fullscreen-parent phone-menu-bg">
-					<div class="breadcrumb breadcrumb-fullscreen alignleft small-description overlay almost-black-overlay" style="background-image: url(' {% static "assets/img/albums/single1.jpg" %}');" data-stellar-background-ratio="0.5" data-stellar-vertical-offset="0">
-					</div>
+			<div class="col-sm-10 col-sm-offset-1">
+				<div class="sectionTitle paddingBottom">
+					<h4>Statistiques de vos musiques </h4>
+					<span class="heading-b3"></span>
 				</div>
-			</div>
-		</div>
-	</section>
-	<!-- =============== END BREADCRUMB ================ -->
 
-
-
-	<!-- =============== START ALBUM SINGLE ================ -->
-	<section class="albumSingle padding background-properties" style="background-image:url(' {% static "assets/img/albums/single44.jpg" %}');">
-		<div class="container">
-			<div class="sectionTitle paddingBottom">
-				<span class="heading-t3"></span>
-				<h2><a>Mon compte</a></h2><br>
-				<h4>Bienvenu à vous {{ user.get_username }} !</h4>
-				<span class="heading-b3"></span>
-			</div><!-- end sectionTtile -->
-			<div class="row">
-				<div class="col-sm-3 col-sm-offset-1">
-					<div class="sidebarAlbum">
-						<div class="widget">
-							<h3>MES INFORMATIONS D'ARTISTE </h3>
-
-
-							<h3>MES INDICATEURS </h3>
-							<ul>
-								<li>Date de création du compte :<span> {{ user.date_joined }} </span></li>
-								<li>Votre TOP 3 des musiques les plus écoutées : <span></span></li>
-								<li>Votre TOP 3 des musiques les plus téléchargées : <span></span></li>
-	              <li>Nombre de playlist présentes sur le site :<span></span></li>
-								<li>Nombre d'écoute par musique :<span></span></li>
-								<li>Nombre d'écoute TOTAL :<span></span></li>
-								<li>Nombre de téléchargement :<span></span></li>
-								<li>Durée total audio :<span> </span></li>
-							</ul>
-						</div><!-- end widget -->
-					</div><!-- end sidebarAlbum -->
-				</div><!-- end col-sm-3 col-sm-offset-1 -->
-			</div><!-- end row -->
-		</div><!-- end container -->
-	</section>
-	<!-- =============== END ALBUM SINGLE ================ -->
-
-	<!-- =============== START PAGINATION ================ -->
-	<div class="section-block  bkg-grey-ultralight pagination-2">
-		<div class="row full-width ">
-			<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="{% url 'home' %}" class="pagination-previous">
-					<span>RECOMMANDATION</span>
-				</a>
-			</div>
-			<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="{% url 'home' %}" class="pagination-next ">
-					<span>MES ALBUMS</span>
-				</a>
-			</div>
-			<div class="col-sm-6 rightHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="{% url 'home' %}" class="pagination-next ">
-					<span>MES PLAYLIST</span>
-				</a>
-			</div>
-			<div class="col-sm-6 leftHover" style="background-image: url(' {% static "assets/img/albums/albFooter.jpg" %}');">
-				<a href="{% url 'home' %}" class="pagination-previous">
-					<span>ACCUEIL</span>
-				</a>
-			</div>
-		</div>
-	</div>
-	<!-- =============== END PAGINATION ================ -->
-
-	{% block footer %}
-	<!-- =============== START FOOTER ================ -->
-	<section style="background-color:#eeeeee;">
-		<div class="footer footerPadding">
-			<div class="container">
-				<div class="row">
-					<div class="col-sm-4">
-						<div class="copyFooter">
-							<a href="#">&copy; CDBUCKET 2016</a>
-						</div>
-					</div>
-					<div class="col-sm-4">
-						<nav class="social-icons">
-							<ul class="clearfix">
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-twitter"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-facebook"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-apple"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-lastfm"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-soundcloud"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-youtube-play"></i><span></span></a></li>
-	                			<li><a href="#" class="icon-button shopIcon"><i class="fa fa-vimeo"></i><span></span></a></li>
-                			</ul>
-						</nav>
-					</div>
-					<div class="col-sm-4">
-						<div class="goTop" id="back-to-top">
-							<i class="fa fa-angle-up"></i>
-							<a href="#">Go Top</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- =============== END FOOTER ================ -->
-	{% endblock %}
-	{% block javasscript %}
-	<!-- ================================================== -->
-	<!-- =============== START JQUERY SCRIPTS ================ -->
-	<!-- ================================================== -->
-	<script src="{% static "assets/js/jquery.js" %}"></script>
-	<script src="{% static "assets/js/bootstrap.min.js" %}"></script>
-	<script src="{% static "assets/js/plugins.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/jplayer/jplayer/jquery.jplayer.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/jplayer/add-on/jplayer.playlist.js" %}"></script>
-	<script type="text/javascript" src="{% static "assets/js/playlist.js" %}"></script>
-	<script src="{% static "assets/js/mainVideo.js" %}"></script>
-	<!--[if lte IE 9 ]>
-			<script src="{% static "assets/js/placeholder.js"></script>
-		<script>
-			jQuery(function() {
-				jQuery('input, textarea').placeholder();
-			});
-		</script>
-	<![endif]-->
-	<!-- ================================================== -->
-	<!-- =============== END JQUERY SCRIPTS ================ -->
-	<!-- ================================================== -->
-	{% endblock %}
-	{% block extrajavascript %}
-	{% endblock %}
-</body>
-</html>
+				<table id="statTable">
+					<tr>
+						<th id="corner"></th><th class="top">Le mois dernier</th><th class="top">Ce mois ci</th><th class="top">Depuis votre inscription</th>
+					</tr>
+					<tr>
+						<th>Nombre d'écoutes</th><td>{{ ecoutes_lst_mth }}</td><td>{{ ecoutes_this_mth }}</td><td>{{ ecoutes }}</td>
+					</tr>
+					<tr>
+						<th>Nombre de telechargements</th><td>{{ ddl_lst_mth }}</td><td>{{ ddl_this_mth }}</td><td>{{ ddl }}</td>
+					</tr>
+					<tr>
+						<th>Nombre de likes (musiques)</th><td >{{ likes_m_last_month }}</td><td >{{ likes_m_this_month }}</td><td >{{ likes_m }}</td>
+					</tr>
+					<tr>
+						<th>Nombre de likes (albums)</th><td>{{ likes_a_last_month }}</td><td>{{ likes_a_this_month }}</td><td>{{ likes_a }}</td>
+					</tr>
+					<tr>
+						<th>Musique la plus téléchargée</th><td>{{ best_d_last_mth }}</td><td>{{ best_d_this_mth }}</td><td>{{ best_d }}</td>
+					</tr>
+					<tr>
+						<th>Musique la plus écoutée</th><td>{{ best_m_last_mth }}</td><td>{{ best_m_this_mth }}</td><td>{{ best_m }}</td>
+					</tr>
+					<tr>
+						<th>Tag le plus populaire</th><td>{{best_tag_last_month}}</td><td>{{best_tag_this_month}}</td><td>{{ best_tag }}</td>
+					</tr>
+				</table>
+			</div><!-- end col-sm-3 col-sm-offset-1 -->
+		</div><!-- end row -->
+	</div><!-- end container -->
+</section>
+<!-- =============== END ALBUM SINGLE ================ -->
