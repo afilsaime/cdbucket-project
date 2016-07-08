@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^fiche_artiste/(?P<pk>\d+)$', login_required(fiche_artiste.as_view()), name="fiche_artiste"),
     url(r'^myalbums/$', login_required(MyAlbumsView.as_view()), name="mes_albums"),
     url(r'^playlist_accueil/$', login_required(playlist_accueil.as_view()), name="playlist_accueil"),
+    url(r'^add-to-playlist/$', login_required(AddToPlaylist.as_view()), name="ajouter_pl"),
     #AJAX
     url(r'^like/toggle/$', login_required(toggle_like), name="toggle_like"),
     url(r'^like_album/toggle/$', login_required(toggle_like_album), name="toggle_like_album"),

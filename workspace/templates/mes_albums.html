@@ -37,55 +37,54 @@
 	<!-- =============== END BREADCRUMB ================ -->
   {% endblock %}
   {% block content %}
-  <section class="albumSingle padding background-properties" style="background-image:url(assets/img/albums/single22.jpg);">
-	  <div class="row">
-		  <div class="col-sm-12 col-xs-12">
-			  <div class="aqura-filter-content">
-				  <ul class="clearfix">
-				  {% for album in albums %}
-					  <li class="col-sm-4 col-xs-12 musique">
-						  <div class="blogBox">
-							  <div class="blogBoxContent">
-								  <div class="blogHeader">
-									  <h1>{{ music.titre }}</h1>
-								  </div>
-								  <div class="admin-list clearfix">
-									  <ul>
-										  <li>{{ album.auteur }}</li>
+  <section class="aquraFilter padding" id="content">
+	  <div class="container">
+		  <!-- start blog-filter-category -->
+		  <div class="categories">
+
+		  </div><!--end categories-->
+		  <!-- end blog-filter-category -->
+
+		  <!-- IF RETOUR RECHERCHE EST NUL RETOURNER PAS DE RESULTAT SINON RETOURNER RESULTAT -->
 
 
-												  <tr>
-													  <td class="padTable"><a href="#" class="btnPlay song"
-												   data-mp3="{{ musique.path.url }}"
-												   data-artist="{{ musique.auteur.username }}"
-												   data-song="{{ musique.titre }}"
-												   data-poster="{% static "assets/img/albums/cover1.jpg" %}"><i class="fa fa-play"></i></a></td>
-													  <td class="tableWidth">{{ album.titre }}</td>
-													  <td>{{ album.duree }}</td>
-													  </tr>
-									  </ul>
-								  </div>
-								  <div class="rmButton">
-									  <a href="blogSingle.html">Ajouter à ma playlist</a>
-								  </div>
-								  <div class="rmButton">
-									  <a href="blogSingle.html">Voir l'album</a>
-								  </div>
-								  <div class="rmButton">
-									  <a href="{{ musique.path.url }}" download="{{ musique.titre }}.mp3">Télécharger</a>
-								  </div>
-							  </div><!-- end blogBoxContent -->
-						  </div><!-- end blogBox -->
-					  </li><!-- end col-sm-4 -->
-			  {% endfor %}
-					  </ul>
-				  </div><!-- end aqura-filter-cotent -->
-			  </div><!-- end col-sm-12 -->
-			</div><!-- end row -->
-			<!-- end filter -->
-			</div><!-- end container -->
-		</section>
-  </section>
+
+					  <!-- start filter -->
+					  <div class="row">
+						  <div class="col-sm-12 col-xs-12">
+							  <div class="aqura-filter-content">
+								  <ul class="clearfix">
+
+
+							  {% for album in albums %}
+								  <li class="col-sm-4 col-xs-12 album">
+									  <div class="blogBox">
+										  <div class="blogBoxContent">
+											  <div class="blogHeader">
+												  <h1>{{ album.titre }}</h1>
+											  </div>
+											  <div class="admin-list clearfix">
+												  <ul>
+													  <li>{{ album.artiste.username }}</li>
+													  <li> </li>
+													  <li> | {{ album.date_publication }}</li>
+												  </ul>
+											  </div><!-- end admin-list -->
+											  <div class="rmButton">
+												  <a href="{% url "voir_album" album.id %}">Consulter Album</a>
+											  </div>
+										  </div><!-- end blogBoxContent -->
+									  </div><!-- end blogBox -->
+								  </li><!-- end col-sm-4 -->
+							  {% endfor %}
+
+								  </ul>
+							  </div><!-- end aqura-filter-cotent -->
+						  </div><!-- end col-sm-12 -->
+					  </div><!-- end row -->
+					  <!-- end filter -->
+				  </div><!-- end container -->
+			  </section>
   {% endblock %}
 	{% block footer %}
 	<!-- =============== START FOOTER ================ -->

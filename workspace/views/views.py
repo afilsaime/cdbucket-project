@@ -237,6 +237,7 @@ class AccessAlbumView(DetailView):
         user = self.request.user
         liked_musics = user.likemusic_set.filter(music__album=self.get_object()).values_list('music',flat=True)
         context['Liked_musics'] = liked_musics
+        context['Playlists'] = Album.objects.filter(artiste=self.request.user).filter(type_album='PL')
         try:
             albums_liked = user.likealbum_set.get(album=self.get_object())
             context['is_liked'] = True
@@ -737,8 +738,37 @@ class MyAlbumsView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(MyAlbumsView,self).get_context_data(**kwargs)
 
-        context['albums'] = Album.objects.filter(artiste=self.request.user)
+        context['albums'] = Album.objects.filter(artiste=self.request.user).exclude(type_album='PL')
         return context
 
 class playlist_accueil(TemplateView):
     template_name = "playlist_accueil.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(playlist_accueil,self).get_context_data(**kwargs)
+
+        context['playlist'] = Album.objects.filter(artiste=self.request.user).filter(type_album='PL')
+        return context
+
+class AddToPlaylist(FormView):
+    form_class = AddToPlaylistForm
+    template_name = "base.html"
+
+    def form_valid(self,form,**kwargs):
+        playlist = form.cleaned_data['playlist']
+        music = form.cleaned_data['music']
+
+        playlist = Album.objects.get(id=playlist)
+        music = Music.objects.get(id=music)
+
+        newmusic = Music()
+        newmusic.duree = music.duree
+        newmusic.titre = music.titre
+        newmusic.album = playlist
+        newmusic.tag = music.tag
+        newmusic.auteur = music.auteur
+        newmusic.active = music.active
+        newmusic.path = music.path
+
+        newmusic.save()
+        return redirect(reverse("playlist_accueil"))

@@ -91,6 +91,10 @@ class AddAlbumForm(forms.Form):
 class AddPlaylistForm(forms.Form):
     titre = forms.CharField()
 
+class AddToPlaylistForm(forms.Form):
+    music = forms.IntegerField()
+    playlist = forms.IntegerField()
+
 class ConnexionForm(forms.Form):
     username = forms.CharField(label="User")
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
